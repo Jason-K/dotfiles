@@ -1,1 +1,40 @@
+# Secrets and environment files
 .zsh_secrets
+.env
+.env.local
+.env.*.local
+
+# IDE/Editor configuration with personal data
+.claude.json
+.cursor.json
+.vscode/settings.json
+.vscode/keybindings.json
+
+# Node modules (typically included but being explicit)
+node_modules/
+.npm
+package-lock.json
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Editor backups
+*.swp
+*.swo
+*~
+.*.sw[op]
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*

@@ -6,7 +6,6 @@
 
 [user]
 	# name = Jason
-	# email = 80914358+Jason-K@users.noreply.github.com
 
 [gpg]
   format = ssh

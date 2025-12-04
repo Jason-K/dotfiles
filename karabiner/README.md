@@ -1,5 +1,7 @@
 # Karabiner-Elements Configuration
 
+[![CI](https://github.com/Jason-K/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/Jason-K/dotfiles/actions/workflows/ci.yml)
+
 This directory contains the Karabiner-Elements configuration built with [karabiner.ts](https://github.com/evan-liu/karabiner.ts).
 
 ## Structure

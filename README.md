@@ -16,25 +16,34 @@ cd ~/dotfiles
 
 ```
 dotfiles/
-├── shell/              # Shell configuration files
-│   ├── .zshrc         # Main zsh configuration
-│   ├── .zshenv        # Environment variables
-│   ├── .p10k.zsh      # Powerlevel10k theme config
-│   └── .env.schema    # API key specs for Varlock (1Password integration)
-├── bin/               # Custom scripts
-├── git/               # Git configuration
-├── hammerspoon/       # Hammerspoon automation
-├── hazel/             # Hazel rules
-├── karabiner/         # Karabiner Elements config
-│   └── karabiner.ts/  # TypeScript config builder
-├── km/                # Keyboard Maestro macros
-├── macos/             # macOS system preferences
+├── .claude/                   # Claude Code configuration (moved from ~/.claude)
+│   ├── local/                # Claude CLI binary
+│   ├── subagents-registry/   # 125+ specialized Claude subagents
+│   │   └── categories/       # 10 agent categories
+│   ├── plugins/              # Claude plugins
+│   └── projects/             # Project-specific settings
+├── shell/                    # Shell configuration files
+│   ├── .zshrc               # Main zsh configuration
+│   ├── .zshenv              # Environment variables
+│   ├── .p10k.zsh            # Powerlevel10k theme config
+│   ├── .env.schema          # API key specs for Varlock (1Password integration)
+│   └── claude-setup.sh      # Interactive Claude subagent installer
+├── bin/                     # Custom scripts
+├── git/                     # Git configuration
+├── hammerspoon/             # Hammerspoon automation
+├── hazel/                   # Hazel rules
+├── karabiner/               # Karabiner Elements config
+│   └── karabiner.ts/        # TypeScript config builder
+├── km/                      # Keyboard Maestro macros
+├── macos/                   # macOS system preferences
 │   ├── dock.sh
 │   └── macos-defaults.sh
-├── vscode/            # VS Code settings
-├── Brewfile           # Homebrew packages
-├── bootstrap.sh       # Full setup for new machines
-└── install.sh         # Symlink dotfiles to ~
+├── vscode/                  # VS Code settings
+├── Brewfile                 # Homebrew packages
+├── bootstrap.sh             # Full setup for new machines
+├── install.sh               # Symlink dotfiles to ~
+├── README.md                # This file
+└── CLAUDE-SUBAGENTS.md      # Claude subagent system documentation
 ```
 
 ## Files
@@ -65,7 +74,10 @@ All shell configuration files live in `~/dotfiles/shell/` and are symlinked to `
 - Fast syntax highlighting instead of OMZ default
 
 **Tool Wrappers:**
-- `claude()` - Claude CLI with automatic `.env.schema` management
+- `claude()` - Claude CLI with automatic `.env.schema` management and subagent installer
+  - `claude setup` - Interactive agent selection wizard
+  - `claude list-agents` - Browse available agents
+  - `claude help` - Show enhanced help
 - `open_codex` / `open-codex` - OpenCodex with varlock secret injection
 - `y()` - Yazi file manager with smart directory switching
 - `fif()` - Fuzzy search file contents with preview
@@ -207,6 +219,44 @@ kbuild  # alias for: (cd ~/dotfiles/karabiner/karabiner.ts && npm run build)
 This generates `~/.config/karabiner/karabiner.json` from the TypeScript source.
 
 See [karabiner/README.md](karabiner/README.md) for detailed documentation.
+
+### Claude Subagent System
+
+The dotfiles include an integrated system for managing Claude Code subagents - specialized AI agents for different development tasks.
+
+**Quick start:**
+```bash
+cd ~/my-project
+claude setup              # Interactive agent selection wizard
+```
+
+**Available commands:**
+```bash
+claude list-agents       # Show 10 categories with 125+ agents
+claude help              # Show enhanced help
+claude setup             # Initialize project and select agents
+```
+
+**Agent categories:**
+- 01-core-development (10 agents) - Backend, frontend, API, fullstack, mobile
+- 02-language-specialists (24 agents) - Python, Go, Rust, TypeScript, Hammerspoon, etc.
+- 03-infrastructure (12 agents) - DevOps, cloud, Docker, Kubernetes
+- 04-quality-security (12 agents) - Testing, QA, security auditing
+- 05-data-ai (12 agents) - Data science, ML, AI engineering
+- 06-developer-experience (10 agents) - CLI tools, docs, libraries
+- 07-specialized-domains (11 agents) - Finance, healthcare, gaming
+- 08-business-product (11 agents) - Product management, UX research
+- 09-meta-orchestration (8 agents) - Agent coordination, workflow
+- 10-research-analysis (6 agents) - Research, investigation, synthesis
+
+**How it works:**
+1. Run `claude setup` in a project directory
+2. Browse agent categories interactively
+3. Select agents by number (e.g., `1,2,3` or `a` for all)
+4. Agents are copied to `.claude/agents/` in your project
+5. Claude can reference these agents for specialized guidance
+
+See [CLAUDE-SUBAGENTS.md](CLAUDE-SUBAGENTS.md) for complete documentation.
 
 ### macOS Settings
 

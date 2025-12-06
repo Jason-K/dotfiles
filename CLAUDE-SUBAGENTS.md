@@ -205,13 +205,63 @@ chmod +x ~/dotfiles/shell/claude-setup.sh
 ## Files Modified/Created
 
 - `~/dotfiles/.claude/` - Moved from `~/.claude`
-- `~/dotfiles/subagents-registry/` - New clone of awesome-claude-code-subagents
+- `~/dotfiles/.claude/subagents-registry/` - Clone of awesome-claude-code-subagents
 - `~/dotfiles/shell/claude-setup.sh` - New interactive setup script
 - `~/dotfiles/shell/.zshrc` - Enhanced claude() function
+
+## Development Best Practices
+
+### When Editing Files
+
+**✅ Recommended Approaches:**
+
+1. **Use file tools directly:**
+   ```
+   - create_file() for new files
+   - replace_string_in_file() for edits
+   - multi_replace_string_in_file() for batch edits
+   ```
+
+2. **Read-then-replace pattern:**
+   ```
+   - read_file() to see current content
+   - replace_string_in_file() with exact strings
+   ```
+
+**❌ Avoid:**
+
+- Using `cat` with heredocs (`cat << 'EOF'`) for file creation/editing
+  - Causes escaping conflicts with special characters
+  - Heredoc terminators can be in content
+  - Terminal tool simplifies commands unpredictably
+
+- Using `echo` with complex multi-line strings
+  - Quote escaping becomes problematic
+  - Newlines may not be preserved correctly
+
+**Why cat fails:**
+- Backticks, quotes, `$` in content break shell parsing
+- If content contains `EOF` or terminator strings, heredoc breaks
+- Complex escaping chains become fragile
+
+**Correct workflow example:**
+```bash
+# ✅ Good - Use file tools
+create_file(path, content)
+
+# ✅ Good - Read first, then replace
+content = read_file(path)
+replace_string_in_file(path, old_string, new_string)
+
+# ❌ Bad - Cat with heredoc
+cat << 'EOF' > file.md
+content with "quotes" and $variables
+EOF
+```
 
 ## References
 
 - [Awesome Claude Code Subagents](https://github.com/VoltAgent/awesome-claude-code-subagents)
-- Original agent definitions are in `subagents-registry/categories/`
+- Original agent definitions are in `.claude/subagents-registry/categories/`
 - Each category has a README.md with detailed descriptions
 

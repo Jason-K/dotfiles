@@ -220,12 +220,78 @@ fkill() {
 alias open_codex="varlock run -- /opt/homebrew/bin/open-codex"
 alias open-codex="varlock run -- /opt/homebrew/bin/open-codex"
 
-# Claude wrapper (Varlock with .env.schema)
+# Claude wrapper (Varlock with .env.schema + subagent setup)
 claude() {
   if ! command -v varlock >/dev/null 2>&1; then
     echo "[claude] 'varlock' not found in PATH" >&2
     return 127
   fi
+
+  local claude_bin="$HOME/dotfiles/.claude/local/claude"
+
+  # Handle special commands (these don't require varlock or running Claude)
+  case "${1:-}" in
+    "setup")
+      # Initialize claude for current project with subagent selection
+      if [[ ! -d .claude ]]; then
+        echo "[claude] Initializing .claude directory for this project..."
+        mkdir -p .claude/{agents,tmp}
+        echo "[claude] Created .claude directory structure"
+      fi
+      # Run interactive subagent setup
+      "$HOME/dotfiles/shell/claude-setup.sh"
+      return $?
+      ;;
+    "list-agents")
+      # List available agents from registry
+      if [[ ! -d "$HOME/dotfiles/.claude/subagents-registry/categories" ]]; then
+        echo "[claude] Subagents registry not found at ~/.claude/subagents-registry" >&2
+        return 1
+      fi
+      echo "[claude] Available Agent Categories:"
+      echo ""
+      find "$HOME/dotfiles/.claude/subagents-registry/categories" -maxdepth 1 -type d | sort | while read -r cat_dir; do
+        if [[ "$cat_dir" != "$HOME/dotfiles/.claude/subagents-registry/categories" ]]; then
+          local cat_name=$(basename "$cat_dir")
+          local agent_count=$(find "$cat_dir" -maxdepth 1 -name "*.md" ! -name "README.md" | wc -l)
+          printf "  %-35s (%2d agents)\n" "$cat_name" "$agent_count"
+        fi
+      done
+      return 0
+      ;;
+    "help"|"--help"|"-h")
+      # Show enhanced help (don't pass to Claude for these)
+      cat << 'EOF'
+
+Claude command-line interface with subagent setup
+
+USAGE:
+  claude [command] [args]
+
+COMMANDS:
+  setup                    Interactive setup to add subagents to .claude/agents/
+  list-agents             List all available agent categories
+  help, --help, -h        Show this help message
+  (any other args)        Pass through to Claude CLI
+
+EXAMPLES:
+  claude setup            # Start interactive subagent selection
+  claude list-agents      # Show available agent categories
+  claude --help-native    # Show Claude's built-in help
+  claude @project-context # Use Claude with project context
+
+SUBAGENT SETUP:
+  When you run 'claude setup', you'll be guided through:
+  1. Browse agent categories
+  2. Select agents for your project
+  3. Agents are installed to .claude/agents/
+
+The setup creates a local .claude folder structure if needed.
+
+EOF
+      return 0
+      ;;
+  esac
 
   # Ensure .env.schema exists in current directory for varlock
   if [[ ! -f .env.schema ]]; then
@@ -249,7 +315,8 @@ claude() {
     echo "[claude] Created .gitignore with .env.schema"
   fi
 
-  varlock run -- /Users/jason/.claude/local/claude "$@"
+  # Run Claude with varlock
+  varlock run -- "$claude_bin" "$@"
 }
 
 # Cling helper function

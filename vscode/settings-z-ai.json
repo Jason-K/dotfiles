@@ -1,0 +1,22 @@
+{
+  // VSCode settings for Claude extension with z.ai API
+
+  // Claude extension settings (Anthropic Claude for VSCode)
+  "claude.apiKey": "${env:ANTHROPIC_AUTH_TOKEN}",
+
+  // z.ai API configuration
+  "claude.apiBaseUrl": "https://api.z.ai/api/anthropic",
+  "claude.apiMode": "z.ai",
+  "claude.enableProxyHeaders": true,
+
+  // Model configuration for z.ai
+  "claude.model": "claude-3-5-sonnet",
+  "claude.requestTimeout": 30000,
+
+  // Alternative env var names that some extensions use
+  "anthropic.apiKey": "${env:Z_AI_API_KEY}",
+  "anthropic.baseUrl": "${env:ANTHROPIC_BASE_URL}",
+
+  // Optional: Disable telemetry/non-essential traffic
+  "claude.disableNonessentialTraffic": true
+}

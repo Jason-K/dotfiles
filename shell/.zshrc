@@ -11,17 +11,12 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# OMZ options
-HYPHEN_INSENSITIVE="true"
-ENABLE_CORRECTION="true"
 zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 1
 
 # ---- 2) Completion cache BEFORE sourcing OMZ ---------------------
 ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compdump-${ZSH_VERSION}"
 autoload -Uz compinit
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' rehash true
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completion-cache"
 mkdir -p "${ZSH_COMPDUMP:h}"
 # Only regenerate compdump once per day for speed
@@ -108,7 +103,7 @@ command -v fclones >/dev/null 2>&1 && source <(fclones complete zsh)
 [[ -x "$HOME/.local/bin/mise" ]] && eval "$("$HOME/.local/bin/mise" activate zsh)"
 
 # Conda (only if installed; noisy otherwise)
-[[ -x "/opt/anaconda3/bin/conda" ]] && eval "$(/opt/anaconda3/bin/conda shell.zsh hook 2>/dev/null)"
+[[ -x "/opt/anaconda3/bin/conda" ]] && eval "$(/opt/anaconda3/bin/conda shell.zsh hook 2>&1 | grep -v "No module named 'anaconda_auth'")" 2>/dev/null || true
 
 # ---- 9) Key bindings --------------------------------------------
 bindkey '^[[A' history-substring-search-up
@@ -152,7 +147,7 @@ alias fixmb="rm -rf '$HOME/Library/Group Containers/group.com.apple.controlcente
 # Editors & apps
 alias cat='bat'
 alias nano='micro'
-alias code='code-insiders'
+alias code='bash "$HOME/.vscode-launcher.sh"'
 alias fz='fzf --preview "bat --style=header --color=always --line-range :50 {}" --preview-window=right:60% | xargs open'
 
 # Network
@@ -220,16 +215,11 @@ fkill() {
 alias open_codex="varlock run -- /opt/homebrew/bin/open-codex"
 alias open-codex="varlock run -- /opt/homebrew/bin/open-codex"
 
-# Claude wrapper (Varlock with .env.schema + subagent setup)
+# Claude wrapper with 1Password secret management + subagent setup
 claude() {
-  if ! command -v varlock >/dev/null 2>&1; then
-    echo "[claude] 'varlock' not found in PATH" >&2
-    return 127
-  fi
-
   local claude_bin="$HOME/dotfiles/.claude/local/claude"
 
-  # Handle special commands (these don't require varlock or running Claude)
+  # Handle special commands (these don't require secrets or running Claude)
   case "${1:-}" in
     "setup")
       # Initialize claude for current project with subagent selection
@@ -293,30 +283,35 @@ EOF
       ;;
   esac
 
-  # Ensure .env.schema exists in current directory for varlock
-  if [[ ! -f .env.schema ]]; then
-    # Copy canonical schema from dotfiles
-    if [[ -f "$HOME/dotfiles/shell/.env.schema" ]]; then
-      cp "$HOME/dotfiles/shell/.env.schema" .env.schema
-      echo "[claude] Copied .env.schema to current directory"
-    else
-      echo "[claude] Warning: .env.schema not found in dotfiles/shell/" >&2
-    fi
-  fi
+  # Load secrets from 1Password once and export for all subagents
+  echo "[claude] Loading secrets from 1Password (one-time authentication)..."
 
-  # Ensure .env.schema is in .gitignore
-  if [[ -f .gitignore ]]; then
-    if ! grep -q "^\.env\.schema$" .gitignore; then
-      echo ".env.schema" >> .gitignore
-      echo "[claude] Added .env.schema to .gitignore"
-    fi
-  else
-    echo ".env.schema" > .gitignore
-    echo "[claude] Created .gitignore with .env.schema"
-  fi
+  # Read all secrets from 1Password once and export them
+  # Subagents will inherit these exported environment variables
+  export ANTHROPIC_AUTH_TOKEN=$(op read "op://Secrets/GLM_API/apikey2" 2>/dev/null)
+  export Z_AI_API_KEY=$(op read "op://Secrets/GLM_API/apikey2" 2>/dev/null)
+  export CONTEXT7_API_KEY=$(op read "op://Secrets/Context7_API/api_key" 2>/dev/null)
+  export GITHUB_TOKEN=$(op read "op://Secrets/GitHub Personal Access Token/token" 2>/dev/null)
+  export GEMINI_API_KEY=$(op read "op://Secrets/Gemini_API/api_key" 2>/dev/null)
+  export DEEPSEEK_API_KEY=$(op read "op://Secrets/Deepseek_API/api_key" 2>/dev/null)
+  export OPENAI_API_KEY=$(op read "op://Secrets/oAI_API/api_key2" 2>/dev/null)
+  export OPENROUTER_API_KEY=$(op read "op://Secrets/OpenRouter_API/api_key" 2>/dev/null)
+  export SMITHERY_API_KEY=$(op read "op://Secrets/Smithery/credential" 2>/dev/null)
 
-  # Run Claude with varlock
-  varlock run -- "$claude_bin" "$@"
+  # Export non-sensitive config vars
+  export Z_AI_MODE="ZAI"
+  export Z_WEBSEARCH_URL="https://api.z.ai/api/mcp/web_search_prime/mcp"
+  export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
+  export API_TIMEOUT_MS="3000000"
+  export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+  export ANTHROPIC_DEFAULT_OPUS_MODEL="GLM-4.6"
+  export ANTHROPIC_DEFAULT_SONNET_MODEL="GLM-4.6"
+  export ANTHROPIC_DEFAULT_HAIKU_MODEL="GLM-4.5-Air"
+
+  echo "[claude] Environment loaded. Starting Claude..."
+
+  # Run Claude directly - it inherits all exported environment variables
+  "$claude_bin" "$@"
 }
 
 # Cling helper function
@@ -331,8 +326,6 @@ cling() {
   done
   [[ ${#folders[@]} -gt 0 ]] && open -a Cling "${folders[@]}"
 }
-
-export VARLOCK_TELEMETRY_DISABLED=true
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/jason/.cache/lm-studio/bin"
@@ -362,3 +355,5 @@ command -v tv >/dev/null 2>&1 && eval "$(tv init zsh)"
 # fzf (guard; fallback if not loaded by fzf --zsh above)
 [[ ! -v FZF_DEFAULT_OPTS && -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
+# bun completions
+[ -s "/Users/jason/.bun/_bun" ] && source "/Users/jason/.bun/_bun"

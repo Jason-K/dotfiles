@@ -1,0 +1,76 @@
+#!/bin/bash
+# Claude Code wrapper for VS Code with 1Password integration
+# This wrapper loads secrets from 1Password before executing Claude
+#
+# The VSCode extension launches this with minimal environment,
+# so we must explicitly set up PATH and load secrets.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. SET UP PATH FOR HOMEBREW (required for node, op CLI)
+# ─────────────────────────────────────────────────────────────────────────────
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+
+# Ensure Homebrew environment is loaded (for Apple Silicon Macs)
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 2. LOAD SECRETS FROM 1PASSWORD (if not already set)
+# ─────────────────────────────────────────────────────────────────────────────
+if command -v op &> /dev/null; then
+  # Only load if not already set (allows override from parent environment)
+  if [[ -z "$ANTHROPIC_AUTH_TOKEN" ]]; then
+    export ANTHROPIC_AUTH_TOKEN=$(op read "op://Secrets/GLM_API/apikey2" 2>/dev/null)
+  fi
+  if [[ -z "$Z_AI_API_KEY" ]]; then
+    export Z_AI_API_KEY=$(op read "op://Secrets/GLM_API/apikey2" 2>/dev/null)
+  fi
+  if [[ -z "$CONTEXT7_API_KEY" ]]; then
+    export CONTEXT7_API_KEY=$(op read "op://Secrets/Context7_API/api_key" 2>/dev/null)
+  fi
+  if [[ -z "$GITHUB_TOKEN" ]]; then
+    export GITHUB_TOKEN=$(op read "op://Secrets/GitHub Personal Access Token/token" 2>/dev/null)
+  fi
+  if [[ -z "$GEMINI_API_KEY" ]]; then
+    export GEMINI_API_KEY=$(op read "op://Secrets/Gemini_API/api_key" 2>/dev/null)
+  fi
+  if [[ -z "$DEEPSEEK_API_KEY" ]]; then
+    export DEEPSEEK_API_KEY=$(op read "op://Secrets/Deepseek_API/api_key" 2>/dev/null)
+  fi
+  if [[ -z "$OPENAI_API_KEY" ]]; then
+    export OPENAI_API_KEY=$(op read "op://Secrets/oAI_API/api_key2" 2>/dev/null)
+  fi
+  if [[ -z "$OPENROUTER_API_KEY" ]]; then
+    export OPENROUTER_API_KEY=$(op read "op://Secrets/OpenRouter_API/api_key" 2>/dev/null)
+  fi
+  if [[ -z "$SMITHERY_API_KEY" ]]; then
+    export SMITHERY_API_KEY=$(op read "op://Secrets/Smithery/credential" 2>/dev/null)
+  fi
+else
+  echo "[claude-vscode-wrapper] WARNING: 1Password CLI (op) not found in PATH" >&2
+fi
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 3. SET Z.AI / ANTHROPIC CONFIGURATION
+# ─────────────────────────────────────────────────────────────────────────────
+export Z_AI_MODE="ZAI"
+export Z_WEBSEARCH_URL="https://api.z.ai/api/mcp/web_search_prime/mcp"
+export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
+export API_TIMEOUT_MS="3000000"
+export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+export ANTHROPIC_DEFAULT_OPUS_MODEL="GLM-4.6"
+export ANTHROPIC_DEFAULT_SONNET_MODEL="GLM-4.6"
+export ANTHROPIC_DEFAULT_HAIKU_MODEL="GLM-4.5-Air"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 4. EXECUTE CLAUDE CODE
+# ─────────────────────────────────────────────────────────────────────────────
+CLAUDE_BIN="/Users/jason/dotfiles/.claude/local/node_modules/.bin/claude"
+
+if [[ ! -x "$CLAUDE_BIN" ]]; then
+  echo "[claude-vscode-wrapper] ERROR: Claude binary not found at $CLAUDE_BIN" >&2
+  exit 1
+fi
+
+exec "$CLAUDE_BIN" "$@"

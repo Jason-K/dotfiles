@@ -1,23 +1,27 @@
 {
+  "alwaysThinkingEnabled": true,
   "apiKeyHelper": "/Users/jason/dotfiles/.claude/zai_key_helper.sh",
+  "disabledMcpjsonServers": ["web-scraper", "system-admin", "network-tools"],
   "env": {
-    "CLAUDE_CODE_API_KEY_HELPER_TTL_MS": "3600000",
-    "USE_BUILTIN_RIPGREP": "1",
     "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "GLM-4.5-Air",
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "GLM-4.6",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "GLM-4.6",
     "API_TIMEOUT_MS": "3000000",
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
+    "CLAUDE_CODE_API_KEY_HELPER_TTL_MS": "3600000",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "0",
-    "DISABLE_TELEMETRY": "1"
+    "DISABLE_TELEMETRY": "1",
+    "USE_BUILTIN_RIPGREP": "1"
   },
-  "disabledMcpjsonServers": ["web-scraper", "system-admin", "network-tools"],
-  "alwaysThinkingEnabled": true,
-  "statusLine": {
-    "type": "command",
-    "command": "bash -c 'input=$(cat); MODEL=$(echo \"$input\" | jq -r \".model.display_name\"); DIR=$(echo \"$input\" | jq -r \".workspace.current_dir\"); BRANCH=\"\"; if git rev-parse --git-dir >/dev/null 2>&1; then BRANCH=\" | 🌿 $(git branch --show-current 2>/dev/null)\"; fi; echo \"[$MODEL] 📁 ${DIR##*/}$BRANCH\"'"
+  "extraKnownMarketplaces": {
+    "claude-code-templates": {
+      "source" :{
+        "source": "github",
+        "repo": "davila7/claude-code-templates"
+      }
+    }
   },
   "hooks": {
     "PostToolUse": [
@@ -58,5 +62,18 @@
         ]
       }
     ]
+  },
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./config/credentials.json)",
+      "Read(./build)"
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash -c 'input=$(cat); MODEL=$(echo \"$input\" | jq -r \".model.display_name\"); DIR=$(echo \"$input\" | jq -r \".workspace.current_dir\"); BRANCH=\"\"; if git rev-parse --git-dir >/dev/null 2>&1; then BRANCH=\" | 🌿 $(git branch --show-current 2>/dev/null)\"; fi; echo \"[$MODEL] 📁 ${DIR##*/}$BRANCH\"'"
   }
 }

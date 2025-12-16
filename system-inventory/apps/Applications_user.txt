@@ -1,0 +1,11 @@
+Beyond Compare.app
+Chrome Apps.localized
+Dadroit JSON Viewer.app
+EasyFind.app
+Edge Apps.localized
+iTerm.app
+Orion
+Setapp
+Spotify.app
+Spyder 6 (anaconda3).app
+XMenu.app

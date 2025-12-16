@@ -1,0 +1,9 @@
+/opt/homebrew/lib
+├── @smithery/cli@1.6.6
+├── claude-code-templates@1.28.3
+├── cline@1.0.8
+├── delay-cli@3.0.0
+├── n_@4.0.1
+├── npm@11.7.0
+└── open-codex@0.1.31
+

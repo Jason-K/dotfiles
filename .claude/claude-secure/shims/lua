@@ -1,0 +1,34 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+
+# Shim allowlisting for lua.
+# Choose a real lua binary without accidentally recursing into this shim.
+
+candidates=(
+  "/opt/homebrew/bin/lua"
+  "/usr/local/bin/lua"
+  "/usr/bin/lua"
+)
+
+REAL_LUA=""
+for c in "${candidates[@]}"; do
+  if [[ -x "$c" ]]; then
+    REAL_LUA="$c"
+    break
+  fi
+done
+
+if [[ -z "$REAL_LUA" ]]; then
+  echo "lua blocked: real lua not found in common locations" >&2
+  exit 127
+fi
+
+# Optional policy: require CWD inside project root
+if [[ -n "${CLAUDE_PROJECT_ROOT:-}" ]]; then
+  case "$PWD" in
+    "$CLAUDE_PROJECT_ROOT"/*|"$CLAUDE_PROJECT_ROOT") ;;
+    *) echo "lua blocked: must run inside project root ($CLAUDE_PROJECT_ROOT)" >&2; exit 126 ;;
+  esac
+fi
+
+exec "$REAL_LUA" "$@"

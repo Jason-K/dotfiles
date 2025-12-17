@@ -1,0 +1,29 @@
+[hsLauncher]
+project_root = "/Users/jason/Scripts/Metascripts/hsLauncher"
+mode = "rw"
+network = true
+no_home = true
+strict_temp = true
+audit_log = "/Users/jason/Library/Logs/claude-secure/audit.log"
+allow_rw = ["/Users/jason/Scripts/Metascripts/hsStringEval", "/Users/jason/.claude"]
+allow_ro = ["/Users/jason/.hammerspoon", "/Users/jason/dotfiles"]
+
+[hsStringEval]
+project_root = "/Users/jason/Scripts/Metascripts/hsStringEval"
+mode = "rw"
+network = true
+no_home = true
+strict_temp = true
+audit_log = "/Users/jason/Library/Logs/claude-secure/audit.log"
+allow_rw = ["/Users/jason/Scripts/Metascripts/hsLauncher", "/Users/jason/.claude"]
+allow_ro = ["/Users/jason/.hammerspoon", "/Users/jason/dotfiles"]
+
+[file_namer]
+project_root = "/Users/jason/Scripts/Metascripts/file_namer"
+mode = "rw"
+network = true
+no_home = true
+strict_temp = true
+audit_log = "/Users/jason/Library/Logs/claude-secure/audit.log"
+allow_rw = ["/Users/jason/.claude"]
+allow_ro = ["/Users/jason/dotfiles", "/Users/jason/Scripts/Application_Specific/QSpace/JJK_QSpaceRenamer", "/Users/jason/Scripts/Application_Specific/Meruscase"]

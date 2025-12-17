@@ -1,0 +1,105 @@
+#!/bin/zsh
+set -euo pipefail
+
+# claude-smart - Simple version with basic grep/sed
+CLAUDE_CONFIG="/Users/jason/dotfiles/.claude/claude-secure/projects.toml"
+CLAUDE_WRAPPER="/Users/jason/dotfiles/.claude/claude-secure/claude-secure-wrapper.sh"
+
+find_preset_simple() {
+    local current_dir="$(pwd)"
+    local real_dir="$(realpath "$current_dir")"
+
+    # Very simple approach: extract sections and project roots with grep/sed
+    local temp_file="/tmp/claude-preset-$$"
+
+    # Extract section headers and project_root lines
+    grep -E "^\[|project_root" "$CLAUDE_CONFIG" | \
+    sed 's/^\[\(.*\)\]$/SECTION:\1/' | \
+    sed 's/.*project_root[[:space:]]*=[[:space:]]*"\(.*\)".*/ROOT:\1/' > "$temp_file"
+
+    local current_section=""
+    local current_root=""
+
+    while IFS= read -r line; do
+        if [[ "$line" =~ ^SECTION: ]]; then
+            # Process previous section if it has a root
+            if [[ -n "$current_section" && -n "$current_root" ]]; then
+                expanded_root="${current_root/#\~/$HOME}"
+                resolved_root="$(realpath "$expanded_root" 2>/dev/null || echo "$expanded_root")"
+
+                if [[ "$real_dir" == "$resolved_root" || "$real_dir" == "$resolved_root/"* ]]; then
+                    echo "$current_section"
+                    rm -f "$temp_file"
+                    return 0
+                fi
+            fi
+
+            # Start new section
+            current_section="${line#SECTION:}"
+            current_root=""
+        elif [[ "$line" =~ ^ROOT: ]]; then
+            current_root="${line#ROOT:}"
+        fi
+    done < "$temp_file"
+
+    # Check last section
+    if [[ -n "$current_section" && -n "$current_root" ]]; then
+        expanded_root="${current_root/#\~/$HOME}"
+        resolved_root="$(realpath "$expanded_root" 2>/dev/null || echo "$expanded_root")"
+
+        if [[ "$real_dir" == "$resolved_root" || "$real_dir" == "$resolved_root/"* ]]; then
+            echo "$current_section"
+            rm -f "$temp_file"
+            return 0
+        fi
+    fi
+
+    rm -f "$temp_file"
+    return 1
+}
+
+create_temp_sandbox() {
+    local current_dir="$(pwd)"
+    local temp_config="/tmp/claude-temp-$$-$(date +%s).toml"
+
+    cat > "$temp_config" <<EOF
+[temp_project]
+project_root = "$current_dir"
+mode = "rw"
+network = true
+no_home = true
+strict_temp = true
+audit_log = "/Users/jason/Library/Logs/claude-secure/audit.log"
+
+allow_rw = ["$current_dir"]
+allow_ro = ["/Users/jason/dotfiles"]
+EOF
+
+    echo "$temp_config"
+}
+
+main() {
+    local claude_args=("$@")
+
+    # Try to find existing preset
+    local preset=""
+    if preset="$(find_preset_simple)"; then
+        echo "🎯 Found preset: $preset" >&2
+        echo "📁 Directory: $(pwd)" >&2
+        exec "$CLAUDE_WRAPPER" --config "$CLAUDE_CONFIG" --preset "$preset" -- "${claude_args[@]}"
+    else
+        echo "🔥 No preset found - creating temporary sandbox" >&2
+        echo "📁 Directory: $(pwd)" >&2
+        local temp_config
+        temp_config="$(create_temp_sandbox)"
+        trap 'rm -f "$temp_config"' EXIT
+        exec "$CLAUDE_WRAPPER" --config "$temp_config" --preset "temp_project" -- "${claude_args[@]}"
+    fi
+}
+
+if [[ ! -x "$CLAUDE_WRAPPER" ]]; then
+    echo "❌ Claude wrapper not found or not executable: $CLAUDE_WRAPPER" >&2
+    exit 1
+fi
+
+main "$@"

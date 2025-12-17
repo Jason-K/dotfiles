@@ -1,0 +1,117 @@
+#!/bin/zsh
+set -euo pipefail
+
+# claude-smart - Intelligent Claude launcher with automatic preset detection
+# Usage: claude-smart [claude_args...]
+
+CLAUDE_CONFIG="/Users/jason/dotfiles/.claude/claude-secure/projects.toml"
+CLAUDE_WRAPPER="/Users/jason/dotfiles/.claude/claude-secure/claude-secure-wrapper.sh"
+
+# Function to find preset for current directory
+find_preset() {
+    local current_dir="$(pwd)"
+    local real_dir="$(/usr/bin/python3 - <<'PY'
+import os, sys
+print(os.path.realpath(os.getcwd()))
+PY
+)"
+
+    # Check if config file exists
+    if [[ ! -f "$CLAUDE_CONFIG" ]]; then
+        return 1
+    fi
+
+    # Use simple grep/sed to find matching preset (more reliable)
+    local current_section=""
+    while IFS= read -r line; do
+        # Skip comments and empty lines
+        [[ "$line" =~ ^[[:space:]]*# ]] && continue
+        [[ -z "${line// }" ]] && continue
+
+        # Look for section headers like [section_name]
+        if [[ "$line" =~ ^\[(.+)\] ]]; then
+            current_section="${BASH_REMATCH[1]}"
+            continue
+        fi
+
+        # Look for project_root lines
+        if [[ "$line" =~ ^[[:space:]]*project_root[[:space:]]*=[[:space:]]*\"(.+)\"[[:space:]]*$ ]]; then
+            project_root="${BASH_REMATCH[1]}"
+            # Expand and resolve the path
+            expanded_root="${project_root/#\~/$HOME}"
+            resolved_root="$(/usr/bin/python3 -c "import os; print(os.path.realpath('$expanded_root'))" 2>/dev/null)"
+
+            # Check if current directory matches or is under this project root
+            if [[ "$real_dir" == "$resolved_root" || "$real_dir" == "$resolved_root/"* || "$real_dir" == "$resolved_root"*/* ]]; then
+                echo "$current_section"
+                return 0
+            fi
+        fi
+    done < "$CLAUDE_CONFIG"
+
+    return 1
+}
+
+# Function to create temporary sandbox for current directory
+create_temp_sandbox() {
+    local current_dir="$(pwd)"
+    local temp_config="/tmp/claude-temp-$$-$(date +%s).toml"
+
+    cat > "$temp_config" <<EOF
+[temp_project]
+project_root = "$current_dir"
+mode = "rw"
+network = true
+no_home = true
+strict_temp = true
+audit_log = "/Users/jason/Library/Logs/claude-secure/audit.log"
+
+allow_rw = ["$current_dir"]
+allow_ro = []
+EOF
+
+    echo "$temp_config"
+}
+
+# Main execution
+main() {
+    local preset=""
+    local claude_args=("$@")
+
+    # Try to find existing preset
+    if preset="$(find_preset)"; then
+        echo "🎯 Found preset: $preset" >&2
+        echo "📁 Directory: $(pwd)" >&2
+
+        # Use existing preset
+        exec "$CLAUDE_WRAPPER" \
+            --config "$CLAUDE_CONFIG" \
+            --preset "$preset" \
+            -- "${claude_args[@]}"
+    else
+        echo "🔥 No preset found - creating temporary sandbox" >&2
+        echo "📁 Directory: $(pwd)" >&2
+
+        # Create temporary sandbox config
+        local temp_config
+        temp_config="$(create_temp_sandbox)"
+
+        # Ensure cleanup on exit
+        trap 'rm -f "$temp_config"' EXIT
+
+        # Use temporary preset
+        exec "$CLAUDE_WRAPPER" \
+            --config "$temp_config" \
+            --preset "temp_project" \
+            -- "${claude_args[@]}"
+    fi
+}
+
+# Check if wrapper exists
+if [[ ! -x "$CLAUDE_WRAPPER" ]]; then
+    echo "❌ Claude wrapper not found or not executable: $CLAUDE_WRAPPER" >&2
+    exit 1
+fi
+
+# Run main function with all arguments
+main "$@"

@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+
+# Shim allowlisting for Hammerspoon 'hs' CLI.
+
+candidates=(
+  "/Applications/Hammerspoon.app/Contents/Frameworks/hs/hs"
+  "/opt/homebrew/bin/hs"
+  "/usr/local/bin/hs"
+)
+
+REAL_HS=""
+for c in "${candidates[@]}"; do
+  if [[ -x "$c" ]]; then
+    REAL_HS="$c"
+    break
+  fi
+done
+
+if [[ -z "$REAL_HS" ]]; then
+  echo "hs blocked: real hs not found (install Hammerspoon and/or hs CLI)" >&2
+  exit 127
+fi
+
+# Optional: keep hs runs inside the project working directory
+if [[ -n "${CLAUDE_PROJECT_ROOT:-}" ]]; then
+  case "$PWD" in
+    "$CLAUDE_PROJECT_ROOT"/*|"$CLAUDE_PROJECT_ROOT") ;;
+    *) echo "hs blocked: must run inside project root ($CLAUDE_PROJECT_ROOT)" >&2; exit 126 ;;
+  esac
+fi
+
+exec "$REAL_HS" "$@"

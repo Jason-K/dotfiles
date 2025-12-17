@@ -1,6 +1,6 @@
 {
   "alwaysThinkingEnabled": true,
-  "apiKeyHelper": "/Users/jason/dotfiles/.claude/zai_key_helper.sh",
+  "apiKeyHelper": "/Users/jason/dotfiles/.claude/claude-secure/zai_key_helper.sh",
   "disabledMcpjsonServers": ["web-scraper", "system-admin", "network-tools"],
   "env": {
     "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",

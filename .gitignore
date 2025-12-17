@@ -3,6 +3,7 @@
 .env
 .env.local
 .env.*.local
+settings-cleaned.json
 
 # IDE/Editor configuration with personal data
 .claude.json
@@ -48,3 +49,10 @@ statsig/
 history.jsonl
 mypy_cache/
 projects/
+
+# Claude settings with personal data
+.claude/settings.json
+
+# Claude-relaated folders
+todos/
+

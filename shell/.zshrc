@@ -40,7 +40,6 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 # ---- 4) OMZ plugins (trimmed; no duplicates/heavy items) --------
 plugins=(
   aliases
-  common-aliases
   copyfile
   copypath
   direnv
@@ -50,7 +49,6 @@ plugins=(
   zsh-autosuggestions
   zsh-history-substring-search
   zsh-interactive-cd
-  # NOTE: we DON'T use OMZ's zsh-syntax-highlighting (we load fast-syntax-highlighting below)
 )
 
 source "$ZSH/oh-my-zsh.sh"   # OMZ will skip compinit because we ran it
@@ -94,16 +92,22 @@ FAST_HIGHLIGHT_STYLES[back-quoted-argument]='fg=yellow'
 command -v fzf >/dev/null 2>&1 && source <(fzf --zsh)
 
 # Bun completions (guard)
-[[ -r "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
+if [[ -r "$HOME/.bun/_bun" ]]; then
+  source "$HOME/.bun/_bun"
+fi
 
 # fclones completions (guard)
 command -v fclones >/dev/null 2>&1 && source <(fclones complete zsh)
 
 # mise activation (guard)
-[[ -x "$HOME/.local/bin/mise" ]] && eval "$("$HOME/.local/bin/mise" activate zsh)"
+if [[ -x "$HOME/.local/bin/mise" ]]; then
+  eval "$("$HOME/.local/bin/mise" activate zsh)"
+fi
 
 # Conda (only if installed; noisy otherwise)
-[[ -x "/opt/anaconda3/bin/conda" ]] && eval "$(/opt/anaconda3/bin/conda shell.zsh hook 2>&1 | grep -v "No module named 'anaconda_auth'")" 2>/dev/null || true
+if [[ -x "/opt/anaconda3/bin/conda" ]]; then
+  eval "$(/opt/anaconda3/bin/conda shell.zsh hook)" 2>/dev/null || true
+fi
 
 # ---- 9) Key bindings --------------------------------------------
 bindkey '^[[A' history-substring-search-up
@@ -121,7 +125,6 @@ alias run='nocorrect run'
 
 # Quick inspectors
 alias aliases="alias | sed 's/=.*//'"
-alias functions="declare -f | grep '^[a-z].* ()' | sed 's/{$//'"
 alias paths='echo -e ${PATH//:/\\n}'
 
 # Directory listings (eza)
@@ -131,14 +134,7 @@ alias lt="eza --tree --level=2 --long --icons"
 # Folders & nav
 alias ..="cd .."
 alias ...="cd ../.."
-alias docs='cd ~/Documents'
-alias dls='cd ~/Downloads'
-alias desk='cd ~/Desktop'
-alias scripts='cd ~/Scripts'
 alias lastdl='open kmtrigger://macro=Open%20most%20recently%20downloaded%20file'
-
-# Fix macOS menu bar weirdness
-alias fixmb="rm -rf '$HOME/Library/Group Containers/group.com.apple.controlcenter/Library/Preferences/group.com.apple.controlcenter.plist' && killall ControlCenter"
 
 # Editors & apps
 alias cat='bat'
@@ -166,11 +162,10 @@ alias update='topgrade'
 alias kbuild='nocorrect (cd ~/dotfiles/karabiner/karabiner.ts && npm run build)'
 
 # Common mistakes
-alias /clear='\clear'
+alias clear='\clear'
 
 # One reload alias (login-style)
-# alias reload='exec "${SHELL}" -l'
-alias reload='source ~/.zshrc && echo "Reloaded .zshrc"'
+alias reload='\clear && source ~/.zshrc && echo "Reloaded .zshrc"'
 
 # Yazi smart-cd wrapper
 y() {
@@ -181,8 +176,11 @@ y() {
 }
 
 # ripgrep-all finder with preview (opens via macOS 'open')
-fif() {
-  [[ "$#" -gt 0 ]] || { echo "Need a search term"; return 1; }
+# Usage: ff <search-term>
+# Ensure no plugin alias (e.g., OMZ common-aliases) shadows this function
+unalias ff 2>/dev/null
+ff() {
+  [[ "$#" -gt 0 ]] || { echo "Usage: ff <search-term>"; return 1; }
   local file
   file="$(rga --max-count=1 --ignore-case --files-with-matches --no-messages "$*" \
         | fzf-tmux +m --preview="rga --ignore-case --pretty --context 10 '$*' {}")" \
@@ -190,6 +188,7 @@ fif() {
 }
 
 # fuzzy cd using locate + fzf
+# Usage: cf <search-pattern>
 cf() {
   local file
   file="$(locate -Ai -0 "$@" | grep -z -vE '~$' | fzf --read0 -0 -1)"
@@ -198,6 +197,7 @@ cf() {
 }
 
 # pick processes and kill
+# Usage: fkill [signal] - defaults to SIGKILL (-9)
 fkill() {
   local pid
   if [[ "$UID" != "0" ]]; then
@@ -208,112 +208,13 @@ fkill() {
   [[ -n "$pid" ]] && echo "$pid" | xargs kill -"${1:-9}"
 }
 
-# ---- 11) Tool wrappers with varlock secret management ----------
-
-# Open Codex wrapper
-alias open_codex="varlock run -- /opt/homebrew/bin/open-codex"
-alias open-codex="varlock run -- /opt/homebrew/bin/open-codex"
-
-# Claude wrapper with 1Password secret management + subagent setup
-claude-secure() {
-  local claude_bin="$HOME/dotfiles/.claude/local/claude"
-
-  # Handle special commands (these don't require secrets or running Claude)
-  case "${1:-}" in
-    "setup")
-      # Initialize claude for current project with subagent selection
-      if [[ ! -d .claude ]]; then
-        echo "[claude] Initializing .claude directory for this project..."
-        mkdir -p .claude/{agents,tmp}
-        echo "[claude] Created .claude directory structure"
-      fi
-      # Run interactive subagent setup
-      "$HOME/dotfiles/shell/claude-setup.sh"
-      return $?
-      ;;
-    "list-agents")
-      # List available agents from registry
-      if [[ ! -d "$HOME/dotfiles/.claude/subagents-registry/categories" ]]; then
-        echo "[claude] Subagents registry not found at ~/.claude/subagents-registry" >&2
-        return 1
-      fi
-      echo "[claude] Available Agent Categories:"
-      echo ""
-      find "$HOME/dotfiles/.claude/subagents-registry/categories" -maxdepth 1 -type d | sort | while read -r cat_dir; do
-        if [[ "$cat_dir" != "$HOME/dotfiles/.claude/subagents-registry/categories" ]]; then
-          local cat_name=$(basename "$cat_dir")
-          local agent_count=$(find "$cat_dir" -maxdepth 1 -name "*.md" ! -name "README.md" | wc -l)
-          printf "  %-35s (%2d agents)\n" "$cat_name" "$agent_count"
-        fi
-      done
-      return 0
-      ;;
-    "help"|"--help"|"-h")
-      # Show enhanced help (don't pass to Claude for these)
-      cat << 'EOF'
-
-Claude command-line interface with subagent setup
-
-USAGE:
-  claude [command] [args]
-
-COMMANDS:
-  setup                    Interactive setup to add subagents to .claude/agents/
-  list-agents             List all available agent categories
-  help, --help, -h        Show this help message
-  (any other args)        Pass through to Claude CLI
-
-EXAMPLES:
-  claude setup            # Start interactive subagent selection
-  claude list-agents      # Show available agent categories
-  claude --help-native    # Show Claude's built-in help
-  claude @project-context # Use Claude with project context
-
-SUBAGENT SETUP:
-  When you run 'claude setup', you'll be guided through:
-  1. Browse agent categories
-  2. Select agents for your project
-  3. Agents are installed to .claude/agents/
-
-The setup creates a local .claude folder structure if needed.
-
-EOF
-      return 0
-      ;;
-  esac
-
-  # Load secrets from 1Password once and export for all subagents
-  echo "[claude] Loading secrets from 1Password (one-time authentication)..."
-
-  # Read all secrets from 1Password once and export them
-  # Subagents will inherit these exported environment variables
-  export ANTHROPIC_AUTH_TOKEN=$(op read "op://Secrets/GLM_API/apikey2" 2>/dev/null)
-  export Z_AI_API_KEY=$(op read "op://Secrets/GLM_API/apikey2" 2>/dev/null)
-  export CONTEXT7_API_KEY=$(op read "op://Secrets/Context7_API/api_key" 2>/dev/null)
-  export GITHUB_TOKEN=$(op read "op://Secrets/GitHub Personal Access Token/token" 2>/dev/null)
-  export GEMINI_API_KEY=$(op read "op://Secrets/Gemini_API/api_key" 2>/dev/null)
-  export DEEPSEEK_API_KEY=$(op read "op://Secrets/Deepseek_API/api_key" 2>/dev/null)
-  export OPENAI_API_KEY=$(op read "op://Secrets/oAI_API/api_key2" 2>/dev/null)
-  export OPENROUTER_API_KEY=$(op read "op://Secrets/OpenRouter_API/api_key" 2>/dev/null)
-  export SMITHERY_API_KEY=$(op read "op://Secrets/Smithery/credential" 2>/dev/null)
-
-  # Export non-sensitive config vars
-  export Z_AI_MODE="ZAI"
-  export Z_WEBSEARCH_URL="https://api.z.ai/api/mcp/web_search_prime/mcp"
-  export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
-  export API_TIMEOUT_MS="3000000"
-  export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
-  export ANTHROPIC_DEFAULT_OPUS_MODEL="GLM-4.6"
-  export ANTHROPIC_DEFAULT_SONNET_MODEL="GLM-4.6"
-  export ANTHROPIC_DEFAULT_HAIKU_MODEL="GLM-4.5-Air"
-
-  echo "[claude] Environment loaded. Starting Claude..."
-
-  # Run Claude directly - it inherits all exported environment variables
-  "$claude_bin" "$@"
-}
+# Claude Smart Launcher (provides claude, claude-smart, c, cl aliases)
+# See: ~/dotfiles/.claude/claude-secure/SETUP.md
+[[ -r "$HOME/dotfiles/.claude/claude-secure/iterm2-integration.sh" ]] && \
+  source "$HOME/dotfiles/.claude/claude-secure/iterm2-integration.sh"
 
 # Cling helper function
+# Usage: cling <file-or-folder> ...
 cling() {
   local folders=()
   for arg in "$@"; do
@@ -327,13 +228,7 @@ cling() {
 }
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/jason/.cache/lm-studio/bin"
-# End of LM Studio CLI section
-
-# ---- 12) Final niceties & PATH additions ------------------------
-# Measure startup quickly: for i in {1..5}; do /usr/bin/time -l zsh -i -c exit; done
-
-# PATH additions (consolidated to reduce duplicate entries)
+# ---- 11) PATH consolidation ----------------------------------------
 path=(
   "$HOME/Scripts/Metascripts/hsLauncher/scripts"
   "$HOME/.cache/lm-studio/bin"
@@ -341,6 +236,8 @@ path=(
   $path
 )
 export PATH
+
+# ---- 12) Final tool inits & niceties --------------------------------
 
 # Docker completions (fpath only; compinit already run above)
 [[ -d "$HOME/.docker/completions" ]] && fpath=("$HOME/.docker/completions" $fpath)
@@ -353,6 +250,3 @@ command -v tv >/dev/null 2>&1 && eval "$(tv init zsh)"
 
 # fzf (guard; fallback if not loaded by fzf --zsh above)
 [[ ! -v FZF_DEFAULT_OPTS && -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-
-# bun completions
-[ -s "/Users/jason/.bun/_bun" ] && source "/Users/jason/.bun/_bun"

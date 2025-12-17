@@ -48,7 +48,9 @@
     "tengu_log_1p_events": false,
     "code_slack_app_install_banner": false,
     "tengu_web_tasks": false,
-    "tengu_enable_versioned_plugins": false
+    "tengu_enable_versioned_plugins": false,
+    "tengu_c4w_usage_limit_notifications_enabled": false,
+    "tengu_thinkback": false
   },
   "cachedDynamicConfigs": {
     "tengu-top-of-feed-tip": {
@@ -305,7 +307,7 @@
     "0d7f82d0-16e4-4d7d-b705-9233a5fb591e": {
       "hasAccess": false,
       "hasAccessNotAsDefault": false,
-      "timestamp": 1765928046579
+      "timestamp": 1765937314066
     }
   },
   "sonnet45MigrationComplete": true,

@@ -2,43 +2,45 @@
 # ~/.zprofile — login-shell environment & PATH policy (macOS, zsh)
 # ==================================================================
 
-# Locale & editor
+# Locale (EDITOR is set in .zshenv for consistency)
 export LANG="en_US.UTF-8"
-export EDITOR="micro"   # change to nvim if you prefer
 
 # Put Homebrew FIRST on PATH & set related env
 if command -v /opt/homebrew/bin/brew >/dev/null 2>&1; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Rust / Cargo environment
-[[ -r "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
-
-# LM Studio CLI
-[[ -d "$HOME/.cache/lm-studio/bin" ]] && export PATH="$PATH:$HOME/.cache/lm-studio/bin"
-
 # Optional custom local environment (guarded)
 [[ -r "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
 
-# Developer tools
-# NOTE: ~/.cargo/bin is already added by sourcing ~/.cargo/env above.
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.bun/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
+# ---- Consolidated PATH array setup ----
+# Note: Cargo is handled in .zshenv only for interactive shells
+path=(
+  "$HOME/.local/bin"
+  "$HOME/.bun/bin"
+  "$HOME/go/bin"
+  "$HOME/Scripts/Metascripts/hsLauncher/scripts"
+  $path
+)
 
-# GUI app CLIs (only if you actually use them)
-export PATH="/Applications/Privileges.app/Contents/MacOS/privilegescli:$PATH"
-export PATH="/Applications/CMake.app/Contents/bin:$PATH"
-export PATH="/Applications/Little Snitch.app/Contents/Components:$PATH"
+# GUI app CLIs (guard: only add if they exist)
+[[ -d "/Applications/Privileges.app/Contents/MacOS" ]] && path+=("/Applications/Privileges.app/Contents/MacOS/privilegescli")
+[[ -d "/Applications/CMake.app/Contents/bin" ]] && path+=("/Applications/CMake.app/Contents/bin")
+[[ -d "/Applications/Little Snitch.app/Contents/Components" ]] && path+=("/Applications/Little Snitch.app/Contents/Components")
 
-# 1Password SSH agent (macOS)
-export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+# Export consolidated PATH
+export PATH
+
+# 1Password SSH agent (macOS) — guard for safety
+SSH_AUTH_SOCK_PATH="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+[[ -S "$SSH_AUTH_SOCK_PATH" ]] && export SSH_AUTH_SOCK="$SSH_AUTH_SOCK_PATH"
 
 # Homebrew safety knobs
 export HOMEBREW_NO_INSECURE_REDIRECT=1
 export HOMEBREW_CASK_OPTS=--require-sha
 export HOMEBREW_NO_ANALYTICS=1
 
-# --- PATH de-dup (zsh) ---
+# PATH de-duplication (remove duplicates while preserving order)
 typeset -U path PATH
+
 # --- End of ~/.zprofile ---

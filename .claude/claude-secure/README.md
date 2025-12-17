@@ -9,10 +9,20 @@ A secure sandbox wrapper for Claude Code with intelligent project detection.
 echo 'source /Users/jason/dotfiles/.claude/claude-secure/iterm2-integration.sh' >> ~/.zshrc
 source ~/.zshrc
 
-# Use anywhere
-claude --dangerously-skip-permissions  # Smart detection + secure sandbox
+# Vanilla Claude (no wrapper, no sandbox)
+claude --dangerously-skip-permissions
+
+# Smart sandbox (auto-detect preset, safe)
+claude-smart --dangerously-skip-permissions
 c --dangerously-skip-permissions       # Quick alias
 ```
+
+## Commands
+
+- **`claude`** – Vanilla Claude binary with no modifications
+- **`claude-smart`** – Intelligent sandbox with preset auto-detection (recommended)
+- **`claude-sandbox <preset>`** – Explicit sandbox with specific preset
+- **`c`, `cl`** – Quick aliases for `claude-smart`
 
 ## Features
 

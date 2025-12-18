@@ -228,7 +228,6 @@ cling() {
   [[ ${#folders[@]} -gt 0 ]] && open -a Cling "${folders[@]}"
 }
 
-# Added by LM Studio CLI (lms)
 # ---- 11) PATH consolidation ----------------------------------------
 path=(
   "$HOME/Scripts/Metascripts/hsLauncher/scripts"

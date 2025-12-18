@@ -93,8 +93,14 @@ EOF
 
   # Load optional secrets (non-blocking)
   load_secret "CONTEXT7_API_KEY" "op://Secrets/Context7_API/api_key"
+  load_secret "SMITHERY_API_KEY" "op://Secrets/Context7_API/api_key"
   load_secret "GITHUB_TOKEN" "op://Secrets/GitHub Personal Access Token/token"
   load_secret "OPENAI_API_KEY" "op://Secrets/oAI_API/api_key2"
+
+  # Map Context7 key to Smithery if only one is present
+  if [[ -z "${SMITHERY_API_KEY:-}" && -n "${CONTEXT7_API_KEY:-}" ]]; then
+    export SMITHERY_API_KEY="$CONTEXT7_API_KEY"
+  fi
 
   # Set non-secret config variables
   export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"

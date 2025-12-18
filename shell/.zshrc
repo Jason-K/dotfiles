@@ -128,7 +128,7 @@ alias aliases="alias | sed 's/=.*//'"
 alias paths='echo -e ${PATH//:/\\n}'
 
 # Directory listings (eza)
-alias l="eza -l -a -h --classify=always --icons=always --no-permissions --no-user --time-style=long-iso --sort=modified --group-directories-first --hyperlink"
+alias l="eza -l -a -h --group-directories-first --classify=always --icons=always --no-permissions --no-user --time-style=long-iso --sort=modified --hyperlink"
 alias lt="eza --tree --level=2 --long --icons"
 
 # Folders & nav
@@ -167,18 +167,19 @@ alias clear='\clear'
 # One reload alias (login-style)
 alias reload='\clear && source ~/.zshrc && echo "Reloaded .zshrc"'
 
-# Yazi smart-cd wrapper
+# Yazi smart-cd wrapper (with direct-dir fast path)
 y() {
-  local tmp="$(mktemp -t 'yazi-cwd.XXXXXX')" cwd
-  yazi "$@" --cwd-file="$tmp"
-  if cwd="$(<"$tmp")" && [[ -n "$cwd" && "$cwd" != "$PWD" ]]; then builtin cd -- "$cwd"; fi
-  rm -f -- "$tmp"
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
 }
 
 # ripgrep-all finder with preview (opens via macOS 'open')
 # Usage: ff <search-term>
 # Ensure no plugin alias (e.g., OMZ common-aliases) shadows this function
-unalias ff 2>/dev/null
+# unalias ff 2>/dev/null
 ff() {
   [[ "$#" -gt 0 ]] || { echo "Usage: ff <search-term>"; return 1; }
   local file

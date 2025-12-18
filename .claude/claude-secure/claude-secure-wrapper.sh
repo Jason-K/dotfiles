@@ -273,20 +273,29 @@ if (( NO_HOME )); then
   CLAUDE_HOME_ESCAPED="$(esc_scheme "$HOME_REAL/.claude")"
   CLAUDE_LOCAL_ESCAPED="$(esc_scheme "$HOME_REAL/.claude/local")"
 
-  # Project path chain metadata (Node realpath commonly touches these)
-  SCRIPTS_ESCAPED="$(esc_scheme "$HOME_REAL/Scripts")"
-  METASCRIPTS_ESCAPED="$(esc_scheme "$HOME_REAL/Scripts/Metascripts")"
+  # Build all parent directories from HOME to PROJECT_ROOT for metadata access
   PROJECT_ESCAPED="$(esc_scheme "$PROJECT_ROOT_REAL")"
 
+  # Generate parent path chain dynamically
+  PARENT_PATHS=()
+  current_path="$PROJECT_ROOT_REAL"
+  while [[ "$current_path" != "$HOME_REAL" && "$current_path" != "/" ]]; do
+    PARENT_PATHS+=("$(esc_scheme "$current_path")")
+    current_path="$(/usr/bin/dirname "$current_path")"
+  done
+
+  # Build the metadata rules with all parent paths
   NO_HOME_RULES=$'(allow file-read-metadata\n'\
 $'  (literal "/Users")\n'\
 $'  (literal "'"$USER_HOME_ESCAPED"'")\n'\
 $'  (literal "'"$CLAUDE_HOME_ESCAPED"'")\n'\
-$'  (literal "'"$CLAUDE_LOCAL_ESCAPED"'")\n'\
-$'  (literal "'"$SCRIPTS_ESCAPED"'")\n'\
-$'  (literal "'"$METASCRIPTS_ESCAPED"'")\n'\
-$'  (literal "'"$PROJECT_ESCAPED"'")\n'\
-$')\n'\
+$'  (literal "'"$CLAUDE_LOCAL_ESCAPED"'")\n'
+
+  for parent in "${PARENT_PATHS[@]}"; do
+    NO_HOME_RULES+=$'  (literal "'"$parent"'")\n'
+  done
+
+  NO_HOME_RULES+=$')\n'\
 $'(deny file-read* file-write* (subpath "'"$USER_HOME_ESCAPED"'"))'
 fi
 
@@ -295,10 +304,18 @@ CLAUDE_BIN_DIR="$(/usr/bin/dirname "$CLAUDE_BIN_REAL")"
 CLAUDE_BIN_DIR_ESC="$(esc_scheme "$CLAUDE_BIN_DIR")"
 CLAUDE_BIN_ALLOW=$'(allow file-read* file-map-executable\n  (subpath "'"$CLAUDE_BIN_DIR_ESC"'")\n)'
 
-# Allow access to Claude config files when no_home is enabled
+# Allow 1Password CLI for headersHelper to pull API keys at runtime (no plaintext cache)
+OP_BIN_ALLOW=""
+if command -v op >/dev/null 2>&1; then
+  OP_BIN_PATH="$(command -v op)"
+  OP_BIN_ESC="$(esc_scheme "$OP_BIN_PATH")"
+  OP_BIN_ALLOW=$'(allow file-read* file-map-executable\n  (literal "'"$OP_BIN_ESC"'")\n)'
+fi
+
+# Allow access to Claude config files and directories when no_home is enabled
 CLAUDE_CONFIG_ALLOW=""
 if (( NO_HOME )); then
-  # Resolve the actual config file location and its directory
+  # Resolve the actual config file location
   CLAUDE_CONFIG_JSON="$(/usr/bin/python3 - <<'PY'
 import os, sys
 config_path = os.path.expanduser("~/.claude.json")
@@ -309,11 +326,35 @@ else:
 print(real_path)
 PY
 )"
-  CLAUDE_CONFIG_DIR="$(/usr/bin/dirname "$CLAUDE_CONFIG_JSON")"
   CLAUDE_CONFIG_JSON_ESC="$(esc_scheme "$CLAUDE_CONFIG_JSON")"
   CLAUDE_CONFIG_LINK_ESC="$(esc_scheme "$HOME_REAL/.claude.json")"
   CLAUDE_CONFIG_BACKUP_ESC="$(esc_scheme "$HOME_REAL/.claude.json.backup")"
-  CLAUDE_CONFIG_ALLOW=$'(allow file-read*\n  (literal "'"$CLAUDE_CONFIG_LINK_ESC"'")\n  (literal "'"$CLAUDE_CONFIG_JSON_ESC"'")\n  (literal "'"$CLAUDE_CONFIG_BACKUP_ESC"'")\n)\n'
+  CLAUDE_DIR_ESC="$(esc_scheme "$HOME_REAL/.claude")"
+  CLAUDE_DEBUG_ESC="$(esc_scheme "$HOME_REAL/.claude/debug")"
+  CLAUDE_PLUGINS_ESC="$(esc_scheme "$HOME_REAL/.claude/plugins")"
+  CLAUDE_SESSION_ENV_ESC="$(esc_scheme "$HOME_REAL/.claude/session-env")"
+  CLAUDE_CACHE_ESC="$(esc_scheme "$HOME_REAL/Library/Caches/claude-cli-nodejs")"
+  DOTFILES_CLAUDE_JSON_ESC="$(esc_scheme "$HOME_REAL/dotfiles/.claude.json")"
+  CLAUDE_PROJECTS_ESC="$(esc_scheme "$HOME_REAL/.claude/projects")"
+  OP_CONFIG_ESC="$(esc_scheme "$HOME_REAL/.config/1Password")"
+  OP_GROUP_ESC="$(esc_scheme "$HOME_REAL/Library/Group Containers/2BUA8C4S2C.com.1password")"
+  NPM_HOME_ESC="$(esc_scheme "$HOME_REAL/.npm")"
+  NPM_CACHE_ESC="$(esc_scheme "$HOME_REAL/Library/Caches/npm")"
+  CLAUDE_ENV_ESC="$(esc_scheme "$HOME_REAL/.claude/.env")"
+
+  # Read-only access to global .claude directory (for config, marketplaces, etc.)
+  # Write access only to specific subdirectories that need it (debug logs, plugins)
+  # This prevents malicious code from modifying sensitive global configuration
+  CLAUDE_CONFIG_ALLOW=$'(allow file-read*\n  (literal "'"$CLAUDE_CONFIG_LINK_ESC"'")\n  (literal "'"$CLAUDE_CONFIG_JSON_ESC"'")\n  (literal "'"$CLAUDE_CONFIG_BACKUP_ESC"'")\n  (subpath "'"$CLAUDE_DIR_ESC"'")\n)\n'
+  # Targeted write allowances: debug logs, plugins installs, CLI caches
+  CLAUDE_CONFIG_ALLOW+=$'(allow file-write*\n  (subpath "'"$CLAUDE_DEBUG_ESC"'")\n  (subpath "'"$CLAUDE_PLUGINS_ESC"'")\n  (subpath "'"$CLAUDE_SESSION_ENV_ESC"'")\n  (subpath "'"$CLAUDE_PROJECTS_ESC"'")\n)\n'
+  CLAUDE_CONFIG_ALLOW+=$'(allow file-read* file-write*\n  (subpath "'"$CLAUDE_CACHE_ESC"'")\n)\n'
+  # Minimal config writes: permit ~/.claude.json, and narrowly allow dotfiles/.claude.json
+  # to prevent crashes when Claude persists settings there.
+  CLAUDE_CONFIG_ALLOW+=$'(allow file-write*\n  (literal "'"$CLAUDE_CONFIG_LINK_ESC"'")\n  (literal "'"$DOTFILES_CLAUDE_JSON_ESC"'")\n)\n'
+  CLAUDE_CONFIG_ALLOW+=$'(allow file-read* file-write*\n  (subpath "'"$OP_CONFIG_ESC"'")\n  (subpath "'"$OP_GROUP_ESC"'")\n)\n'
+  CLAUDE_CONFIG_ALLOW+=$'(allow file-read* file-write*\n  (subpath "'"$NPM_HOME_ESC"'")\n  (subpath "'"$NPM_CACHE_ESC"'")\n)\n'
+  CLAUDE_CONFIG_ALLOW+=$'(allow file-read* file-write*\n  (literal "'"$CLAUDE_ENV_ESC"'")\n)\n'
 fi
 
 # Allow rules for project + allowlists
@@ -371,6 +412,11 @@ fi
     print "; allow executing claude_bin even when HOME is denied"
     print "$CLAUDE_BIN_ALLOW"
     print ""
+    if [[ -n "$OP_BIN_ALLOW" ]]; then
+      print "; allow executing 1Password CLI for headersHelper"
+      print "$OP_BIN_ALLOW"
+      print ""
+    fi
   fi
 
   # always allow reading Claude config files (placed after deny rules to override)
@@ -401,6 +447,89 @@ FINAL_ARGS=()
 if (( ${#claude_args[@]} > 0 )); then
   FINAL_ARGS=("${claude_args[@]}")
 fi
+
+# -------------------------------------------------
+# Secret injection (runs OUTSIDE the sandbox)
+# - Prefer existing env if already set
+# - Else, use 1Password CLI if available (no in-sandbox op calls)
+# - Map to variables Claude/z.ai expect
+# -------------------------------------------------
+
+# small helper: read secret via 1Password if op is available
+_read_op_secret() {
+  local path="$1"
+  if command -v op >/dev/null 2>&1; then
+    op read "$path" 2>/dev/null | head -n1 | tr -d '\r\n'
+  fi
+}
+
+# Try sourcing VSCode secret launcher (provides load_secret) if present
+_load_with_launcher() {
+  local launcher="$HOME/dotfiles/shell/vscode-secret-launcher.sh"
+  if [[ -r "$launcher" ]]; then
+    # shellcheck source=/dev/null
+    source "$launcher" 2>/dev/null || true
+    if typeset -f load_secret >/dev/null 2>&1; then
+      load_secret "ANTHROPIC_AUTH_TOKEN" "op://Secrets/GLM_API/apikey2" || true
+      load_secret "Z_AI_API_KEY" "op://Secrets/GLM_API/apikey2" || true
+      load_secret "CONTEXT7_API_KEY" "op://Secrets/Context7_API/api_key" || true
+      load_secret "SMITHERY_API_KEY" "op://Secrets/Context7_API/api_key" || true
+      load_secret "GITHUB_TOKEN" "op://Secrets/GitHub Personal Access Token/token" || true
+      load_secret "OPENAI_API_KEY" "op://Secrets/oAI_API/api_key2" || true
+    fi
+  fi
+}
+
+# Required z.ai/Anthropic token
+if [[ -z "${ANTHROPIC_AUTH_TOKEN:-}" ]]; then
+  _load_with_launcher
+fi
+if [[ -z "${ANTHROPIC_AUTH_TOKEN:-}" ]]; then
+  ANTHROPIC_AUTH_TOKEN="$(_read_op_secret 'op://Secrets/GLM_API/apikey2')"
+  export ANTHROPIC_AUTH_TOKEN
+fi
+
+# Backfill related vars if missing
+if [[ -n "${ANTHROPIC_AUTH_TOKEN:-}" ]]; then
+  [[ -z "${ANTHROPIC_API_KEY:-}" ]] && export ANTHROPIC_API_KEY="$ANTHROPIC_AUTH_TOKEN"
+  [[ -z "${Z_AI_API_KEY:-}" ]] && export Z_AI_API_KEY="$ANTHROPIC_AUTH_TOKEN"
+  [[ -z "${ZAI_API_KEY:-}" ]] && export ZAI_API_KEY="$ANTHROPIC_AUTH_TOKEN"
+  [[ -z "${CLAUDE_CODE_AUTH_TOKEN:-}" ]] && export CLAUDE_CODE_AUTH_TOKEN="$ANTHROPIC_AUTH_TOKEN"
+  [[ -z "${CLAUDE_API_KEY:-}" ]] && export CLAUDE_API_KEY="$ANTHROPIC_AUTH_TOKEN"
+fi
+
+# Resolve conflict: prefer API key and drop token if both are set
+if [[ -n "${ANTHROPIC_AUTH_TOKEN:-}" && -n "${ANTHROPIC_API_KEY:-}" ]]; then
+  unset ANTHROPIC_AUTH_TOKEN
+  unset CLAUDE_CODE_AUTH_TOKEN
+fi
+
+# Optional secrets
+if [[ -z "${CONTEXT7_API_KEY:-}" ]]; then CONTEXT7_API_KEY="$(_read_op_secret 'op://Secrets/Context7_API/api_key')"; export CONTEXT7_API_KEY; fi
+if [[ -z "${SMITHERY_API_KEY:-}" ]]; then SMITHERY_API_KEY="$(_read_op_secret 'op://Secrets/Context7_API/api_key')"; [[ -n "${SMITHERY_API_KEY:-}" ]] && export SMITHERY_API_KEY; fi
+if [[ -z "${SMITHERY_API_KEY:-}" && -n "${CONTEXT7_API_KEY:-}" ]]; then export SMITHERY_API_KEY="$CONTEXT7_API_KEY"; fi
+if [[ -z "${GITHUB_TOKEN:-}" ]]; then GITHUB_TOKEN="$(_read_op_secret 'op://Secrets/GitHub Personal Access Token/token')"; export GITHUB_TOKEN; fi
+if [[ -z "${OPENAI_API_KEY:-}" ]]; then OPENAI_API_KEY="$(_read_op_secret 'op://Secrets/oAI_API/api_key2')"; export OPENAI_API_KEY; fi
+
+# Base URL and defaults for z.ai if not already configured
+[[ -z "${ANTHROPIC_BASE_URL:-}" ]] && export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
+[[ -z "${Z_AI_MODE:-}" ]] && export Z_AI_MODE="ZAI"
+[[ -z "${API_TIMEOUT_MS:-}" ]] && export API_TIMEOUT_MS="3000000"
+export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+
+# Persist secrets to ~/.claude/.env ONLY for configs that still need ${VAR} expansion
+# HTTP MCP servers now use headersHelper to fetch from 1Password directly (no cache)
+CLAUDE_ENV="$HOME/.claude/.env"
+/bin/mkdir -p "$(dirname "$CLAUDE_ENV")"
+cat >"$CLAUDE_ENV" <<ENVEOF
+# No API keys cached here anymore - HTTP MCP uses headersHelper
+# Only keeping minimal env for backward compatibility
+ENVEOF
+note "Minimal .env created (HTTP MCP auth via headersHelper from 1Password)"
+
+# Log masked presence of key envs (no secret content) for troubleshooting
+_mask() { local v="$1"; [[ -n "$v" ]] && echo "set(len=${#v})" || echo "unset"; }
+note "Secrets presence: ANTHROPIC_AUTH_TOKEN=$(_mask "${ANTHROPIC_AUTH_TOKEN-}") ANTHROPIC_API_KEY=$(_mask "${ANTHROPIC_API_KEY-}") Z_AI_API_KEY=$(_mask "${Z_AI_API_KEY-}") ZAI_API_KEY=$(_mask "${ZAI_API_KEY-}") SMITHERY_API_KEY=$(_mask "${SMITHERY_API_KEY-}")"
 
 cmd=(/usr/bin/sandbox-exec -f "$SANDBOX_PROFILE" "$CLAUDE_BIN_REAL" "${FINAL_ARGS[@]}")
 

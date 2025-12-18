@@ -27,3 +27,17 @@ strict_temp = true
 audit_log = "/Users/jason/Library/Logs/claude-secure/audit.log"
 allow_rw = ["/Users/jason/.claude"]
 allow_ro = ["/Users/jason/dotfiles", "/Users/jason/Scripts/Application_Specific/QSpace/JJK_QSpaceRenamer", "/Users/jason/Scripts/Application_Specific/Meruscase"]
+
+[pdf-bookmarker]
+project_root = "/Users/jason/Scripts/Application_Specific/Acrobat/pdf-bookmarker"
+mode = "rw"
+network = true
+no_home = true
+strict_temp = true
+audit_log = "/Users/jason/Library/Logs/claude-secure/audit.log"
+allow_rw = ["/Users/jason/.claude"]
+allow_ro = ["/Users/jason/dotfiles", "/Users/jason/Scripts/Application_Specific/Acrobat/jjk_Acrobat_Bookmarker"]
+default_model = "claude-sonnet-4-5-20250929"
+env_vars = ["ANTHROPIC_AUTH_TOKEN", "GLM_API_KEY", "Z_AI_API_KEY", "Z_AI_MODE", "ANTHROPIC_BASE_URL", "CONTEXT7_API_KEY"]
+allow_executables = ["/opt/homebrew/bin/op"]
+# 

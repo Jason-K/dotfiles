@@ -14,6 +14,7 @@ claude() {
     fi
 
     # Run vanilla Claude with no modifications
+    echo "🚀 Launching vanilla Claude..." >&2
     "$claude_bin" "$@"
 }
 
@@ -34,7 +35,30 @@ claude-smart() {
 }
 
 # ───────────────────────────────────────────────────────────────────────────────
-# 3) Sandbox wrapper (advanced): call claude-secure-wrapper directly
+# 3) Secrets-enabled direct run (no sandbox): loads secrets then runs Claude
+
+claude-secrets() {
+    local secrets_script="$HOME/dotfiles/.claude/claude-secure/claude-secure-nosandbox.sh"
+
+    if [[ ! -r "$secrets_script" ]]; then
+        echo "❌ Secrets launcher not found: $secrets_script" >&2
+        return 1
+    fi
+
+    # Source once to load the claude-secure helper, then invoke it
+    # This keeps the secrets-loading logic in a single place.
+    source "$secrets_script"
+
+    if ! command -v claude-secure >/dev/null 2>&1; then
+        echo "❌ claude-secure function unavailable after sourcing: $secrets_script" >&2
+        return 1
+    fi
+
+    claude-secure "$@"
+}
+
+# ───────────────────────────────────────────────────────────────────────────────
+# 4) Sandbox wrapper (advanced): call claude-secure-wrapper directly
 # ───────────────────────────────────────────────────────────────────────────────
 
 # Direct wrapper access with explicit config/preset (for advanced usage)

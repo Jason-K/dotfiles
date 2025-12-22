@@ -1,0 +1,131 @@
+#!/usr/bin/osascript -l JavaScript
+/*
+  detect.jxa
+  Modes:
+    - default: detect unresponsive apps
+    - --foreground: detect the frontmost app
+  Output: JSON array of { name, pid, bundle }
+  Exit 0 always (empty array if none)
+  Notes:
+    - Foreground detection uses AppleScript via Standard Additions for reliability.
+    - Resolving pid/bundle via System Events may require Accessibility permission.
+*/
+
+function toJSON(arr, pidOnly) {
+  if (pidOnly) {
+    const minimal = arr.map(x => ({ pid: x.pid }));
+    try { console.log(JSON.stringify(minimal)); }
+    catch (e) { console.log("[]"); }
+  } else {
+    try { console.log(JSON.stringify(arr)); }
+    catch (e) { console.log("[]"); }
+  }
+}
+
+function getUnresponsive() {
+  // Faster AE query using 'whose' to filter in one shot
+  try {
+    const se = Application("System Events");
+    const list = se.processes.whose({ backgroundOnly: false, responding: false });
+    const out = [];
+    const len = (function(){ try { return list.length; } catch(_) { return 0; } })();
+    for (let i = 0; i < len; i++) {
+      const p = list[i];
+      let name = "", bundle = "", pid = -1;
+      try { name = p.name(); } catch (_) {}
+      try { pid = p.unixId(); } catch (_) {}
+      try { bundle = p.bundleIdentifier(); } catch (_) {}
+      if (name && pid > 0) out.push({ name, pid, bundle });
+    }
+    return out;
+  } catch (_) {
+    // Fallback to slower iteration
+    const se = Application("System Events");
+    const procs = se.processes().filter(p => {
+      try { return !p.backgroundOnly() && !p.responding(); }
+      catch (e) { return false; }
+    });
+    return procs.map(p => {
+      let name = "", bundle = "", pid = -1;
+      try { name = p.name(); } catch (_) {}
+      try { pid = p.unixId(); } catch (_) {}
+      try { bundle = p.bundleIdentifier(); } catch (_) {}
+      return { name, pid, bundle };
+    }).filter(x => x.pid > 0 && x.name);
+  }
+}
+
+function getFrontmostCoreGraphics() {
+  // Fast path: use CoreGraphics window list to get frontmost window owner
+  try {
+    ObjC.import('CoreGraphics');
+    const kOnScreen = 1; // kCGWindowListOptionOnScreenOnly
+    const kExcludeDesktop = 2; // kCGWindowListOptionExcludeDesktopElements
+    const opts = kOnScreen | kExcludeDesktop;
+    const arr = $.CGWindowListCopyWindowInfo(opts, $.kCGNullWindowID);
+    const list = ObjC.deepUnwrap(arr) || [];
+    // The array is ordered front-to-back; pick first layer 0 (normal window)
+    for (let i = 0; i < list.length; i++) {
+      const w = list[i];
+      if (w.kCGWindowLayer === 0 && w.kCGWindowOwnerPID > 0) {
+        const name = String(w.kCGWindowOwnerName || '');
+        const pid = Number(w.kCGWindowOwnerPID || 0);
+        if (name && pid > 0) {
+          return [{ name, pid, bundle: null }];
+        }
+      }
+    }
+  } catch (_) { /* ignore */ }
+  return [];
+}
+
+function getFrontmost() {
+  // Try CoreGraphics first (fast, no Accessibility required)
+  const cg = getFrontmostCoreGraphics();
+  if (cg.length) return cg;
+
+  // Next try NSWorkspace.frontmostApplication
+  try {
+    ObjC.import('AppKit');
+    const ws = $.NSWorkspace.sharedWorkspace;
+    const app = ws.frontmostApplication();
+    if (app) {
+      const name = ObjC.unwrap(app.localizedName());
+      const bundle = ObjC.unwrap(app.bundleIdentifier());
+      const pid = ObjC.unwrap(app.processIdentifier());
+      if (name && pid > 0) return [{ name, pid, bundle }];
+    }
+  } catch (_) { /* ignore */ }
+
+  // Last resort: AppleScript via Standard Additions
+  try {
+    const app = Application.currentApplication();
+    app.includeStandardAdditions = true;
+    const asName = app.doShellScript("osascript -e 'tell application \"System Events\" to get name of first process whose frontmost is true'");
+    if (asName) {
+      let pid = null, bundle = null;
+      try {
+        const se = Application('System Events');
+        pid = se.processes.byName(asName).unixId();
+        bundle = se.processes.byName(asName).bundleIdentifier();
+      } catch (_) {}
+      return [{ name: asName, pid, bundle }];
+    }
+  } catch (_) { /* ignore */ }
+
+  return [];
+}
+
+(function main() {
+  try {
+    // Parse CLI flags via NSProcessInfo
+    const argv = ObjC.deepUnwrap($.NSProcessInfo.processInfo.arguments);
+    const args = Array.isArray(argv) ? argv.map(String) : [];
+    const foreground = args.includes("--foreground");
+    const pidOnly = args.includes("--pid-only");
+    const result = foreground ? getFrontmost() : getUnresponsive();
+    toJSON(result, pidOnly);
+  } catch (e) {
+    console.log("[]");
+  }
+})();

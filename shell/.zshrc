@@ -27,25 +27,35 @@ else
 fi
 
 # ---- 3) fzf-tab styles (you’re using fzf-tab in place of OMZ fzf)-
+
+# Case-insensitive completion and fuzzy matching for hidden files, dots, and dashes
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' 'r:|[._-]=** r:|=**'
+# Preview directories with eza when completing cd commands
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+# Don't sort git branches; preserve order for faster selection
 zstyle ':completion:*:git-checkout:*' sort false
+# Format completion descriptions with brackets
 zstyle ':completion:*:descriptions' format '[%d]'
+# Use LS_COLORS for file/directory completion coloring
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# Don't show menu completion by default (we use fzf-tab instead)
 zstyle ':completion:*' menu no
+# Customize fzf colors and keybindings for fzf-tab completion
 zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+# Use fzf default options (respects $FZF_DEFAULT_OPTS)
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
+# Allow '<' and '>' to switch between completion groups
 zstyle ':fzf-tab:*' switch-group '<' '>'
 
 # ---- 4) OMZ plugins (trimmed; no duplicates/heavy items) --------
+
 plugins=(
   aliases
   copyfile
   copypath
   direnv
   extract
-  fzf-tab                 # keep; we drop OMZ's fzf plugin
-  web-search
+  fzf-tab
   zsh-autosuggestions
   zsh-history-substring-search
   zsh-interactive-cd
@@ -54,23 +64,25 @@ plugins=(
 source "$ZSH/oh-my-zsh.sh"   # OMZ will skip compinit because we ran it
 
 # ---- 5) Prompt init (choose one: we keep p10k; Starship disabled) -
+
 [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
-# If you prefer Starship, comment the line above and uncomment below:
-# eval "$(starship init zsh)"
 
 # ---- 6) zoxide (standardize; do NOT alias cd or define z/zz) ----
+
 if command -v zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh)"
   alias j='z'
 fi
 
 # ---- 7) fast-syntax-highlighting (faster than OMZ's syntax plugin)
+
 # Install once if missing (guarded, shallow clone)
 FAST_HIGHL="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting"
 if [[ ! -d "$FAST_HIGHL" ]]; then
   command -v git >/dev/null 2>&1 && \
     git clone --depth 1 https://github.com/zdharma-continuum/fast-syntax-highlighting.git "$FAST_HIGHL"
 fi
+
 # Style tweaks (subtle, readable)
 typeset -A FAST_HIGHLIGHT_STYLES
 FAST_HIGHLIGHT_STYLES[command]='fg=green'
@@ -84,10 +96,12 @@ FAST_HIGHLIGHT_STYLES[globbing]='fg=magenta'
 FAST_HIGHLIGHT_STYLES[single-hyphen-option]='fg=magenta'
 FAST_HIGHLIGHT_STYLES[double-hyphen-option]='fg=magenta'
 FAST_HIGHLIGHT_STYLES[back-quoted-argument]='fg=yellow'
+
 # Load after autosuggestions for correct layering
 [[ -r "$FAST_HIGHL/fast-syntax-highlighting.plugin.zsh" ]] && source "$FAST_HIGHL/fast-syntax-highlighting.plugin.zsh"
 
 # ---- 8) Tool inits (light & guarded) -----------------------------
+
 # fzf key bindings/completion (single init; complements fzf-tab)
 command -v fzf >/dev/null 2>&1 && source <(fzf --zsh)
 
@@ -110,12 +124,25 @@ if [[ -x "/opt/anaconda3/bin/conda" ]]; then
 fi
 
 # ---- 9) Key bindings --------------------------------------------
+
+# History substring search bindings
+# ↑ Up arrow = search history backwards for lines starting with current input
 bindkey '^[[A' history-substring-search-up
+# ↓ Down arrow = search history forwards for lines starting with current input
 bindkey '^[[B' history-substring-search-down
+
+# Menu completion bindings
+# ⏎ Enter = accept current menu selection and execute
 bindkey -M menuselect '^M' .accept-line
+# ⇄ Tab = trigger menu completion (show/navigate completion menu)
 bindkey '^I' menu-complete
+# ⇧⇄ Shift+Tab = cycle backwards through completions (from terminfo)
 bindkey "$terminfo[kcbt]" reverse-menu-complete
+
+# Undo/Redo bindings
+# Ctrl+X then Ctrl+_ (Ctrl+Shift+minus); redo last undone action
 bindkey "^X^_" redo
+# Ctrl+U; delete from cursor to start of line (backward-kill-line)
 bindkey "^U" backward-kill-line
 
 # ---- 10) Aliases & helpers (restored + tidy) ---------------------
@@ -192,7 +219,7 @@ ff() {
 # Usage: cf <search-pattern>
 cf() {
   local file
-  file="$(locate -Ai -0 "$@" | grep -z -vE '~$' | fzf --read0 -0 -1)"
+  file="$(locate -i "$@" | grep -v '~$' | fzf -0 -1)"
   [[ -n "$file" ]] || return
   if [[ -d "$file" ]]; then cd -- "$file"; else cd -- "${file:h}"; fi
 }
@@ -229,10 +256,23 @@ cling() {
 }
 
 # ---- 11) PATH consolidation ----------------------------------------
+typeset -U path PATH
 path=(
   "$HOME/Scripts/Metascripts/hsLauncher/scripts"
   "$HOME/.cache/lm-studio/bin"
   "$HOME/.antigravity/antigravity/bin"
+  "$HOME/dotfiles/bin"
+  "$HOME/.local/bin"
+  "$HOME/.bun/bin"
+  "$HOME/go/bin"
+  "/opt/homebrew/bin"
+  "/opt/homebrew/sbin"
+  "/usr/local/bin"
+  "/System/Cryptexes/App/usr/bin"
+  "/usr/bin"
+  "/bin"
+  "/usr/sbin"
+  "/sbin"
   $path
 )
 export PATH
@@ -250,3 +290,7 @@ command -v tv >/dev/null 2>&1 && eval "$(tv init zsh)"
 
 # fzf (guard; fallback if not loaded by fzf --zsh above)
 [[ ! -v FZF_DEFAULT_OPTS && -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+# >>> Added by Spyder >>>
+alias uninstall-spyder=/Users/jason/Library/spyder-6/uninstall-spyder.sh
+# <<< Added by Spyder <<<

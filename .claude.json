@@ -1,5 +1,5 @@
 {
-  "numStartups": 103,
+  "numStartups": 130,
   "installMethod": "local",
   "autoUpdates": true,
   "customApiKeyResponses": {
@@ -13,41 +13,41 @@
   },
   "tipsHistory": {
     "new-user-warmup": 4,
-    "plan-mode-for-complex-tasks": 102,
-    "shift-enter": 96,
-    "memory-command": 97,
-    "theme-command": 97,
+    "plan-mode-for-complex-tasks": 108,
+    "shift-enter": 119,
+    "memory-command": 114,
+    "theme-command": 118,
     "status-line": 93,
-    "stickers-command": 97,
+    "stickers-command": 118,
     "prompt-queue": 37,
-    "enter-to-steer-in-relatime": 93,
-    "todo-list": 93,
-    "ide-upsell-external-terminal": 75,
-    "# for memory": 75,
-    "install-github-app": 97,
-    "permissions": 102,
-    "drag-and-drop-images": 93,
-    "paste-images-mac": 96,
-    "double-esc-code-restore": 96,
-    "continue": 96,
-    "custom-commands": 96,
-    "shift-tab": 96,
-    "image-paste": 93,
-    "tab-toggle-thinking": 63,
-    "ultrathink-keyword": 96,
-    "custom-agents": 96,
-    "vscode-command-install": 102,
-    "git-worktrees": 97,
-    "default-permission-mode-config": 83,
-    "install-slack-app": 83,
-    "rename-conversation": 84,
-    "config-thinking-mode": 84,
-    "desktop-app": 86,
-    "web-app": 86,
-    "mobile-app": 86,
+    "enter-to-steer-in-relatime": 114,
+    "todo-list": 114,
+    "ide-upsell-external-terminal": 110,
+    "# for memory": 116,
+    "install-github-app": 122,
+    "permissions": 115,
+    "drag-and-drop-images": 116,
+    "paste-images-mac": 123,
+    "double-esc-code-restore": 123,
+    "continue": 129,
+    "custom-commands": 112,
+    "shift-tab": 129,
+    "image-paste": 114,
+    "tab-toggle-thinking": 116,
+    "ultrathink-keyword": 108,
+    "custom-agents": 112,
+    "vscode-command-install": 105,
+    "git-worktrees": 114,
+    "default-permission-mode-config": 104,
+    "install-slack-app": 104,
+    "rename-conversation": 104,
+    "config-thinking-mode": 104,
+    "desktop-app": 104,
+    "web-app": 104,
+    "mobile-app": 104,
     "btw-side-question": 96
   },
-  "promptQueueUseCount": 6,
+  "promptQueueUseCount": 8,
   "showExpandedTodos": true,
   "cachedStatsigGates": {
     "tengu_disable_bypass_permissions_mode": false,
@@ -65,10 +65,15 @@
     "tengu_ant_attribution_header_new": false
   },
   "cachedDynamicConfigs": {
+    "tengu_1p_event_batch_config": {},
     "tengu-top-of-feed-tip": {
       "tip": "",
       "color": "dim"
     }
+  },
+  "cachedGrowthBookFeatures": {
+    "strawberry_granite_flag": "OFF",
+    "persimmon_marble_flag": "OFF"
   },
   "hasSeenStashHint": true,
   "userID": "9d663b4f4fc46acff86801d075347ea7de552b40ba460951d9bbbb02fba93288",
@@ -129,14 +134,14 @@
       "lastCost": 0,
       "lastAPIDuration": 0,
       "lastToolDuration": 0,
-      "lastDuration": 139799,
+      "lastDuration": 241248,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
       "lastTotalInputTokens": 0,
       "lastTotalOutputTokens": 0,
       "lastTotalCacheCreationInputTokens": 0,
       "lastTotalCacheReadInputTokens": 0,
-      "lastSessionId": "b4792ec5-1e5b-4312-8ca2-f175ab4cd6d0"
+      "lastSessionId": "1071ceb4-57bc-4573-8b52-fa6f660f531f"
     },
     "/Users/jason/Scripts": {
       "allowedTools": [],
@@ -161,14 +166,14 @@
       "lastCost": 0,
       "lastAPIDuration": 0,
       "lastToolDuration": 0,
-      "lastDuration": 51995,
+      "lastDuration": 47183,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
       "lastTotalInputTokens": 0,
       "lastTotalOutputTokens": 0,
       "lastTotalCacheCreationInputTokens": 0,
       "lastTotalCacheReadInputTokens": 0,
-      "lastSessionId": "e1010387-dafa-4604-a6c3-33345c2a5070"
+      "lastSessionId": "670bdd04-ff14-4cda-ac00-9188b11097df"
     },
     "/Users/jason/Gits/karabiner.ts": {
       "allowedTools": [],
@@ -270,7 +275,7 @@
       "enabledMcpjsonServers": [],
       "disabledMcpjsonServers": [],
       "hasTrustDialogAccepted": true,
-      "projectOnboardingSeenCount": 1,
+      "projectOnboardingSeenCount": 2,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [
@@ -289,19 +294,19 @@
         "version": null,
         "packageManager": null
       },
-      "lastCost": 0,
-      "lastAPIDuration": 0,
       "lastAPIDurationWithoutRetries": 0,
+      "lastModelUsage": {},
+      "lastCost": 0.0170178,
+      "lastAPIDuration": 20998,
       "lastToolDuration": 0,
-      "lastDuration": 242522,
+      "lastDuration": 256149,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 0,
-      "lastTotalOutputTokens": 0,
+      "lastTotalInputTokens": 1285,
+      "lastTotalOutputTokens": 859,
       "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 0,
-      "lastModelUsage": {},
-      "lastSessionId": "3f8893b3-0d4a-460c-be9a-fbee21444fbb"
+      "lastTotalCacheReadInputTokens": 926,
+      "lastSessionId": "27bbb2aa-19d8-4cda-984f-944e408a4c2c"
     },
     "/Users/jason/.claude-worktrees/file_namer/vigorous-torvalds": {
       "allowedTools": [],
@@ -357,37 +362,103 @@
         "version": null,
         "packageManager": null
       },
-      "lastCost": 0.0626193,
-      "lastAPIDuration": 69499,
-      "lastAPIDurationWithoutRetries": 69496,
+      "lastCost": 0.48211410000000005,
+      "lastAPIDuration": 275789,
+      "lastAPIDurationWithoutRetries": 275787,
       "lastToolDuration": 0,
-      "lastDuration": 10060362,
+      "lastDuration": 27749108,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 351,
-      "lastTotalOutputTokens": 4073,
+      "lastTotalInputTokens": 164,
+      "lastTotalOutputTokens": 32073,
       "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 1571,
+      "lastTotalCacheReadInputTokens": 1757,
       "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
+        "GLM-4.5-Air": {
+          "inputTokens": 1,
+          "outputTokens": 73,
+          "cacheReadInputTokens": 1117,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.0014331
+        },
         "GLM-4.6": {
           "inputTokens": 163,
-          "outputTokens": 349,
+          "outputTokens": 32000,
           "cacheReadInputTokens": 640,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.005916
-        },
-        "GLM-4.5-Air": {
-          "inputTokens": 188,
-          "outputTokens": 3724,
-          "cacheReadInputTokens": 931,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.056703300000000005
+          "costUSD": 0.480681
         }
       },
-      "lastSessionId": "04ebeadb-7541-493b-b0a1-5ef728bc7d65"
+      "lastSessionId": "b09dffd9-5f2b-41fe-985b-eb475c1854bf"
+    },
+    "/Users/jason/Downloads/PROJECT_contact-cleanup": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 4,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "exampleFiles": [],
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "lastAPIDurationWithoutRetries": 2659,
+      "lastTotalWebSearchRequests": 0,
+      "lastModelUsage": {
+        "GLM-4.5-Air": {
+          "inputTokens": 180,
+          "outputTokens": 166,
+          "cacheReadInputTokens": 932,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.0033096
+        }
+      },
+      "lastCost": 3.9729108000000006,
+      "lastAPIDuration": 1256346,
+      "lastToolDuration": 736897,
+      "lastDuration": 228443390,
+      "lastLinesAdded": 4157,
+      "lastLinesRemoved": 17,
+      "lastTotalInputTokens": 325628,
+      "lastTotalOutputTokens": 65966,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 6688456,
+      "lastSessionId": "6260ce9b-4ab2-4468-9f5c-ed12c7f257d6"
+    },
+    "/Users/jason/tmp": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 3,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "exampleFiles": [],
+      "lastTotalWebSearchRequests": 0,
+      "lastCost": 0,
+      "lastAPIDuration": 0,
+      "lastToolDuration": 0,
+      "lastDuration": 83050113,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 0,
+      "lastTotalOutputTokens": 0,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 0,
+      "lastSessionId": "d3c134a5-7f6a-475f-8cce-5baa244a6c4d"
     }
   },
   "firstStartTime": "2025-07-16T16:51:58.327Z",
@@ -439,8 +510,8 @@
       "headersHelper": "echo '{\"Authorization\":\"Bearer '$(op read 'op://Secrets/Context7_API/api_key' 2>/dev/null)'\"}'"
     }
   },
-  "lastReleaseNotesSeen": "2.0.72",
-  "lastPlanModeUse": 1765297274503,
+  "lastReleaseNotesSeen": "2.0.36",
+  "lastPlanModeUse": 1766037319531,
   "opus45MigrationComplete": true,
   "githubRepoPaths": {
     "jason-k/scripts": [
@@ -472,10 +543,11 @@
     "0d7f82d0-16e4-4d7d-b705-9233a5fb591e": true
   },
   "thinkingMigrationComplete": true,
-  "officialMarketplaceAutoInstallRetryCount": 3,
-  "officialMarketplaceAutoInstallLastAttemptTime": 1766021702888,
-  "officialMarketplaceAutoInstallNextRetryTime": 1766050502888,
+  "officialMarketplaceAutoInstallRetryCount": 4,
+  "officialMarketplaceAutoInstallLastAttemptTime": 1766108449564,
+  "officialMarketplaceAutoInstallNextRetryTime": 1766166049564,
   "apiKeyHelper": {
     "smitheryApiKeyHelper": "if [ -f ~/.claude/.env ]; then source ~/.claude/.env; echo \"$SMITHERY_API_KEY\"; fi"
-  }
+  },
+  "hasUsedBackslashReturn": true
 }

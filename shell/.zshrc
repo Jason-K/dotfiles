@@ -168,6 +168,8 @@ alias cat='bat'
 alias nano='micro'
 alias code='bash "$HOME/.vscode-launcher.sh"'
 alias fz='fzf --preview "bat --style=header --color=always --line-range :50 {}" --preview-window=right:60% | xargs open'
+alias helium-personal='open -na "Helium" --args --profile-directory="Default"'
+alias helium-work='open -na "Helium" --args --profile-directory="Profile 1"'
 
 # Network
 alias ipp="dig +short myip.opendns.com @resolver1.opendns.com"

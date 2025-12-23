@@ -1,12 +1,12 @@
 {
   "alwaysThinkingEnabled": true,
-  "apiKeyHelper": "/Users/jason/dotfiles/.claude/claude-secure/zai_key_helper.sh",
+
   "disabledMcpjsonServers": ["web-scraper", "system-admin", "network-tools"],
   "env": {
     "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "GLM-4.5-Air",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "GLM-4.6",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "GLM-4.6",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "GLM-4.7",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "GLM-4.7",
     "API_TIMEOUT_MS": "3000000",
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
     "CLAUDE_CODE_API_KEY_HELPER_TTL_MS": "3600000",

@@ -397,6 +397,31 @@ fi
   print "; network policy"
   print "$NETWORK_RULES"
   print ""
+  print "; allow git and curl executable mapping (narrow allowances)"
+  print "(allow file-read* file-map-executable"
+  print "  (literal \"/usr/bin/git\")"
+  print "  (literal \"/opt/homebrew/bin/git\")"
+  print "  (literal \"/usr/bin/curl\")"
+  print "  (literal \"/opt/homebrew/bin/curl\")"
+  print ")"
+  print ""
+  print "; allow common subprocess executables (narrow literals)"
+  print "(allow file-read* file-map-executable"
+  print "  (literal \"/bin/sh\")"
+  print "  (literal \"/usr/bin/env\")"
+  print "  (literal \"/usr/bin/git-lfs\")"
+  print "  (literal \"/opt/homebrew/bin/git-lfs\")"
+  print "  (literal \"/usr/bin/tar\")"
+  print "  (literal \"/usr/bin/unzip\")"
+  print "  (literal \"/usr/bin/openssl\")"
+  print "  (literal \"/opt/homebrew/bin/openssl\")"
+  print ")"
+  print ""
+  print "; allow /dev/null access (common in subprocess IO)"
+  print "(allow file-read* file-write*"
+  print "  (literal \"/dev/null\")"
+  print ")"
+  print ""
   if (( RW_MODE )); then
     print "; rw mode: deny writes by default, then re-allow temp/project/allow_rw"
     print "$WRITE_CLAMP"
@@ -451,51 +476,28 @@ fi
 # -------------------------------------------------
 # Secret injection (runs OUTSIDE the sandbox)
 # - Prefer existing env if already set
-# - Else, use 1Password CLI if available (no in-sandbox op calls)
+# - Else, load from 1Password using op run (single biometric auth)
 # - Map to variables Claude/z.ai expect
 # -------------------------------------------------
 
-# small helper: read secret via 1Password if op is available
-_read_op_secret() {
-  local path="$1"
-  if command -v op >/dev/null 2>&1; then
-    op read "$path" 2>/dev/null | head -n1 | tr -d '\r\n'
+# Load secrets using op run if they're not already set
+# This triggers ONE biometric prompt instead of multiple
+if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
+  local env_file="$HOME/dotfiles/.claude/claude-secure/.claude-env"
+  if [[ -r "$env_file" ]] && command -v op >/dev/null 2>&1; then
+    note "Loading secrets from 1Password (one-time biometric auth)..."
+    # Use op run to load all secrets at once
+    eval "$(op run --no-masking --env-file="$env_file" -- /usr/bin/printenv | grep -E '^(ANTHROPIC|Z_AI|CONTEXT7|SMITHERY|GITHUB|GEMINI|DEEPSEEK|OPENAI|OPENROUTER)_' | sed 's/^/export /')"
   fi
-}
-
-# Try sourcing VSCode secret launcher (provides load_secret) if present
-_load_with_launcher() {
-  local launcher="$HOME/dotfiles/shell/vscode-secret-launcher.sh"
-  if [[ -r "$launcher" ]]; then
-    # shellcheck source=/dev/null
-    source "$launcher" 2>/dev/null || true
-    if typeset -f load_secret >/dev/null 2>&1; then
-      load_secret "ANTHROPIC_AUTH_TOKEN" "op://Secrets/GLM_API/apikey2" || true
-      load_secret "Z_AI_API_KEY" "op://Secrets/GLM_API/apikey2" || true
-      load_secret "CONTEXT7_API_KEY" "op://Secrets/Context7_API/api_key" || true
-      load_secret "SMITHERY_API_KEY" "op://Secrets/Context7_API/api_key" || true
-      load_secret "GITHUB_TOKEN" "op://Secrets/GitHub Personal Access Token/token" || true
-      load_secret "OPENAI_API_KEY" "op://Secrets/oAI_API/api_key2" || true
-    fi
-  fi
-}
-
-# Required z.ai/Anthropic token
-if [[ -z "${ANTHROPIC_AUTH_TOKEN:-}" ]]; then
-  _load_with_launcher
-fi
-if [[ -z "${ANTHROPIC_AUTH_TOKEN:-}" ]]; then
-  ANTHROPIC_AUTH_TOKEN="$(_read_op_secret 'op://Secrets/GLM_API/apikey2')"
-  export ANTHROPIC_AUTH_TOKEN
 fi
 
 # Backfill related vars if missing
-if [[ -n "${ANTHROPIC_AUTH_TOKEN:-}" ]]; then
-  [[ -z "${ANTHROPIC_API_KEY:-}" ]] && export ANTHROPIC_API_KEY="$ANTHROPIC_AUTH_TOKEN"
-  [[ -z "${Z_AI_API_KEY:-}" ]] && export Z_AI_API_KEY="$ANTHROPIC_AUTH_TOKEN"
-  [[ -z "${ZAI_API_KEY:-}" ]] && export ZAI_API_KEY="$ANTHROPIC_AUTH_TOKEN"
-  [[ -z "${CLAUDE_CODE_AUTH_TOKEN:-}" ]] && export CLAUDE_CODE_AUTH_TOKEN="$ANTHROPIC_AUTH_TOKEN"
-  [[ -z "${CLAUDE_API_KEY:-}" ]] && export CLAUDE_API_KEY="$ANTHROPIC_AUTH_TOKEN"
+if [[ -n "${ANTHROPIC_API_KEY:-}" ]]; then
+  [[ -z "${ANTHROPIC_AUTH_TOKEN:-}" ]] && export ANTHROPIC_AUTH_TOKEN="$ANTHROPIC_API_KEY"
+  [[ -z "${Z_AI_API_KEY:-}" ]] && export Z_AI_API_KEY="$ANTHROPIC_API_KEY"
+  [[ -z "${ZAI_API_KEY:-}" ]] && export ZAI_API_KEY="$ANTHROPIC_API_KEY"
+  [[ -z "${CLAUDE_CODE_AUTH_TOKEN:-}" ]] && export CLAUDE_CODE_AUTH_TOKEN="$ANTHROPIC_API_KEY"
+  [[ -z "${CLAUDE_API_KEY:-}" ]] && export CLAUDE_API_KEY="$ANTHROPIC_API_KEY"
 fi
 
 # Resolve conflict: prefer API key and drop token if both are set
@@ -504,17 +506,18 @@ if [[ -n "${ANTHROPIC_AUTH_TOKEN:-}" && -n "${ANTHROPIC_API_KEY:-}" ]]; then
   unset CLAUDE_CODE_AUTH_TOKEN
 fi
 
-# Optional secrets
-if [[ -z "${CONTEXT7_API_KEY:-}" ]]; then CONTEXT7_API_KEY="$(_read_op_secret 'op://Secrets/Context7_API/api_key')"; export CONTEXT7_API_KEY; fi
-if [[ -z "${SMITHERY_API_KEY:-}" ]]; then SMITHERY_API_KEY="$(_read_op_secret 'op://Secrets/Context7_API/api_key')"; [[ -n "${SMITHERY_API_KEY:-}" ]] && export SMITHERY_API_KEY; fi
-if [[ -z "${SMITHERY_API_KEY:-}" && -n "${CONTEXT7_API_KEY:-}" ]]; then export SMITHERY_API_KEY="$CONTEXT7_API_KEY"; fi
-if [[ -z "${GITHUB_TOKEN:-}" ]]; then GITHUB_TOKEN="$(_read_op_secret 'op://Secrets/GitHub Personal Access Token/token')"; export GITHUB_TOKEN; fi
-if [[ -z "${OPENAI_API_KEY:-}" ]]; then OPENAI_API_KEY="$(_read_op_secret 'op://Secrets/oAI_API/api_key2')"; export OPENAI_API_KEY; fi
+# Backfill SMITHERY from CONTEXT7 if needed
+if [[ -z "${SMITHERY_API_KEY:-}" && -n "${CONTEXT7_API_KEY:-}" ]]; then
+  export SMITHERY_API_KEY="$CONTEXT7_API_KEY"
+fi
 
 # Base URL and defaults for z.ai if not already configured
 [[ -z "${ANTHROPIC_BASE_URL:-}" ]] && export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
 [[ -z "${Z_AI_MODE:-}" ]] && export Z_AI_MODE="ZAI"
 [[ -z "${API_TIMEOUT_MS:-}" ]] && export API_TIMEOUT_MS="3000000"
+[[ -z "${ANTHROPIC_DEFAULT_OPUS_MODEL:-}" ]] && export ANTHROPIC_DEFAULT_OPUS_MODEL="GLM-4.7"
+[[ -z "${ANTHROPIC_DEFAULT_SONNET_MODEL:-}" ]] && export ANTHROPIC_DEFAULT_SONNET_MODEL="GLM-4.7"
+[[ -z "${ANTHROPIC_DEFAULT_HAIKU_MODEL:-}" ]] && export ANTHROPIC_DEFAULT_HAIKU_MODEL="GLM-4.5-Air"
 export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 
 # Persist secrets to ~/.claude/.env ONLY for configs that still need ${VAR} expansion
@@ -566,6 +569,35 @@ note "----- sandbox profile -----"
 cat "$SANDBOX_PROFILE" >&2
 note "----- command -----"
 note "${(q)cmd}"
+
+# TTY guard: ensure interactive sessions have a real TTY
+CLAUDE_SECURE_DEBUG="${CLAUDE_SECURE_DEBUG:-}"
+wants_print=0
+if (( ${#FINAL_ARGS[@]} > 0 )); then
+  for arg in "${FINAL_ARGS[@]}"; do
+    if [[ "$arg" == "-p" || "$arg" == "--print" ]]; then
+      wants_print=1; break
+    fi
+  done
+fi
+
+if (( wants_print == 0 )); then
+  if [[ -n "$CLAUDE_SECURE_DEBUG" ]]; then
+    if [[ -t 0 ]]; then
+      note "[debug] stdin is a TTY"
+    else
+      note "[debug] stdin is NOT a TTY"
+    fi
+  fi
+  if ! [[ -t 0 ]]; then
+    if [[ -r /dev/tty ]]; then
+      exec < /dev/tty
+      [[ -n "$CLAUDE_SECURE_DEBUG" ]] && note "[debug] reattached stdin to /dev/tty"
+    else
+      note "WARN: No interactive TTY available. Use -p/--print or pipe input."
+    fi
+  fi
+fi
 
 if (( dry_run )); then
   exit 0

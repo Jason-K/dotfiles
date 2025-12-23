@@ -51,3 +51,12 @@ c --dangerously-skip-permissions       # Quick alias
 - **Sandbox Enforcement**: Every session runs in macOS sandbox
 
 For complete setup instructions, see [SETUP.md](SETUP.md).
+
+## Optional Safeguards
+
+If you prefer extra protection against accidental deletions while keeping normal edits:
+
+- Deny deletes: add `(deny file-write-unlink (subpath "<PROJECT_ROOT_REAL>"))`
+- Deny renames: add `(deny file-rename* (subpath "<PROJECT_ROOT_REAL>"))`
+
+This preserves `file-write-data` and `file-write-create` (edits and new files) while blocking unlink/rename operations that can cause data loss. You can add these lines inside the sandbox profile generation in `claude-secure-wrapper.sh` after the project allow rules.

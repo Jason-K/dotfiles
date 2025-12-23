@@ -1,0 +1,6 @@
+ANTHROPIC_API_KEY=op://Secrets/GLM_API/apikey2
+ANTHROPIC_AUTH_TOKEN=op://Secrets/GLM_API/apikey2
+Z_AI_API_KEY=op://Secrets/GLM_API/apikey2
+CONTEXT7_API_KEY=op://Secrets/Context7_API/api_key
+SMITHERY_API_KEY=op://Secrets/Context7_API/api_key
+GITHUB_TOKEN=op://Secrets/GitHub Personal Access Token/token

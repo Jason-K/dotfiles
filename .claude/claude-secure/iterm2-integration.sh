@@ -36,7 +36,9 @@ claude-smart() {
 
 # ───────────────────────────────────────────────────────────────────────────────
 # 3) Secrets-enabled direct run (no sandbox): loads secrets then runs Claude
+# ───────────────────────────────────────────────────────────────────────────────
 
+# Non-sandboxed Claude with 1Password secrets (one-time biometric auth via op run)
 claude-secrets() {
     local secrets_script="$HOME/dotfiles/.claude/claude-secure/claude-secure-nosandbox.sh"
 
@@ -109,6 +111,7 @@ fi
 # Smart/sandbox mode aliases (primary workflow)
 alias c='claude-smart'
 alias cl='claude-smart'
+alias cs='claude-secrets'
 
 # ───────────────────────────────────────────────────────────────────────────────
 # 6) Auto-completion for zsh

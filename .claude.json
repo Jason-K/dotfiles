@@ -1,5 +1,5 @@
 {
-  "numStartups": 130,
+  "numStartups": 143,
   "installMethod": "local",
   "autoUpdates": true,
   "customApiKeyResponses": {
@@ -7,45 +7,44 @@
       "f78.OWPXCsZVyyhLF19v"
     ],
     "rejected": [
-      "ItzmzTd9tpA-c0ad0gAA",
-      "${GLM_KEY}"
+      "ItzmzTd9tpA-c0ad0gAA"
     ]
   },
   "tipsHistory": {
     "new-user-warmup": 4,
     "plan-mode-for-complex-tasks": 108,
     "shift-enter": 119,
-    "memory-command": 114,
+    "memory-command": 134,
     "theme-command": 118,
     "status-line": 93,
     "stickers-command": 118,
     "prompt-queue": 37,
-    "enter-to-steer-in-relatime": 114,
-    "todo-list": 114,
+    "enter-to-steer-in-relatime": 136,
+    "todo-list": 136,
     "ide-upsell-external-terminal": 110,
-    "# for memory": 116,
+    "# for memory": 136,
     "install-github-app": 122,
-    "permissions": 115,
-    "drag-and-drop-images": 116,
+    "permissions": 134,
+    "drag-and-drop-images": 136,
     "paste-images-mac": 123,
     "double-esc-code-restore": 123,
     "continue": 129,
-    "custom-commands": 112,
+    "custom-commands": 132,
     "shift-tab": 129,
-    "image-paste": 114,
+    "image-paste": 136,
     "tab-toggle-thinking": 116,
-    "ultrathink-keyword": 108,
-    "custom-agents": 112,
-    "vscode-command-install": 105,
+    "ultrathink-keyword": 132,
+    "custom-agents": 132,
+    "vscode-command-install": 132,
     "git-worktrees": 114,
-    "default-permission-mode-config": 104,
-    "install-slack-app": 104,
-    "rename-conversation": 104,
-    "config-thinking-mode": 104,
-    "desktop-app": 104,
-    "web-app": 104,
+    "default-permission-mode-config": 137,
+    "install-slack-app": 137,
+    "rename-conversation": 137,
+    "config-thinking-mode": 137,
+    "desktop-app": 137,
+    "web-app": 137,
     "mobile-app": 104,
-    "btw-side-question": 96
+    "btw-side-question": 137
   },
   "promptQueueUseCount": 8,
   "showExpandedTodos": true,
@@ -213,7 +212,44 @@
       ],
       "lastTotalWebSearchRequests": 0,
       "exampleFilesGeneratedAt": 1764960085800,
-      "hasCompletedProjectOnboarding": true
+      "hasCompletedProjectOnboarding": true,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "lastCost": 0.027268800000000003,
+      "lastAPIDuration": 19694,
+      "lastAPIDurationWithoutRetries": 19691,
+      "lastToolDuration": 0,
+      "lastDuration": 63949,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 5021,
+      "lastTotalOutputTokens": 626,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 9386,
+      "lastModelUsage": {
+        "GLM-4.5-Air": {
+          "inputTokens": 1,
+          "outputTokens": 136,
+          "cacheReadInputTokens": 8746,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.0046668000000000005
+        },
+        "GLM-4.6": {
+          "inputTokens": 5020,
+          "outputTokens": 490,
+          "cacheReadInputTokens": 640,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.022602
+        }
+      },
+      "lastSessionId": "c3440bc6-5c3d-41e4-a73a-ebb3b8a945bd"
     },
     "/Users/jason/Scripts/Metascripts/hsStringEval": {
       "allowedTools": [],
@@ -275,7 +311,7 @@
       "enabledMcpjsonServers": [],
       "disabledMcpjsonServers": [],
       "hasTrustDialogAccepted": true,
-      "projectOnboardingSeenCount": 2,
+      "projectOnboardingSeenCount": 4,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [
@@ -296,17 +332,17 @@
       },
       "lastAPIDurationWithoutRetries": 0,
       "lastModelUsage": {},
-      "lastCost": 0.0170178,
-      "lastAPIDuration": 20998,
+      "lastCost": 0.008818200000000002,
+      "lastAPIDuration": 6075,
       "lastToolDuration": 0,
-      "lastDuration": 256149,
+      "lastDuration": 146176,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 1285,
-      "lastTotalOutputTokens": 859,
+      "lastTotalInputTokens": 2023,
+      "lastTotalOutputTokens": 180,
       "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 926,
-      "lastSessionId": "27bbb2aa-19d8-4cda-984f-944e408a4c2c"
+      "lastTotalCacheReadInputTokens": 164,
+      "lastSessionId": "0e0f26cc-d240-4094-8780-0fa8423d3eb0"
     },
     "/Users/jason/.claude-worktrees/file_namer/vigorous-torvalds": {
       "allowedTools": [],
@@ -510,7 +546,7 @@
       "headersHelper": "echo '{\"Authorization\":\"Bearer '$(op read 'op://Secrets/Context7_API/api_key' 2>/dev/null)'\"}'"
     }
   },
-  "lastReleaseNotesSeen": "2.0.36",
+  "lastReleaseNotesSeen": "2.0.72",
   "lastPlanModeUse": 1766037319531,
   "opus45MigrationComplete": true,
   "githubRepoPaths": {
@@ -543,11 +579,8 @@
     "0d7f82d0-16e4-4d7d-b705-9233a5fb591e": true
   },
   "thinkingMigrationComplete": true,
-  "officialMarketplaceAutoInstallRetryCount": 4,
-  "officialMarketplaceAutoInstallLastAttemptTime": 1766108449564,
-  "officialMarketplaceAutoInstallNextRetryTime": 1766166049564,
-  "apiKeyHelper": {
-    "smitheryApiKeyHelper": "if [ -f ~/.claude/.env ]; then source ~/.claude/.env; echo \"$SMITHERY_API_KEY\"; fi"
-  },
+  "officialMarketplaceAutoInstallRetryCount": 5,
+  "officialMarketplaceAutoInstallLastAttemptTime": 1766444062689,
+  "officialMarketplaceAutoInstallNextRetryTime": 1766559262689,
   "hasUsedBackslashReturn": true
 }

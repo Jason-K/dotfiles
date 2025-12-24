@@ -1,0 +1,37 @@
+##############################
+#        IP blocklist        #
+##############################
+
+## Rules for blocking DNS responses if they contain
+## IP addresses matching patterns.
+##
+## Sample feeds of suspect IP addresses:
+## - https://github.com/stamparm/ipsum
+## - https://github.com/tg12/bad_packets_blocklist
+## - https://isc.sans.edu/block.txt
+## - https://block.energized.pro/extensions/ips/formats/list.txt
+## - https://www.iblocklist.com/lists
+
+# Localhost rebinding protection
+0.0.0.0
+127.*
+
+# RFC1918 rebinding protection
+10.*
+172.16.*
+172.17.*
+172.18.*
+172.19.*
+172.20.*
+172.21.*
+172.22.*
+172.23.*
+172.24.*
+172.25.*
+172.26.*
+172.27.*
+172.28.*
+172.29.*
+172.30.*
+172.31.*
+192.168.*

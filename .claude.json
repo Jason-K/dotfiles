@@ -1,7 +1,8 @@
 {
-  "numStartups": 152,
+  "numStartups": 155,
   "installMethod": "local",
   "autoUpdates": true,
+  "verbose": true,
   "customApiKeyResponses": {
     "approved": [
       "f78.OWPXCsZVyyhLF19v",
@@ -22,7 +23,7 @@
     "prompt-queue": 37,
     "enter-to-steer-in-relatime": 136,
     "todo-list": 136,
-    "ide-upsell-external-terminal": 145,
+    "ide-upsell-external-terminal": 153,
     "# for memory": 147,
     "install-github-app": 147,
     "permissions": 147,
@@ -33,7 +34,7 @@
     "custom-commands": 148,
     "shift-tab": 147,
     "image-paste": 136,
-    "tab-toggle-thinking": 144,
+    "tab-toggle-thinking": 155,
     "ultrathink-keyword": 147,
     "custom-agents": 148,
     "vscode-command-install": 132,
@@ -48,6 +49,7 @@
     "btw-side-question": 137
   },
   "promptQueueUseCount": 12,
+  "showExpandedTodos": true,
   "cachedStatsigGates": {
     "tengu_disable_bypass_permissions_mode": false,
     "tengu_tool_pear": false,
@@ -271,7 +273,18 @@
       ],
       "exampleFilesGeneratedAt": 1766511627503,
       "lastTotalWebSearchRequests": 0,
-      "hasCompletedProjectOnboarding": true
+      "hasCompletedProjectOnboarding": true,
+      "lastCost": 0.9220397999999999,
+      "lastAPIDuration": 72463,
+      "lastToolDuration": 17696,
+      "lastDuration": 2409549,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 298363,
+      "lastTotalOutputTokens": 868,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 46436,
+      "lastSessionId": "95d83568-59c9-4780-ab46-686442609c84"
     },
     "/Users/jason/Scripts/Application_Specific/Browsers/Userscripts": {
       "allowedTools": [],
@@ -496,6 +509,30 @@
       "lastTotalCacheCreationInputTokens": 0,
       "lastTotalCacheReadInputTokens": 0,
       "lastSessionId": "d3c134a5-7f6a-475f-8cce-5baa244a6c4d"
+    },
+    "/Users/jason/bin/dnscrypt_proxy": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 1,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "exampleFiles": [],
+      "lastCost": 0.005376000000000001,
+      "lastAPIDuration": 4708,
+      "lastToolDuration": 0,
+      "lastDuration": 743341,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 293,
+      "lastTotalOutputTokens": 285,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 740,
+      "lastTotalWebSearchRequests": 0,
+      "lastSessionId": "7e763245-1930-46cb-b4f4-9ebf0979c50e"
     }
   },
   "firstStartTime": "2025-07-16T16:51:58.327Z",

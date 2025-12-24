@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Job Label -->
+    <key>Label</key>
+    <string>com.user.dnscrypt.blocklist-update</string>
+
+    <!-- Program to Run -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/jason/dotfiles/dnscrypt-proxy/settIngs/blocklist-generator/update-blocklist.sh</string>
+    </array>
+
+    <!-- Run at 8 AM every day -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>8</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <!-- Also run on load (optional - will run once when launchd loads this job) -->
+    <!-- <key>RunAtLoad</key>
+    <true/> -->
+
+    <!-- Standard Output and Error Logs -->
+    <key>StandardOutPath</key>
+    <string>/Users/jason/dotfiles/dnscrypt-proxy/logs/blocklist-launchd-stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/jason/dotfiles/dnscrypt-proxy/logs/blocklist-launchd-stderr.log</string>
+
+    <!-- Working Directory -->
+    <key>WorkingDirectory</key>
+    <string>/Users/jason/dotfiles/dnscrypt-proxy/settIngs/blocklist-generator</string>
+
+    <!-- Run even when user is not logged in -->
+    <key>KeepAlive</key>
+    <false/>
+
+    <!-- Environment Variables (if needed) -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+</dict>
+</plist>

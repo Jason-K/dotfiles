@@ -39,6 +39,7 @@ server_names = [
   'quad9-doh-ip4-port443-filter-pri'
 ]
 
+# server_names = ['scaleway-ams']
 
 ## List of local addresses and ports to listen to. Can be IPv4 and/or IPv6.
 ## Example with both IPv4 and IPv6:
@@ -232,7 +233,6 @@ log_file = 'logs/dnscrypt-proxy.log'
 
 log_file_latest = true
 
-
 ## Use the system logger (syslog on Unix, Event Log on Windows)
 
 # use_syslog = true
@@ -343,7 +343,7 @@ cert_refresh_delay = 240
 ## not be sent there. If you're using DNSCrypt or Anonymized DNS and your
 ## lists are up to date, these resolvers will not even be used.
 
-bootstrap_resolvers = ['9.9.9.11:53', '1.1.1.1:53']
+# bootstrap_resolvers = ['9.9.9.11:53', '1.1.1.1:53']
 
 
 ## When internal DNS resolution is required, for example to retrieve
@@ -379,7 +379,7 @@ netprobe_timeout = 60
 ## On other operating systems, the connection will be initialized
 ## but nothing will be sent at all.
 
-netprobe_address = '9.9.9.9:53'
+# netprobe_address = '9.9.9.9:53'
 
 
 ## Offline mode - Do not use any remote encrypted servers.

@@ -1,0 +1,16 @@
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+filter.lfs.clean=git-lfs clean -- %f
+user.name=Jason
+user.email=80914358+Jason-K@users.noreply.github.com
+user.signingkey=ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM2xAy9wilr5bTTGufUCTrjcsWykpvdaDW/1/NEFPLCi
+protocol.file.allow=always
+gpg.format=ssh
+gpg.ssh.program=/Applications/1Password.app/Contents/MacOS/op-ssh-sign
+commit.gpgsign=true
+core.pager=delta
+interactive.difffilter=delta --color-only
+delta.navigate=true
+delta.side-by-side=true
+delta.syntax-theme=Monokai Extended

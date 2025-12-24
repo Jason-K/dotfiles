@@ -1,5 +1,5 @@
 total 48
-drwx------@ 5 jason  staff   160 Dec 15 08:49 1Password
+drwx------@ 5 jason  staff   160 Dec 22 21:13 1Password
 -rw-------@ 1 jason  staff   937 Nov 17 08:17 config
 -rw-------@ 1 jason  staff   399 Nov  3 09:25 id_ed25519
 -rw-r--r--@ 1 jason  staff    91 Nov  3 09:25 id_ed25519.pub

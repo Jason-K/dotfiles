@@ -2,3 +2,7 @@
 /Users/jason/.config/karabiner
 /Users/jason/Library/Application Support/Keyboard Maestro
 /Users/jason/Library/Preferences/org.hammerspoon.Hammerspoon.plist
+/Users/jason/.hammerspoon
+/Users/jason/.config/karabiner
+/Users/jason/Library/Application Support/Keyboard Maestro
+/Users/jason/Library/Preferences/org.hammerspoon.Hammerspoon.plist

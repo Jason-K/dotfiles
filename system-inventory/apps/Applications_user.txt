@@ -3,9 +3,12 @@ Chrome Apps.localized
 Dadroit JSON Viewer.app
 EasyFind.app
 Edge Apps.localized
+Helium Apps.localized
 iTerm.app
 Orion
 Setapp
 Spotify.app
 Spyder 6 (anaconda3).app
+Spyder 6 Uninstaller.app
+Spyder 6.app
 XMenu.app

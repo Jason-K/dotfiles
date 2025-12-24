@@ -304,12 +304,15 @@ CLAUDE_BIN_DIR="$(/usr/bin/dirname "$CLAUDE_BIN_REAL")"
 CLAUDE_BIN_DIR_ESC="$(esc_scheme "$CLAUDE_BIN_DIR")"
 CLAUDE_BIN_ALLOW=$'(allow file-read* file-map-executable\n  (subpath "'"$CLAUDE_BIN_DIR_ESC"'")\n)'
 
-# Allow 1Password CLI for headersHelper to pull API keys at runtime (no plaintext cache)
+# Allow 1Password CLI inside sandbox only when explicitly enabled
+# Default is to DISABLE op in sandbox to avoid repeated biometric prompts
 OP_BIN_ALLOW=""
-if command -v op >/dev/null 2>&1; then
-  OP_BIN_PATH="$(command -v op)"
-  OP_BIN_ESC="$(esc_scheme "$OP_BIN_PATH")"
-  OP_BIN_ALLOW=$'(allow file-read* file-map-executable\n  (literal "'"$OP_BIN_ESC"'")\n)'
+if [[ "${CLAUDE_ALLOW_OP_IN_SANDBOX:-0}" == "1" ]]; then
+  if command -v op >/dev/null 2>&1; then
+    OP_BIN_PATH="$(command -v op)"
+    OP_BIN_ESC="$(esc_scheme "$OP_BIN_PATH")"
+    OP_BIN_ALLOW=$'(allow file-read* file-map-executable\n  (literal "'""$OP_BIN_ESC"'"")\n)'
+  fi
 fi
 
 # Allow access to Claude config files and directories when no_home is enabled
@@ -520,6 +523,10 @@ fi
 [[ -z "${ANTHROPIC_DEFAULT_HAIKU_MODEL:-}" ]] && export ANTHROPIC_DEFAULT_HAIKU_MODEL="GLM-4.5-Air"
 export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 
+# Force headersHelper to use env-only mode; prevent runtime op usage
+export HEADERS_HELPER_MODE="${HEADERS_HELPER_MODE:-env}"
+export HEADERS_HELPER_DISABLE_OP="${HEADERS_HELPER_DISABLE_OP:-1}"
+
 # Persist secrets to ~/.claude/.env ONLY for configs that still need ${VAR} expansion
 # HTTP MCP servers now use headersHelper to fetch from 1Password directly (no cache)
 CLAUDE_ENV="$HOME/.claude/.env"
@@ -533,6 +540,21 @@ note "Minimal .env created (HTTP MCP auth via headersHelper from 1Password)"
 # Log masked presence of key envs (no secret content) for troubleshooting
 _mask() { local v="$1"; [[ -n "$v" ]] && echo "set(len=${#v})" || echo "unset"; }
 note "Secrets presence: ANTHROPIC_AUTH_TOKEN=$(_mask "${ANTHROPIC_AUTH_TOKEN-}") ANTHROPIC_API_KEY=$(_mask "${ANTHROPIC_API_KEY-}") Z_AI_API_KEY=$(_mask "${Z_AI_API_KEY-}") ZAI_API_KEY=$(_mask "${ZAI_API_KEY-}") SMITHERY_API_KEY=$(_mask "${SMITHERY_API_KEY-}")"
+
+# Optional: run an env diagnostic inside the sandbox before launching Claude
+if [[ "${CLAUDE_ENV_DIAG:-0}" == "1" ]]; then
+  note "Running in-sandbox env diagnostic..."
+  diag_out=$(/usr/bin/sandbox-exec -f "$SANDBOX_PROFILE" /usr/bin/env | grep -E '^(ANTHROPIC|Z_AI|ZAI|SMITHERY|OPENAI|OPENROUTER|DEEPSEEK|GEMINI)_' || true)
+  # Mask values in diagnostic output
+  while IFS= read -r line; do
+    k="${line%%=*}"; v="${line#*=}"; lv=${#v}
+    if [[ -n "$v" ]]; then
+      note "[sandbox-env] ${k}=set(len=${lv})"
+    else
+      note "[sandbox-env] ${k}=unset"
+    fi
+  done <<< "$diag_out"
+fi
 
 cmd=(/usr/bin/sandbox-exec -f "$SANDBOX_PROFILE" "$CLAUDE_BIN_REAL" "${FINAL_ARGS[@]}")
 

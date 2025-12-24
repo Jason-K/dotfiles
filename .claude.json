@@ -1,10 +1,11 @@
 {
-  "numStartups": 143,
+  "numStartups": 152,
   "installMethod": "local",
   "autoUpdates": true,
   "customApiKeyResponses": {
     "approved": [
-      "f78.OWPXCsZVyyhLF19v"
+      "f78.OWPXCsZVyyhLF19v",
+      "892.PeGDryDrcfgm4AS6"
     ],
     "rejected": [
       "ItzmzTd9tpA-c0ad0gAA"
@@ -13,30 +14,30 @@
   "tipsHistory": {
     "new-user-warmup": 4,
     "plan-mode-for-complex-tasks": 108,
-    "shift-enter": 119,
-    "memory-command": 134,
-    "theme-command": 118,
+    "shift-enter": 145,
+    "memory-command": 150,
+    "theme-command": 144,
     "status-line": 93,
-    "stickers-command": 118,
+    "stickers-command": 144,
     "prompt-queue": 37,
     "enter-to-steer-in-relatime": 136,
     "todo-list": 136,
-    "ide-upsell-external-terminal": 110,
-    "# for memory": 136,
-    "install-github-app": 122,
-    "permissions": 134,
-    "drag-and-drop-images": 136,
-    "paste-images-mac": 123,
-    "double-esc-code-restore": 123,
-    "continue": 129,
-    "custom-commands": 132,
-    "shift-tab": 129,
+    "ide-upsell-external-terminal": 145,
+    "# for memory": 147,
+    "install-github-app": 147,
+    "permissions": 147,
+    "drag-and-drop-images": 147,
+    "paste-images-mac": 147,
+    "double-esc-code-restore": 147,
+    "continue": 147,
+    "custom-commands": 148,
+    "shift-tab": 147,
     "image-paste": 136,
-    "tab-toggle-thinking": 116,
-    "ultrathink-keyword": 132,
-    "custom-agents": 132,
+    "tab-toggle-thinking": 144,
+    "ultrathink-keyword": 147,
+    "custom-agents": 148,
     "vscode-command-install": 132,
-    "git-worktrees": 114,
+    "git-worktrees": 145,
     "default-permission-mode-config": 137,
     "install-slack-app": 137,
     "rename-conversation": 137,
@@ -46,8 +47,7 @@
     "mobile-app": 104,
     "btw-side-question": 137
   },
-  "promptQueueUseCount": 8,
-  "showExpandedTodos": true,
+  "promptQueueUseCount": 12,
   "cachedStatsigGates": {
     "tengu_disable_bypass_permissions_mode": false,
     "tengu_tool_pear": false,
@@ -61,7 +61,8 @@
     "tengu_prompt_suggestion": false,
     "tengu_sumi": false,
     "tengu_react_vulnerability_warning": false,
-    "tengu_ant_attribution_header_new": false
+    "tengu_ant_attribution_header_new": false,
+    "tengu_year_end_2025_campaign_promo": false
   },
   "cachedDynamicConfigs": {
     "tengu_1p_event_batch_config": {},
@@ -263,12 +264,12 @@
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [
         "init.lua",
-        "selection.lua",
-        "strings.lua",
         "navigation.lua",
-        "registry.lua"
+        "strings.lua",
+        "selection.lua",
+        "hammerspoon.lua"
       ],
-      "exampleFilesGeneratedAt": 1764638032167,
+      "exampleFilesGeneratedAt": 1766511627503,
       "lastTotalWebSearchRequests": 0,
       "hasCompletedProjectOnboarding": true
     },
@@ -332,17 +333,17 @@
       },
       "lastAPIDurationWithoutRetries": 0,
       "lastModelUsage": {},
-      "lastCost": 0.008818200000000002,
-      "lastAPIDuration": 6075,
+      "lastCost": 0,
+      "lastAPIDuration": 0,
       "lastToolDuration": 0,
-      "lastDuration": 146176,
+      "lastDuration": 30434,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 2023,
-      "lastTotalOutputTokens": 180,
+      "lastTotalInputTokens": 0,
+      "lastTotalOutputTokens": 0,
       "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 164,
-      "lastSessionId": "0e0f26cc-d240-4094-8780-0fa8423d3eb0"
+      "lastTotalCacheReadInputTokens": 0,
+      "lastSessionId": "076497e1-693f-4323-8315-d798e5eff56c"
     },
     "/Users/jason/.claude-worktrees/file_namer/vigorous-torvalds": {
       "allowedTools": [],
@@ -524,29 +525,33 @@
   "mcpServers": {
     "zai-mcp-server": {
       "type": "stdio",
-      "command": "/bin/sh",
+      "command": "npx",
       "args": [
-        "-c",
-        "KEY=$(op read 'op://Secrets/GLM_API/apikey2' 2>/dev/null || printf '%s' \"${Z_AI_API_KEY:-}\"); if [ -z \"$KEY\" ]; then echo 'zai-mcp-server missing Z_AI_API_KEY (op read failed and env empty)' >&2; exit 1; fi; Z_AI_API_KEY=\"$KEY\" Z_AI_MODE=${Z_AI_MODE:-search} exec npx -y @z_ai/mcp-server"
-      ]
+        "-y",
+        "@z_ai/mcp-server"
+      ],
+      "env": {
+        "Z_AI_API_KEY": "${Z_AI_API_KEY}",
+        "Z_AI_MODE": "${Z_AI_MODE:-search}"
+      }
     },
     "web-search-prime": {
       "type": "http",
       "url": "https://api.z.ai/api/mcp/web_search_prime/mcp",
-      "headersHelper": "KEY=\"${Z_AI_API_KEY:-$(op read 'op://Secrets/GLM_API/apikey2' 2>/dev/null)}\"; printf '{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}' \"$KEY\""
+      "headersHelper": "printf '{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}' \"$Z_AI_API_KEY\""
     },
     "web-reader": {
       "type": "http",
       "url": "https://api.z.ai/api/mcp/web_reader/mcp",
-      "headersHelper": "KEY=\"${Z_AI_API_KEY:-$(op read 'op://Secrets/GLM_API/apikey2' 2>/dev/null)}\"; printf '{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}' \"$KEY\""
+      "headersHelper": "printf '{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}' \"$Z_AI_API_KEY\""
     },
     "context7-mcp": {
       "type": "http",
       "url": "https://mcp.context7.com/mcp",
-      "headersHelper": "echo '{\"Authorization\":\"Bearer '$(op read 'op://Secrets/Context7_API/api_key' 2>/dev/null)'\"}'"
+      "headersHelper": "printf '{\"Authorization\":\"Bearer %s\"}' \"$CONTEXT7_API_KEY\""
     }
   },
-  "lastReleaseNotesSeen": "2.0.72",
+  "lastReleaseNotesSeen": "2.0.36",
   "lastPlanModeUse": 1766037319531,
   "opus45MigrationComplete": true,
   "githubRepoPaths": {

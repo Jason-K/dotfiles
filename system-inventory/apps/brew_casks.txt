@@ -18,7 +18,6 @@ chatgpt
 claude
 cloudmounter
 cmake-app
-copilot-money
 customshortcuts
 dadroit-json-viewer
 daisydisk
@@ -70,6 +69,7 @@ maccy
 macupdater
 maintenance
 microsoft-edge
+moom
 neo-network-utility
 netiquette
 notion
@@ -90,7 +90,6 @@ profind
 proton-drive
 proton-mail
 proton-mail-bridge
-qlmarkdown
 qlvideo
 qspace-pro
 raindropio

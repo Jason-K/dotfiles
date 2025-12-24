@@ -19,6 +19,7 @@ ca-certificates
 cairo
 camlpdf
 cask
+certifi
 cffi
 chezmoi
 cjson
@@ -32,8 +33,11 @@ czkawka
 dav1d
 dbus
 direnv
+djvulibre
+dotenvx
 double-conversion
 dua-cli
+duckdb
 emacs
 enchant
 eza
@@ -84,6 +88,7 @@ img2pdf
 jasper
 jbig2dec
 jbig2enc
+jpeg
 jpeg-turbo
 jpeg-xl
 jq
@@ -225,6 +230,7 @@ qtshadertools
 qtsvg
 rav1e
 readline
+rich-cli
 ripgrep
 ripgrep-all
 rtmpdump
@@ -262,7 +268,6 @@ unixodbc
 unpaper
 utf8proc
 uvwasi
-varlock
 watchexec
 webp
 webp-pixbuf-loader
@@ -303,7 +308,6 @@ chatgpt
 claude
 cloudmounter
 cmake-app
-copilot-money
 customshortcuts
 dadroit-json-viewer
 daisydisk
@@ -355,6 +359,7 @@ maccy
 macupdater
 maintenance
 microsoft-edge
+moom
 neo-network-utility
 netiquette
 notion
@@ -375,7 +380,6 @@ profind
 proton-drive
 proton-mail
 proton-mail-bridge
-qlmarkdown
 qlvideo
 qspace-pro
 raindropio

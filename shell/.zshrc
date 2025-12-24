@@ -196,6 +196,37 @@ alias clear='\clear'
 # One reload alias (login-style)
 alias reload='\clear && source ~/.zshrc && echo "Reloaded .zshrc"'
 
+# ---- Kitty shell integration (REPLACE lines 199-207) ----
+# Enhanced version with more features while maintaining iTerm2 compatibility
+
+if [[ "$TERM" == "xterm-kitty" ]]; then
+    # SSH with proper terminfo propagation
+    alias ssh="kitty +kitten ssh"
+
+    # Image viewing in terminal
+    alias icat="kitty +kitten icat"
+
+    # File transfer over SSH
+    alias kcp="kitty +kitten transfer"
+
+    # Theme switching (requires allow_remote_control in kitty.conf)
+    kitty-dark()  { kitty @ set-colors --all ~/.config/kitty/themes/dark.conf 2>/dev/null || echo "Enable allow_remote_control in kitty.conf" >&2; }
+    kitty-light() { kitty @ set-colors --all ~/.config/kitty/themes/light.conf 2>/dev/null || echo "Enable allow_remote_control in kitty.conf" >&2; }
+
+    # Broadcast input to all windows (like iTerm2's broadcast)
+    kitty-broadcast() { kitty +kitten broadcast; }
+
+    # New window/tab in current directory
+    kitty-new() { kitty @ new-window --cwd="$PWD" "$@"; }
+    kitty-tab() { kitty @ new-tab --cwd="$PWD" "$@"; }
+
+    # Window title hooks (show directory and running command)
+    autoload -Uz add-zsh-hook
+    _kitty_title_precmd()  { print -Pn "\e]2;%~\a"; }
+    _kitty_title_preexec() { print -Pn "\e]2;%~ ❯ ${1%%$'\n'*}\a"; }
+    add-zsh-hook precmd _kitty_title_precmd
+    add-zsh-hook preexec _kitty_title_preexec
+fi
 # Yazi smart-cd wrapper (with direct-dir fast path)
 y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd

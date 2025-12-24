@@ -316,7 +316,7 @@
         );
         iconSize = 16;
         showIconPreview = 1;
-        sortColumn = dateModified;
+        sortColumn = name;
         textSize = 13;
         useRelativeDates = 1;
         userDidChangeSort = 1;
@@ -1078,28 +1078,40 @@
             name = Downloads;
         },
                 {
-            "file-bookmark" = {length = 1436, bytes = 0x626f6f6b 9c050000 00000510 40000000 ... 04000000 00000000 };
-            name = MouseGic;
-        },
-                {
-            "file-bookmark" = {length = 972, bytes = 0x626f6f6b cc030000 00000510 40000000 ... 04000000 00000000 };
-            name = SMS;
-        },
-                {
-            "file-bookmark" = {length = 912, bytes = 0x626f6f6b 90030000 00000510 40000000 ... 04000000 00000000 };
-            name = "Parks, Alon";
-        },
-                {
-            "file-bookmark" = {length = 868, bytes = 0x626f6f6b 64030000 00000510 40000000 ... 04000000 00000000 };
-            name = Cases;
+            "file-bookmark" = {length = 1548, bytes = 0x626f6f6b 0c060000 00000510 40000000 ... ac000000 00000000 };
+            name = "Fenn 1.0.22-arm64";
         },
                 {
             "file-bookmark" = {length = 724, bytes = 0x626f6f6b d4020000 00000510 40000000 ... 04000000 00000000 };
             name = Office;
         },
                 {
-            "file-bookmark" = {length = 1548, bytes = 0x626f6f6b 0c060000 00000510 40000000 ... ac000000 00000000 };
-            name = "Fenn 1.0.22-arm64";
+            "file-bookmark" = {length = 868, bytes = 0x626f6f6b 64030000 00000510 40000000 ... 04000000 00000000 };
+            name = Cases;
+        },
+                {
+            "file-bookmark" = {length = 912, bytes = 0x626f6f6b 90030000 00000510 40000000 ... 04000000 00000000 };
+            name = "Parks, Alon";
+        },
+                {
+            "file-bookmark" = {length = 972, bytes = 0x626f6f6b cc030000 00000510 40000000 ... 04000000 00000000 };
+            name = SMS;
+        },
+                {
+            "file-bookmark" = {length = 1436, bytes = 0x626f6f6b 9c050000 00000510 40000000 ... 04000000 00000000 };
+            name = MouseGic;
+        },
+                {
+            "file-bookmark" = {length = 640, bytes = 0x626f6f6b 80020000 00000510 40000000 ... 04000000 00000000 };
+            name = jason;
+        },
+                {
+            "file-bookmark" = {length = 740, bytes = 0x626f6f6b e4020000 00000510 40000000 ... 04000000 00000000 };
+            name = "PROJECT_contact-cleanup";
+        },
+                {
+            "file-bookmark" = {length = 1428, bytes = 0x626f6f6b 94050000 00000510 40000000 ... 04000000 00000000 };
+            name = OnText;
         }
     );
     FXRemoveOldTrashItems = 1;
@@ -1123,6 +1135,8 @@
     FXSyncExtensionToolbarItemsPendingAdd =     (
     );
     FXSyncExtensionToolbarItemsPendingRemove =     (
+        "com.sindresorhus.Supercharge-setapp.Finder-Extension",
+        "com.microsoft.OneDrive-mac.FinderSync"
     );
     FXToolbarUpgradedToTenEight = 1;
     FXToolbarUpgradedToTenNine = 2;
@@ -1139,13 +1153,13 @@
     );
     FinderSounds = 0;
     FontSizeCategory = S;
-    GoToField = "";
+    GoToField = "~/dotfiles/.claude";
     GoToFieldHistory =     (
+        "/Users/jason/dotfiles/.claude",
         "/Users/jason/Library/Containers/com.softwareambience.Unclutter/Data/Library/Application Support/Unclutter/FileStorage",
         "/usr/bin/osascript",
         "/Users/jason/Scripts/Metascripts/kill_unresponsive.jxa",
-        "/Users/jason/Library/QuickLook",
-        "/System/Applications/Mission Control.app"
+        "/Users/jason/Library/QuickLook"
     );
     ICloudViewSettings =     {
         ExtendedListViewSettingsV2 =         {
@@ -1742,14 +1756,14 @@
     QLHidePanelOnDeactivate = 1;
     QuitMenuItem = 0;
     RecentMoveAndCopyDestinations =     (
+        "file:///Users/jason/Downloads/PROJECT_contact-cleanup/",
+        "file:///Users/jason/Downloads/Books/",
         "file:///Applications/",
         "file:///Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/Cases/Nunez,%20Emmanuel/",
         "file:///Users/jason/Library/QuickLook/",
-        "file:///Users/jason/Downloads/Books/",
         "file:///Users/jason/Downloads/",
         "file:///Users/jason/.ssh/sce/1password/",
         "file:///Users/jason/Downloads/PDFs/",
-        "file:///Users/jason/Documents/SerialBox/",
         "file:///Users/jason/Downloads/Office/",
         "file:///Users/jason/Documents/Obsidian_local/"
     );
@@ -2351,7 +2365,7 @@
                     ascending = 1;
                     identifier = name;
                     visible = 1;
-                    width = 1051;
+                    width = 1034;
                 },
                                 {
                     ascending = 0;
@@ -2434,9 +2448,9 @@
             );
             iconSize = 16;
             scrollPositionX = "-143";
-            scrollPositionY = 0;
+            scrollPositionY = 2271;
             showIconPreview = 1;
-            sortColumn = dateModified;
+            sortColumn = name;
             textSize = 12;
             useRelativeDates = 1;
             viewOptionsVersion = 1;
@@ -2485,7 +2499,7 @@
                     ascending = 1;
                     index = 0;
                     visible = 1;
-                    width = 1051;
+                    width = 1034;
                 };
                 size =                 {
                     ascending = 0;
@@ -2502,9 +2516,9 @@
             };
             iconSize = 16;
             scrollPositionX = "-143";
-            scrollPositionY = 0;
+            scrollPositionY = 2271;
             showIconPreview = 1;
-            sortColumn = dateModified;
+            sortColumn = name;
             textSize = 12;
             useRelativeDates = 1;
             viewOptionsVersion = 1;
@@ -2515,7 +2529,7 @@
             ShowStatusBar = 0;
             ShowTabView = 1;
             ShowToolbar = 1;
-            WindowBounds = "{{0, 57}, {1800, 1037}}";
+            WindowBounds = "{{0, 56}, {1800, 993}}";
         };
     };
     "ViewOptionsWindow.Location" = "{736, 315}";

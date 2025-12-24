@@ -1,71 +1,58 @@
-# iTerm2 Claude Smart Integration
-# Provides vanilla Claude and intelligent sandboxed access
+# iTerm2 Claude Smart Integration v2
+# Single biometric auth - no repeated prompts
+# Source this from ~/.zshrc
 
-# ───────────────────────────────────────────────────────────────────────────────
-# 1) Vanilla Claude (no wrapper, no secrets, no sandbox)
-# ───────────────────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# PATHS
+# ─────────────────────────────────────────────────────────────────────────────
+CLAUDE_SECURE_DIR="$HOME/dotfiles/.claude/claude-secure"
+CLAUDE_LAUNCHER="$CLAUDE_SECURE_DIR/claude-launcher.sh"
+CLAUDE_WRAPPER="$CLAUDE_SECURE_DIR/claude-secure-wrapper.sh"
+CLAUDE_SMART="$CLAUDE_SECURE_DIR/claude-smart-simple"
+CLAUDE_ENV_FILE="$CLAUDE_SECURE_DIR/.claude-env"
 
+# ─────────────────────────────────────────────────────────────────────────────
+# CORE: Single auth then launch
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Main launcher with secrets (RECOMMENDED)
 claude() {
-    local claude_bin="$HOME/dotfiles/.claude/local/claude"
-
-    if [[ ! -x "$claude_bin" ]]; then
-        echo "❌ Claude binary not found: $claude_bin" >&2
+    if [[ ! -x "$CLAUDE_LAUNCHER" ]]; then
+        echo "❌ Claude launcher not found: $CLAUDE_LAUNCHER" >&2
         return 1
     fi
-
-    # Run vanilla Claude with no modifications
-    echo "🚀 Launching vanilla Claude..." >&2
-    "$claude_bin" "$@"
+    "$CLAUDE_LAUNCHER" "$@"
 }
 
-# ───────────────────────────────────────────────────────────────────────────────
-# 2) Smart launcher with preset detection & sandboxing
-# ───────────────────────────────────────────────────────────────────────────────
+# Alias for convenience
+alias cs='claude'
 
-# Intelligent sandbox: detects presets from projects.toml, creates temp sandboxes
+# ─────────────────────────────────────────────────────────────────────────────
+# SMART: Auto-detect project preset with sandbox
+# ─────────────────────────────────────────────────────────────────────────────
+
 claude-smart() {
-    local script_path="/Users/jason/dotfiles/.claude/claude-secure/claude-smart-simple"
-
-    if [[ ! -x "$script_path" ]]; then
-        echo "❌ Claude smart script not found: $script_path" >&2
+    if [[ ! -x "$CLAUDE_SMART" ]]; then
+        echo "❌ Claude smart script not found: $CLAUDE_SMART" >&2
         return 1
     fi
-
-    "$script_path" "$@"
+    
+    # Pre-resolve secrets before calling wrapper
+    _claude_resolve_secrets || return 1
+    
+    "$CLAUDE_SMART" "$@"
 }
 
-# ───────────────────────────────────────────────────────────────────────────────
-# 3) Secrets-enabled direct run (no sandbox): loads secrets then runs Claude
-# ───────────────────────────────────────────────────────────────────────────────
+# Quick aliases for smart mode
+alias c='claude-smart'
+alias cl='claude-smart'
 
-# Non-sandboxed Claude with 1Password secrets (one-time biometric auth via op run)
-claude-secrets() {
-    local secrets_script="$HOME/dotfiles/.claude/claude-secure/claude-secure-nosandbox.sh"
+# ─────────────────────────────────────────────────────────────────────────────
+# SANDBOX: Explicit preset selection
+# ─────────────────────────────────────────────────────────────────────────────
 
-    if [[ ! -r "$secrets_script" ]]; then
-        echo "❌ Secrets launcher not found: $secrets_script" >&2
-        return 1
-    fi
-
-    # Source once to load the claude-secure helper, then invoke it
-    # This keeps the secrets-loading logic in a single place.
-    source "$secrets_script"
-
-    if ! command -v claude-secure >/dev/null 2>&1; then
-        echo "❌ claude-secure function unavailable after sourcing: $secrets_script" >&2
-        return 1
-    fi
-
-    claude-secure "$@"
-}
-
-# ───────────────────────────────────────────────────────────────────────────────
-# 4) Sandbox wrapper (advanced): call claude-secure-wrapper directly
-# ───────────────────────────────────────────────────────────────────────────────
-
-# Direct wrapper access with explicit config/preset (for advanced usage)
 claude-sandbox() {
-    local config="$HOME/dotfiles/.claude/claude-secure/projects.toml"
+    local config="$CLAUDE_SECURE_DIR/projects.toml"
 
     if [[ $# -lt 1 ]]; then
         cat >&2 << 'EOF'
@@ -80,45 +67,100 @@ EOF
     local preset="$1"
     shift
 
-    "$HOME/dotfiles/.claude/claude-secure/claude-secure-wrapper.sh" \
+    # Pre-resolve secrets
+    _claude_resolve_secrets || return 1
+
+    "$CLAUDE_WRAPPER" \
         --config "$config" \
         --preset "$preset" \
         -- "$@"
 }
 
-# ───────────────────────────────────────────────────────────────────────────────
-# 4) iTerm2 enhancements
-# ───────────────────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# HELPER: Resolve secrets once (call before any wrapper)
+# ─────────────────────────────────────────────────────────────────────────────
 
-if [[ -n "${ITERM_SESSION_ID:-}" ]]; then
-    # iTerm2-specific shell integration
-    iterm2_print_user_vars() {
-        iterm2_set_user_var claudeProject "$(pwd)"
-        iterm2_set_user_var claudeMode "smart"  # default to smart/sandbox
+_claude_resolve_secrets() {
+    # Skip if already resolved
+    if [[ -n "${ANTHROPIC_API_KEY:-}" && -n "${Z_AI_API_KEY:-}" && -n "${CONTEXT7_API_KEY:-}" ]]; then
+        return 0
+    fi
+
+    if [[ ! -r "$CLAUDE_ENV_FILE" ]]; then
+        echo "❌ Environment file not found: $CLAUDE_ENV_FILE" >&2
+        return 1
+    fi
+
+    if ! command -v op &>/dev/null; then
+        echo "❌ 1Password CLI (op) not found" >&2
+        return 1
+    fi
+
+    echo "🔐 Resolving secrets from 1Password (one-time auth)..." >&2
+
+    local exports
+    exports=$(op run --no-masking --env-file="$CLAUDE_ENV_FILE" -- /usr/bin/printenv 2>/dev/null \
+        | grep -E '^(ANTHROPIC|Z_AI|CONTEXT7|SMITHERY|GITHUB|GEMINI|DEEPSEEK|OPENAI|OPENROUTER)_') || {
+        echo "⚠️  Failed to resolve secrets from 1Password" >&2
+        return 1
     }
 
-    # Launch Claude smart mode (sandboxed) in current directory
-    claude_in_current_dir() {
-        echo "🚀 Launching Claude (smart sandbox) in: $(pwd)" >&2
-        claude-smart --dangerously-skip-permissions "$@"
+    # Export to current shell
+    while IFS= read -r line; do
+        [[ -n "$line" ]] && export "$line"
+    done <<< "$exports"
+
+    # Backfill related vars
+    export Z_AI_API_KEY="${Z_AI_API_KEY:-$ANTHROPIC_API_KEY}"
+    export ZAI_API_KEY="${ZAI_API_KEY:-$ANTHROPIC_API_KEY}"
+    export SMITHERY_API_KEY="${SMITHERY_API_KEY:-$CONTEXT7_API_KEY}"
+
+    # Prevent any runtime op calls
+    export HEADERS_HELPER_MODE="env"
+    export HEADERS_HELPER_DISABLE_OP="1"
+
+    echo "✅ Secrets resolved" >&2
+    return 0
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ITERM2 ENHANCEMENTS
+# ─────────────────────────────────────────────────────────────────────────────
+
+if [[ -n "${ITERM_SESSION_ID:-}" ]]; then
+    iterm2_print_user_vars() {
+        iterm2_set_user_var claudeProject "$(pwd)"
     }
 fi
 
-# ───────────────────────────────────────────────────────────────────────────────
-# 5) Aliases for convenience
-# ───────────────────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# HELP
+# ─────────────────────────────────────────────────────────────────────────────
 
-# Smart/sandbox mode aliases (primary workflow)
-alias c='claude-smart'
-alias cl='claude-smart'
-alias cs='claude-secrets'
+claude-help() {
+    cat <<'EOF'
+✅ Claude Smart Integration v2
 
-# ───────────────────────────────────────────────────────────────────────────────
-# 6) Auto-completion for zsh
-# ───────────────────────────────────────────────────────────────────────────────
+📋 Commands:
+   claude [args]                 → Main launcher with secrets (recommended)
+   claude-smart [args]           → Smart sandbox (auto-detect preset)
+   claude-sandbox <preset> [args] → Explicit preset sandbox
 
-if command -v compdef >/dev/null 2>&1; then
-    _claude_smart() {
+📝 Aliases:
+   c, cl  → claude-smart
+   cs     → claude
+
+🔐 Secrets are resolved ONCE via 1Password at first invocation.
+   Subsequent calls reuse the exported environment variables.
+EOF
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# COMPLETIONS
+# ─────────────────────────────────────────────────────────────────────────────
+
+if command -v compdef &>/dev/null; then
+    _claude_opts() {
         local -a options
         options=(
             '--dangerously-skip-permissions[Skip workspace trust dialog]'
@@ -128,44 +170,19 @@ if command -v compdef >/dev/null 2>&1; then
             '--continue[Continue last conversation]'
             '--resume[Resume conversation]'
         )
-        _describe 'claude commands' options
+        _describe 'claude options' options
     }
 
     _claude_sandbox_preset() {
         local presets
-        presets=$(grep '^\[' "$HOME/dotfiles/.claude/claude-secure/projects.toml" 2>/dev/null | sed 's/^\[\(.*\)\].*/\1/')
+        presets=$(grep '^\[' "$CLAUDE_SECURE_DIR/projects.toml" 2>/dev/null | sed 's/^\[\(.*\)\].*/\1/')
         compadd - $presets
     }
 
-    compdef _claude_smart claude
-    compdef _claude_smart claude-smart
-    compdef _claude_smart c
-    compdef _claude_smart cl
+    compdef _claude_opts claude
+    compdef _claude_opts claude-smart
+    compdef _claude_opts c
+    compdef _claude_opts cl
+    compdef _claude_opts cs
     compdef _claude_sandbox_preset claude-sandbox
 fi
-
-# ───────────────────────────────────────────────────────────────────────────────
-# Optional startup message (disabled by default to avoid P10k instant prompt I/O)
-# Enable by exporting CLAUDE_STARTUP_BANNER=1 in your shell env.
-# ───────────────────────────────────────────────────────────────────────────────
-
-if [[ -n "${CLAUDE_STARTUP_BANNER:-}" ]]; then
-    echo "✅ Claude Smart Integration loaded"
-    echo "📋 Available commands:"
-    echo "   claude [args]                 → Vanilla Claude (no wrapper, no sandbox)"
-    echo "   claude-smart [args]           → Smart sandbox (auto-detect preset)"
-    echo "   claude-sandbox <preset> [args] → Explicit preset sandbox"
-    echo "📝 Quick aliases: c, cl → claude-smart (safe by default)"
-fi
-
-# On-demand help: prints the same banner without affecting shell startup
-claude-help() {
-    cat <<'EOF'
-✅ Claude Smart Integration loaded
-📋 Available commands:
-   claude [args]                 → Vanilla Claude (no wrapper, no sandbox)
-   claude-smart [args]           → Smart sandbox (auto-detect preset)
-   claude-sandbox <preset> [args] → Explicit preset sandbox
-📝 Quick aliases: c, cl → claude-smart (safe by default)
-EOF
-}

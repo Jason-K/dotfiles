@@ -1,0 +1,28 @@
+{
+  "mcpServers": {
+    "zai-mcp-server": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@z_ai/mcp-server"],
+      "env": {
+        "Z_AI_API_KEY": "${Z_AI_API_KEY}",
+        "Z_AI_MODE": "${Z_AI_MODE:-search}"
+      }
+    },
+    "web-search-prime": {
+      "type": "http",
+      "url": "https://api.z.ai/api/mcp/web_search_prime/mcp",
+      "headersHelper": "printf '{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}' \"$Z_AI_API_KEY\""
+    },
+    "web-reader": {
+      "type": "http",
+      "url": "https://api.z.ai/api/mcp/web_reader/mcp",
+      "headersHelper": "printf '{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}' \"$Z_AI_API_KEY\""
+    },
+    "context7-mcp": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "headersHelper": "printf '{\"Authorization\":\"Bearer %s\"}' \"$CONTEXT7_API_KEY\""
+    }
+  }
+}

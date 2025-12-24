@@ -9,8 +9,10 @@ cmake
 cpdf
 czkawka
 direnv
-dmno-dev/tap/varlock
+djvulibre
+dotenvx/brew/dotenvx
 dua-cli
+duckdb
 enchant
 eza
 fclones
@@ -24,6 +26,7 @@ gradle
 htop
 hunspell
 imagemagick
+jpeg
 jq
 knqyf263/pet/pet
 lazygit
@@ -46,6 +49,7 @@ pyenv
 python-setuptools
 python-tk@3.13
 qalculate-qt
+rich-cli
 ripgrep-all
 sevenzip
 shfmt

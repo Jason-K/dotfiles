@@ -7,8 +7,6 @@ com.amazon.KindlePreviewerUpdater.plist
 com.apphousekitchen.aldente-pro-setapp.helper.plist
 com.backblaze.bzserv.plist
 com.daisydiskapp.DaisyDiskStandAlone.AdminHelper.plist
-com.docker.socket.plist
-com.docker.vmnetd.plist
 com.hegenberg.BetterTouchProcessPrioWatcher.plist
 com.iboysoft.magicmenud.plist
 com.iboysoft.uninstall.plist

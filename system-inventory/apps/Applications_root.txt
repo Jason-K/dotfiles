@@ -4,6 +4,7 @@
 8x8 Work.app
 Adobe Acrobat DC
 Adobe Creative Cloud
+ahsk.app
 Amazon Kindle.app
 Angry IP Scanner.app
 Antigravity.app
@@ -48,7 +49,6 @@ Do Not Disturb.app
 DockDoor.app
 Docker DB Manager.app
 Docker.app
-Dory.app
 Downie 4.app
 DS Store Cleaner.app
 dupeguru.app
@@ -100,13 +100,14 @@ Maccy.app
 MackingJAI.app
 MacUpdater.app
 Maintenance.app
-Markdown Preview.app
 Microsoft Edge.app
 Microsoft Excel.app
 Microsoft OneNote.app
+Microsoft Outlook 2.app
 Microsoft Outlook.app
 Microsoft Teams.app
 Microsoft Word.app
+Moom.app
 Moves.app
 NeatDownloadManager.app
 Netiquette.app
@@ -120,6 +121,7 @@ OctoApp 2.app
 OctoApp.app
 Ollama.app
 OneDrive.app
+OnText.app
 OnyX.app
 OrcaSlicer_profile_validator.app
 OrcaSlicer.app
@@ -148,7 +150,6 @@ Proton Mail Bridge.app
 Proton Mail Uninstaller.app
 Proton Mail.app
 Python 3.13
-QLMarkdown.app
 QSpace Pro.app
 QuickLook Video.app
 Raindrop.io.app
@@ -158,6 +159,7 @@ rclone
 Readwise.app
 Recall.app
 Rectangle Pro.app
+Redirect Web.app
 RingCentral.app
 Rocket.app
 RustDiskCleaner.app
@@ -198,6 +200,7 @@ TahoeElectronDetector.app
 Tailscale.app
 Taskade.app
 TaskExplorer.app
+TaskLine.app
 Telegram Desktop.app
 TestFlight.app
 Text Toolset.app
@@ -213,6 +216,7 @@ Todoist.app
 Trackless Links Pro.app
 TranscribeX.app
 Transnomino.app
+trilla.app
 tweaks.app
 Typinator_10.0a7.app
 Typinator.app

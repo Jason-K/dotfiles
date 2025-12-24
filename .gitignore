@@ -4,6 +4,7 @@
 .env.local
 .env.*.local
 settings-cleaned.json
+.claude-env
 
 # IDE/Editor configuration with personal data
 .claude.json
@@ -56,3 +57,6 @@ projects/
 # Claude-relaated folders
 todos/
 
+# BACKUPS
+**/backups/**
+backups/

@@ -1,12 +1,11 @@
 {
     autohide = 1;
-    "autohide-delay" = 0;
     "autohide-time-modifier" = "0.5";
     enterMissionControlByTopWindowDrag = 0;
     "expose-group-apps" = 1;
     largesize = 35;
     "last-analytics-stamp" =     (
-        "787509112.903126"
+        "788111649.028115"
     );
     lastShowIndicatorTime = "780438403.301855";
     launchanim = 0;
@@ -14,7 +13,7 @@
     magnification = 1;
     mineffect = suck;
     "minimize-to-application" = 1;
-    "mod-count" = 4361;
+    "mod-count" = 4368;
     "mouse-over-hilite-stack" = 1;
     "mru-space" = 1;
     "mru-spaces" = 1;
@@ -32,10 +31,10 @@
                     "_CFURLStringType" = 15;
                 };
                 "file-label" = "QSpace Pro";
-                "file-mod-date" = 3845013847;
+                "file-mod-date" = 3844080343;
                 "file-type" = 41;
                 "is-beta" = 0;
-                "parent-mod-date" = 233044476071358;
+                "parent-mod-date" = 239602894859390;
             };
             "tile-type" = "file-tile";
         },
@@ -68,10 +67,10 @@
                     "_CFURLStringType" = 15;
                 };
                 "file-label" = Cardinal;
-                "file-mod-date" = 0;
-                "file-type" = 1;
+                "file-mod-date" = 233856227985363;
+                "file-type" = 41;
                 "is-beta" = 0;
-                "parent-mod-date" = 0;
+                "parent-mod-date" = 110530537057223;
             };
             "tile-type" = "file-tile";
         },
@@ -218,10 +217,10 @@
                     "_CFURLStringType" = 15;
                 };
                 "file-label" = Dia;
-                "file-mod-date" = 183527798984922;
+                "file-mod-date" = 25730703138242;
                 "file-type" = 41;
                 "is-beta" = 0;
-                "parent-mod-date" = 97619863202973;
+                "parent-mod-date" = 239602894859390;
             };
             "tile-type" = "file-tile";
         },
@@ -236,10 +235,10 @@
                     "_CFURLStringType" = 15;
                 };
                 "file-label" = Helium;
-                "file-mod-date" = 0;
-                "file-type" = 1;
+                "file-mod-date" = 15581695000655;
+                "file-type" = 41;
                 "is-beta" = 0;
-                "parent-mod-date" = 0;
+                "parent-mod-date" = 212235362632604;
             };
             "tile-type" = "file-tile";
         },
@@ -544,6 +543,7 @@
             "tile-type" = "small-spacer-tile";
         },
                 {
+            GUID = 2578401942;
             "tile-data" =             {
                 book = {length = 716, bytes = 0x626f6f6b cc020000 00000510 40000000 ... 04000000 00000000 };
                 "bundle-identifier" = "com.spotify.client";
@@ -565,6 +565,23 @@
                 "file-label" = "";
             };
             "tile-type" = "small-spacer-tile";
+        },
+                {
+            "tile-data" =             {
+                book = {length = 596, bytes = 0x626f6f6b 54020000 00000510 40000000 ... 04000000 00000000 };
+                "bundle-identifier" = "com.apple.TextEdit";
+                "dock-extra" = 0;
+                "file-data" =                 {
+                    "_CFURLString" = "file:///System/Applications/TextEdit.app/";
+                    "_CFURLStringType" = 15;
+                };
+                "file-label" = TextEdit;
+                "file-mod-date" = 0;
+                "file-type" = 1;
+                "is-beta" = 0;
+                "parent-mod-date" = 0;
+            };
+            "tile-type" = "file-tile";
         }
     );
     "persistent-others" =     (
@@ -667,7 +684,7 @@
     "springboard-rows" = 5;
     "springboard-show-duration" = "0.25";
     "static-only" = 0;
-    tilesize = 36;
+    tilesize = 48;
     "trash-full" = 1;
     version = 1;
     "workspaces-edge-delay" = 0;

@@ -5,6 +5,10 @@
 .env.*.local
 settings-cleaned.json
 .claude-env
+*.pem
+*.key
+*.crt
+*.p12
 
 # IDE/Editor configuration with personal data
 .claude.json
@@ -58,5 +62,6 @@ projects/
 todos/
 
 # BACKUPS
-**/backups/**
 backups/
+settings/settings_sentry/configs/
+settings/settings_sentry/logs/

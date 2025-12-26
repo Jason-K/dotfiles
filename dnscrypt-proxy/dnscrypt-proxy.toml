@@ -226,7 +226,7 @@ log_level = 0
 ## This file is different from other log files, and will not be
 ## automatically rotated by the application.
 
-log_file = 'logs/dnscrypt-proxy.log'
+log_file = 'logs/proxy-application.log'
 
 
 ## When using a log file, only keep logs from the most recent launch.
@@ -552,17 +552,17 @@ map_file = 'settings/captive-portals.txt'
 ## Path to the query log file (absolute, or relative to the same directory as the config file)
 ## Can be set to /dev/stdout in order to log to the standard output.
 
-# file = 'query.log'
+file = 'logs/query.log'
 
 
 ## Query log format (currently supported: tsv and ltsv)
 
-# format = 'ltsv'
+format = 'ltsv'
 
 
 ## Do not log these query types, to reduce verbosity. Keep empty to log everything.
 
-# ignored_qtypes = ['DNSKEY', 'NS']
+ignored_qtypes = ['DNSKEY', 'NS']
 
 
 ###############################################################################
@@ -606,12 +606,12 @@ format = 'ltsv'
 
 ## Path to the file of blocking rules (absolute, or relative to the same directory as the config file)
 
-blocked_names_file = 'settings/blocked-domains.txt'
+blocked_names_file = 'settings/blocked-domains-generated.txt'
 
 
 ## Optional path to a file logging blocked queries
 
-log_file = 'logs/blocked-names.log'
+log_file = 'logs/blocked-domains.log'
 
 
 ## Optional log format: tsv or ltsv (default: tsv)
@@ -660,12 +660,12 @@ log_format = 'ltsv'
 
 ## Path to the file of allow list rules (absolute, or relative to the same directory as the config file)
 
-allowed_names_file = 'settings/allowed-names.txt'
+allowed_names_file = 'settings/allowed-domains.txt'
 
 
 ## Optional path to a file logging allowed queries
 
-log_file = 'logs/allowed-names.log'
+log_file = 'logs/allowed-domains.log'
 
 
 ## Optional log format: tsv or ltsv (default: tsv)

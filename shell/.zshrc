@@ -187,6 +187,16 @@ alias notarytool='/usr/bin/xcrun notarytool'
 # Updates
 alias update='topgrade'
 
+
+
+# SettingsSentry backup
+alias settingssentry-backup='/Users/jason/dotfiles/settings/settings_sentry/settingssentry backup -backup="backups" -zip -log="logs"'
+alias settingssentry-restore='/Users/jason/dotfiles/settings/settings_sentry/settingssentry restore -backup="backups" -log="logs"'
+
+# Mackup backup
+alias mackup-backup='~/dotfiles/mackup/mackup-backup.sh'
+alias mackup-restore='~/dotfiles/mackup/mackup-restore.sh'
+
 # Karabiner config rebuild
 alias kbuild='nocorrect (cd ~/dotfiles/karabiner/karabiner.ts && npm run build)'
 
@@ -271,8 +281,8 @@ fkill() {
 
 # Claude Smart Launcher (provides claude, claude-smart, c, cl aliases)
 # See: ~/dotfiles/.claude/claude-secure/SETUP.md
-[[ -r "$HOME/dotfiles/.claude/claude-secure/iterm2-integration.sh" ]] && \
-  source "$HOME/dotfiles/.claude/claude-secure/iterm2-integration.sh"
+[[ -r "$HOME/dotfiles/.claude/claude-secure/term-integration.sh" ]] && \
+  source "$HOME/dotfiles/.claude/claude-secure/term-integration.sh"
 
 # Cling helper function
 # Usage: cling <file-or-folder> ...

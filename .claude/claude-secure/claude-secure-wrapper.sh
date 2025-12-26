@@ -311,7 +311,7 @@ if [[ "${CLAUDE_ALLOW_OP_IN_SANDBOX:-0}" == "1" ]]; then
   if command -v op >/dev/null 2>&1; then
     OP_BIN_PATH="$(command -v op)"
     OP_BIN_ESC="$(esc_scheme "$OP_BIN_PATH")"
-    OP_BIN_ALLOW=$'(allow file-read* file-map-executable\n  (literal "'""$OP_BIN_ESC"'"")\n)'
+    OP_BIN_ALLOW=$'(allow file-read* file-map-executable\n  (literal "'"$OP_BIN_ESC"'")\n)'
   fi
 fi
 
@@ -337,13 +337,16 @@ PY
   CLAUDE_PLUGINS_ESC="$(esc_scheme "$HOME_REAL/.claude/plugins")"
   CLAUDE_SESSION_ENV_ESC="$(esc_scheme "$HOME_REAL/.claude/session-env")"
   CLAUDE_CACHE_ESC="$(esc_scheme "$HOME_REAL/Library/Caches/claude-cli-nodejs")"
-  DOTFILES_CLAUDE_JSON_ESC="$(esc_scheme "$HOME_REAL/dotfiles/.claude.json")"
+  DOTFILES_CLAUDE_JSON_ESC="$(esc_scheme "$HOME_REAL/dotfiles/.claude/.claude.json")"
   CLAUDE_PROJECTS_ESC="$(esc_scheme "$HOME_REAL/.claude/projects")"
   OP_CONFIG_ESC="$(esc_scheme "$HOME_REAL/.config/1Password")"
   OP_GROUP_ESC="$(esc_scheme "$HOME_REAL/Library/Group Containers/2BUA8C4S2C.com.1password")"
   NPM_HOME_ESC="$(esc_scheme "$HOME_REAL/.npm")"
   NPM_CACHE_ESC="$(esc_scheme "$HOME_REAL/Library/Caches/npm")"
   CLAUDE_ENV_ESC="$(esc_scheme "$HOME_REAL/.claude/.env")"
+  GITCONFIG_ESC="$(esc_scheme "$HOME_REAL/.gitconfig")"
+  DOTFILES_GIT_ESC="$(esc_scheme "$HOME_REAL/dotfiles/git")"
+  SSH_DIR_ESC="$(esc_scheme "$HOME_REAL/.ssh")"
 
   # Read-only access to global .claude directory (for config, marketplaces, etc.)
   # Write access only to specific subdirectories that need it (debug logs, plugins)
@@ -358,6 +361,10 @@ PY
   CLAUDE_CONFIG_ALLOW+=$'(allow file-read* file-write*\n  (subpath "'"$OP_CONFIG_ESC"'")\n  (subpath "'"$OP_GROUP_ESC"'")\n)\n'
   CLAUDE_CONFIG_ALLOW+=$'(allow file-read* file-write*\n  (subpath "'"$NPM_HOME_ESC"'")\n  (subpath "'"$NPM_CACHE_ESC"'")\n)\n'
   CLAUDE_CONFIG_ALLOW+=$'(allow file-read* file-write*\n  (literal "'"$CLAUDE_ENV_ESC"'")\n)\n'
+  # Allow Git to read configuration (needed for plugin installs and git operations)
+  CLAUDE_CONFIG_ALLOW+=$'(allow file-read*\n  (literal "'"$GITCONFIG_ESC"'")\n  (subpath "'"$DOTFILES_GIT_ESC"'")\n)\n'
+  # Allow read access to .ssh for git operations over SSH
+  CLAUDE_CONFIG_ALLOW+=$'(allow file-read*\n  (subpath "'"$SSH_DIR_ESC"'")\n)\n'
 fi
 
 # Allow rules for project + allowlists
@@ -406,6 +413,27 @@ fi
   print "  (literal \"/opt/homebrew/bin/git\")"
   print "  (literal \"/usr/bin/curl\")"
   print "  (literal \"/opt/homebrew/bin/curl\")"
+  print ")"
+  print ""
+  print "; allow node.js and npm executables (needed for plugins)"
+  print "(allow file-read* file-map-executable"
+  print "  (literal \"/usr/bin/node\")"
+  print "  (literal \"/usr/local/bin/node\")"
+  print "  (literal \"/opt/homebrew/bin/node\")"
+  print "  (subpath \"/opt/homebrew/Cellar/node\")"
+  print "  (literal \"/usr/bin/npm\")"
+  print "  (literal \"/usr/local/bin/npm\")"
+  print "  (literal \"/opt/homebrew/bin/npm\")"
+  print "  (literal \"/usr/bin/npx\")"
+  print "  (literal \"/usr/local/bin/npx\")"
+  print "  (literal \"/opt/homebrew/bin/npx\")"
+  print ")"
+  print ""
+  print "; allow homebrew lib directory for dynamic libraries"
+  print "(allow file-read*"
+  print "  (subpath \"/opt/homebrew/lib\")"
+  print "  (subpath \"/usr/local/lib\")"
+  print "  (subpath \"/opt/homebrew/opt\")"
   print ")"
   print ""
   print "; allow common subprocess executables (narrow literals)"
@@ -490,7 +518,7 @@ if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
   if [[ -r "$env_file" ]] && command -v op >/dev/null 2>&1; then
     note "Loading secrets from 1Password (one-time biometric auth)..."
     # Use op run to load all secrets at once
-    eval "$(op run --no-masking --env-file="$env_file" -- /usr/bin/printenv | grep -E '^(ANTHROPIC|Z_AI|CONTEXT7|SMITHERY|GITHUB|GEMINI|DEEPSEEK|OPENAI|OPENROUTER)_' | sed 's/^/export /')"
+    eval "$(op run --no-masking --env-file=\"$env_file\" -- /usr/bin/printenv | grep -E '^(ANTHROPIC|Z_AI|CONTEXT7|SMITHERY|GITHUB|GEMINI|DEEPSEEK|OPENAI|OPENROUTER)_' | sed 's/^/export /')"
   fi
 fi
 
@@ -590,7 +618,7 @@ note "  sandbox_profile: $SANDBOX_PROFILE"
 note "----- sandbox profile -----"
 cat "$SANDBOX_PROFILE" >&2
 note "----- command -----"
-note "${(q)cmd}"
+note "${cmd[@]}"
 
 # TTY guard: ensure interactive sessions have a real TTY
 CLAUDE_SECURE_DEBUG="${CLAUDE_SECURE_DEBUG:-}"

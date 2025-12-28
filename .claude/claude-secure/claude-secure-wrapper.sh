@@ -505,11 +505,78 @@ if (( ${#claude_args[@]} > 0 )); then
 fi
 
 # -------------------------------------------------
-# Secret injection (runs OUTSIDE the sandbox)
-# - Prefer existing env if already set
-# - Else, load from 1Password using op run (single biometric auth)
-# - Map to variables Claude/z.ai expect
+# Auth selection and secret handling (runs OUTSIDE the sandbox)
+# Modes:
+# - env (default): load from 1Password and use z.ai endpoints
+# - desktop: skip secret injection, use Claude Desktop session env if available
+#            and talk directly to Anthropic API
 # -------------------------------------------------
+
+AUTH_MODE="${CLAUDE_AUTH_MODE:-env}"
+
+if [[ "$AUTH_MODE" == "desktop" ]]; then
+  note "Auth mode: desktop (Claude Desktop credentials)"
+  # Prefer Anthropic base endpoint; avoid z.ai overrides
+  export ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-https://api.anthropic.com}"
+  unset Z_AI_MODE
+
+  # Try loading session env published by Claude Desktop
+  session_dir="$HOME/.claude/session-env"
+  if [[ -d "$session_dir" ]]; then
+    for envf in "$session_dir"/*.env(N); do
+      [[ -r "$envf" ]] || continue
+      while IFS= read -r line; do
+        # only export simple KEY=VALUE lines
+        if [[ "$line" =~ ^[A-Z_]+= ]]; then
+          export "$line"
+        fi
+      done < "$envf"
+    done
+  fi
+
+  # Resolve conflicts: prefer auth token when available
+  if [[ -n "${ANTHROPIC_AUTH_TOKEN:-}" && -n "${ANTHROPIC_API_KEY:-}" ]]; then
+    unset ANTHROPIC_API_KEY
+    unset Z_AI_API_KEY
+    unset ZAI_API_KEY
+    unset CLAUDE_API_KEY
+    unset CLAUDE_CODE_AUTH_TOKEN
+  fi
+
+  # Fallback: if neither token nor api key present, load env-mode secrets via 1Password
+  if [[ -z "${ANTHROPIC_AUTH_TOKEN:-}" && -z "${ANTHROPIC_API_KEY:-}" ]]; then
+    note "No Desktop session tokens found; falling back to env-mode via 1Password"
+    env_file="$HOME/dotfiles/.claude/claude-secure/.claude-env"
+    if [[ -r "$env_file" ]] && command -v op >/dev/null 2>&1; then
+      eval "$(op run --no-masking --env-file=\"$env_file\" -- /usr/bin/printenv | grep -E '^(ANTHROPIC|Z_AI|CONTEXT7|SMITHERY|GITHUB|GEMINI|DEEPSEEK|OPENAI|OPENROUTER)_' | sed 's/^/export /')"
+      # Backfill
+      [[ -n "${ANTHROPIC_API_KEY:-}" ]] && {
+        [[ -z "${Z_AI_API_KEY:-}" ]] && export Z_AI_API_KEY="$ANTHROPIC_API_KEY"
+        [[ -z "${ZAI_API_KEY:-}" ]] && export ZAI_API_KEY="$ANTHROPIC_API_KEY"
+        [[ -z "${CLAUDE_CODE_AUTH_TOKEN:-}" ]] && export CLAUDE_CODE_AUTH_TOKEN="$ANTHROPIC_API_KEY"
+        [[ -z "${CLAUDE_API_KEY:-}" ]] && export CLAUDE_API_KEY="$ANTHROPIC_API_KEY"
+      }
+      # Use z.ai endpoints when falling back to env-mode
+      export ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-https://api.z.ai/api/anthropic}"
+      export Z_AI_MODE="${Z_AI_MODE:-ZAI}"
+    else
+      note "WARN: 1Password CLI or env file missing; proceeding without injected secrets"
+    fi
+  fi
+
+  # Keep headersHelper in env-only to avoid op reads
+  export HEADERS_HELPER_MODE="${HEADERS_HELPER_MODE:-env}"
+  export HEADERS_HELPER_DISABLE_OP="${HEADERS_HELPER_DISABLE_OP:-1}"
+
+  # Minimal .env for backward compatibility (no secrets persisted)
+  CLAUDE_ENV="$HOME/.claude/.env"
+  /bin/mkdir -p "$(/usr/bin/dirname "$CLAUDE_ENV")"
+  cat >"$CLAUDE_ENV" <<ENVEOF
+# Desktop auth mode: secrets are provided by Claude Desktop session.
+# This file intentionally contains no API keys.
+ENVEOF
+
+else
 
 # Load secrets using op run if they're not already set
 # This triggers ONE biometric prompt instead of multiple
@@ -568,6 +635,8 @@ note "Minimal .env created (HTTP MCP auth via headersHelper from 1Password)"
 # Log masked presence of key envs (no secret content) for troubleshooting
 _mask() { local v="$1"; [[ -n "$v" ]] && echo "set(len=${#v})" || echo "unset"; }
 note "Secrets presence: ANTHROPIC_AUTH_TOKEN=$(_mask "${ANTHROPIC_AUTH_TOKEN-}") ANTHROPIC_API_KEY=$(_mask "${ANTHROPIC_API_KEY-}") Z_AI_API_KEY=$(_mask "${Z_AI_API_KEY-}") ZAI_API_KEY=$(_mask "${ZAI_API_KEY-}") SMITHERY_API_KEY=$(_mask "${SMITHERY_API_KEY-}")"
+
+fi
 
 # Optional: run an env diagnostic inside the sandbox before launching Claude
 if [[ "${CLAUDE_ENV_DIAG:-0}" == "1" ]]; then

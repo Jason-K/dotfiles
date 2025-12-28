@@ -22,7 +22,9 @@ c --dangerously-skip-permissions       # Quick alias
 - **`claude`** – Vanilla Claude binary with no modifications
 - **`claude-smart`** – Intelligent sandbox with preset auto-detection (recommended)
 - **`claude-sandbox <preset>`** – Explicit sandbox with specific preset
+- **`claude-desktop`** – Smart sandbox using Claude Desktop credentials (no env injection)
 - **`c`, `cl`** – Quick aliases for `claude-smart`
+- **`cdesk`** – Quick alias for `claude-desktop`
 
 ## Features
 
@@ -31,6 +33,7 @@ c --dangerously-skip-permissions       # Quick alias
 - 📁 **Read-Only Dotfiles**: Protects your dotfiles from accidental modification
 - 📝 **Audit Logging**: All sessions logged with full details
 - 🚀 **One-Command Usage**: Works in any directory with automatic fallback
+- 🖥️ **Desktop Auth Option**: Avoids z.ai env injection and authenticates via Claude Desktop session
 
 ## Files
 
@@ -39,6 +42,7 @@ c --dangerously-skip-permissions       # Quick alias
 - `claude-smart` - Alternative TOML parser version
 - `projects.toml` - Project configurations
 - `iterm2-integration.sh` - Shell aliases and iTerm2 integration
+- `term-integration.sh` - Alternative shell integration with Desktop auth option
 - `README.md` - Quick overview
 - `SETUP.md` - Complete setup guide
 - `shims/` - Tool shims for secure execution
@@ -51,6 +55,29 @@ c --dangerously-skip-permissions       # Quick alias
 - **Sandbox Enforcement**: Every session runs in macOS sandbox
 
 For complete setup instructions, see [SETUP.md](SETUP.md).
+
+## Desktop Auth Mode
+
+Use `claude-desktop` when you want to authenticate using Claude Desktop instead of injecting API keys from 1Password.
+
+Requirements:
+
+- Claude Desktop is installed and signed in.
+- Session env files exist under `~/.claude/session-env` (created by Desktop).
+
+
+Behavior:
+
+- The wrapper sets `ANTHROPIC_BASE_URL=https://api.anthropic.com` and skips secret injection.
+- If `ANTHROPIC_AUTH_TOKEN` is found in session env, it is preferred over `ANTHROPIC_API_KEY`.
+- `headersHelper` remains in env-only mode to avoid additional biometric prompts.
+
+## Diagnostics
+
+Quickly check that Claude Desktop credentials are available and recognized:
+
+- `claude-desktop-status` – prints session env files and masked presence of keys
+- `cds` – short alias for the status command
 
 ## Optional Safeguards
 

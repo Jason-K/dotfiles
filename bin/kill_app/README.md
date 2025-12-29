@@ -1,19 +1,19 @@
 ## KILL APP
 
-Fast process termination tool using CoreGraphics detection and POSIX signals.
+Fast process termination tool using CoreGraphics detection and POSIX signals, compiled as a single Swift binary.
 
 ## USAGE
 
 Kill the foreground application:
 
 ```bash
-execute-kill.sh --foreground
+kill-app --foreground
 ```
 
 Kill unresponsive applications:
 
 ```bash
-execute-kill.sh
+kill-app
 ```
 
 ## FLAGS
@@ -21,37 +21,32 @@ execute-kill.sh
 - `--foreground`: Kill the frontmost app instead of unresponsive apps
 - `--dry-run`: Parse and filter targets without sending signals (safe test)
 - `--fast`: Use aggressive timeouts (default; TERM≈0.8s, KILL≈0.5s)
-- `--no-fast`: Use relaxed timeouts from config or defaults
-- `--full`: Emit complete process details (name/bundle/pid); default is PID-only for speed
 - `--instant`: Skip SIGTERM, send SIGKILL immediately
 - `--exclude REGEX`: Skip processes matching pattern
 - `--only REGEX`: Only target processes matching pattern
+- `--graceful`: Add a brief pre-TERM grace wait
 
 ## EXAMPLES
 
 ```bash
-# Quick kill frontmost app (default: fast + pid-only)
-execute-kill.sh --foreground
-
-# Kill with full details for logging/debugging
-execute-kill.sh --foreground --full
+# Quick kill frontmost app
+kill-app --foreground
 
 # Instant kill without grace period
-execute-kill.sh --foreground --instant
+kill-app --foreground --instant
 
 # Kill unresponsive apps, excluding Safari
-execute-kill.sh --exclude Safari
+kill-app --exclude Safari
 
 # Safe test run
-execute-kill.sh --foreground --dry-run
+kill-app --foreground --dry-run
 ```
 
 ## PERFORMANCE
 
-- **Detection**: CoreGraphics window list (no Accessibility permission required)
-- **Default mode**: PID-only JSON for minimal overhead
+- **Detection**: CoreGraphics window list (no Accessibility permission required for foreground)
 - **Signaling**: Batch SIGTERM/SIGKILL to avoid per-process waits
-- **Typical latency**: <100ms for foreground kills
+- **Single Binary**: No overhead from shell script or `osascript` parsing
 
 ## CONFIGURATION
 

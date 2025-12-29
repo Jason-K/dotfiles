@@ -1,19 +1,20 @@
-# open_app / launch-or-activate
+# open-app
 
 Fast helper to activate a running app by bundle ID or launch it if not running.
 
 ## Usage
 
 ```bash
-launch-or-activate -b com.example.App      # bundle id
-launch-or-activate -a "App Name"           # by display name
-launch-or-activate /Applications/App.app    # by path
+open-app -b com.example.App      # bundle id
+open-app -a "App Name"           # by display name
+open-app /Applications/App.app    # by path
 ```
 
 ## Behavior
 
-- If the app is already running (bundle ID), it is activated.
-- Otherwise, it is launched via NSWorkspace using a synchronous open (10s timeout).
+- Always uses `NSWorkspace.openApplication` to ensure the app is activated and a window is visible (mimics Dock behavior).
+- If the app is not running, it launches.
+- If running but no windows, it opens a new window.
 
 ## Flags
 
@@ -24,4 +25,4 @@ launch-or-activate /Applications/App.app    # by path
 ## Notes
 
 - Supports LaunchServices fast bundle lookup for bundle IDs.
-- No extra dependencies; built with `swiftc -O -parse-as-library src/launch-or-activate.swift -o launch-or-activate`.
+- No extra dependencies; built with `swiftc -O -parse-as-library src/open-app.swift -o open-app`.

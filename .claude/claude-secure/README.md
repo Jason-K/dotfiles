@@ -1,4 +1,4 @@
-# Claude Secure Launcher
+w# Claude Secure Launcher
 
 A secure sandbox wrapper for Claude Code with intelligent project detection.
 

@@ -1,0 +1,10 @@
+{
+  "denylist": [
+    "com.apple.finder",
+    "^Xcode$",
+    "Electron Helper (Renderer)"
+  ],
+  "gracePeriodSec": 10,
+  "termWaitSec": 6,
+  "killWaitSec": 3
+}

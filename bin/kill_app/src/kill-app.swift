@@ -37,16 +37,21 @@ enum ExitCode: Int32 {
 
 @main
 struct UnfreezeMain {
-  
+
   // MARK: - Helpers
-  
+
   static func eprint(_ s: String) { fputs(s + "\n", stderr) }
 
   static func loadConfig() -> Config {
-    let home = FileManager.default.homeDirectoryForCurrentUser
-    let url = home.appendingPathComponent(".config/unfreeze.json")
-    guard let data = try? Data(contentsOf: url) else { return Config() }
-    return (try? JSONDecoder().decode(Config.self, from: data)) ?? Config()
+    // Load from script directory
+    if let exePath = CommandLine.arguments.first {
+      let exeDir = URL(fileURLWithPath: exePath).deletingLastPathComponent().path
+      let localConfig = URL(fileURLWithPath: exeDir).appendingPathComponent("do-not-kill.json")
+      if let data = try? Data(contentsOf: localConfig) {
+        return (try? JSONDecoder().decode(Config.self, from: data)) ?? Config()
+      }
+    }
+    return Config()
   }
 
   static func compileRegexes(_ patterns: [String]) -> [NSRegularExpression] {
@@ -75,10 +80,10 @@ struct UnfreezeMain {
   static func getFrontmostApp() -> [Offender] {
     // 1. Try CoreGraphics (Fast, no permissions needed)
     if let cg = getFrontmostCoreGraphics() { return cg }
-    
+
     // 2. Try NSWorkspace
     if let ws = getFrontmostNSWorkspace() { return ws }
-    
+
     // 3. Last resort: AppleScript
     return getFrontmostAppleScript()
   }
@@ -86,7 +91,7 @@ struct UnfreezeMain {
   static func getFrontmostCoreGraphics() -> [Offender]? {
     let options = CGWindowListOption(arrayLiteral: .optionOnScreenOnly, .excludeDesktopElements)
     guard let info = CGWindowListCopyWindowInfo(options, kCGNullWindowID) as? [[String: Any]] else { return nil }
-    
+
     for window in info {
       if let layer = window[kCGWindowLayer as String] as? Int, layer == 0,
          let pid = window[kCGWindowOwnerPID as String] as? Int32, pid > 0,
@@ -107,14 +112,14 @@ struct UnfreezeMain {
   static func getFrontmostAppleScript() -> [Offender] {
     let scriptSource = "tell application \"System Events\" to get {name, unix id, bundle identifier} of first process whose frontmost is true"
     guard let script = NSAppleScript(source: scriptSource) else { return [] }
-    
+
     var error: NSDictionary?
     let descriptor = script.executeAndReturnError(&error)
-    
+
     // NSAppleEventDescriptor is returned directly, check for error via 'error' dict or if descriptor is null (it's implicitly unwrapped usually but let's be safe if API varies, though current swift SDK says distinct return)
     // Actually executeAndReturnError returns NSAppleEventDescriptor! (implicit unwrap) or just NSAppleEventDescriptor depending on SDK version.
     // The previous error said "initializer for conditional binding must have Optional type", so it is NOT optional.
-    
+
     if descriptor.numberOfItems >= 2 {
       let name = descriptor.atIndex(1)?.stringValue
       let pid = descriptor.atIndex(2)?.int32Value ?? 0
@@ -140,11 +145,11 @@ struct UnfreezeMain {
         return res
       end tell
       """
-    
+
     guard let script = NSAppleScript(source: scriptSource) else { return [] }
     var error: NSDictionary?
     let descriptor = script.executeAndReturnError(&error)
-    
+
     // Descriptor is non-optional
     var results: [Offender] = []
     let list = descriptor
@@ -169,12 +174,12 @@ struct UnfreezeMain {
       """
       Usage:
         kill-app [--dry-run] [--exclude REGEX ...] [--only REGEX ...] [--foreground] [--fast] [--graceful]
-      
+
       Flags:
         --foreground Detect and kill the frontmost application.
         --fast       Default behavior (no-op): go TERM -> KILL with tight waits.
         --graceful   Add a brief pre-TERM grace wait.
-        --instant    Skip TERM, go straight to KILL. 
+        --instant    Skip TERM, go straight to KILL.
       """
     )
     exit(ExitCode.badArgs.rawValue)

@@ -4,29 +4,25 @@ Review status of unclear directories. Update as decisions are made.
 
 ## Directories Requiring Clarification
 
-### [ ] km/
-**Current:** Unknown
-**Question:** Active project or placeholder?
-**Decision:** _______________
-**Date:** _______________
+### [x] km/
+**Current:** Placeholder
+**Decision:** Will hold Keyboard Maestro settings (pending migration)
+**Date:** 2026-01-12
 
-### [ ] hazel/
-**Current:** Unknown
-**Question:** Still using Hazel automation?
-**Decision:** _______________
-**Date:** _______________
+### [x] hazel/
+**Current:** Placeholder
+**Decision:** Will hold Hazel automation rules (pending migration)
+**Date:** 2026-01-12
 
-### [ ] typinator/
-**Current:** Unknown
-**Question:** Active text expansion tool?
-**Decision:** _______________
-**Date:** _______________
+### [x] typinator/
+**Current:** Placeholder
+**Decision:** Will hold Typinator text expansion rulesets (pending migration)
+**Date:** 2026-01-12
 
-### [ ] settings/supercharge/
-**Current:** Unknown
-**Question:** What is this directory for?
-**Decision:** _______________
-**Date:** _______________
+### [x] settings/supercharge/
+**Current:** Vestigial (to be removed)
+**Decision:** Remove - contents already in ~/dotfiles/settings/supercharge (the app's backup location)
+**Date:** 2026-01-12
 
 ---
 

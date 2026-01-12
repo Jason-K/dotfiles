@@ -14,10 +14,9 @@
 | hammerspoon/ | ✅ Active | Automation scripts |
 | dnscrypt-proxy/ | 🟡 Mixed | Config + runtime logs |
 | system-inventory/ | ⚠️ Archived | Dated snapshots (Dec 2025) |
-| km/ | ❓ Unclear | Unknown purpose |
-| hazel/ | ❓ Unclear | Unknown purpose |
-| typinator/ | ❓ Unclear | Unknown purpose |
-| settings/supercharge/ | ❓ Unclear | Unknown purpose |
+| km/ | 📋 Placeholder | Keyboard Maestro settings (pending migration) |
+| hazel/ | 📋 Placeholder | Hazel automation rules (pending migration) |
+| typinator/ | 📋 Placeholder | Typinator text expansion rulesets (pending migration) |
 
 ---
 
@@ -66,27 +65,25 @@
 
 ---
 
-## Unclear Directories (Need Clarification)
+## Placeholder Directories (Pending Migration)
 
 ### km/
-**Status:** ❓ Unclear
-**Question:** Is this an intentional placeholder or forgotten?
-**Action Needed:** Document purpose or remove
+**Status:** 📋 Placeholder
+**Purpose:** Keyboard Maestro automation settings
+**Migration Status:** Not yet migrated from ~/Library/Application Support/Keyboard Maestro/
+**Action Needed:** Migrate Keyboard Maestro settings when ready
 
 ### hazel/
-**Status:** ❓ Unclear
-**Question:** Are Hazel rules stored in macOS ~/Library instead?
-**Action Needed:** Document purpose or remove
+**Status:** 📋 Placeholder
+**Purpose:** Hazel automation rules
+**Migration Status:** Not yet migrated from ~/Library/Application Support/Hazel/
+**Action Needed:** Migrate Hazel rules when ready
 
 ### typinator/
-**Status:** ❓ Unclear
-**Question:** Still actively using Typinator text expansion?
-**Action Needed:** Clarify active/archived status
-
-### settings/supercharge/
-**Status:** ❓ Unclear
-**Question:** What is "supercharge"? Still used?
-**Action Needed:** Document purpose or remove
+**Status:** 📋 Placeholder
+**Purpose:** Typinator text expansion rulesets and settings
+**Migration Status:** Not yet migrated from ~/Library/Application Support/Typinator/
+**Action Needed:** Migrate Typinator configuration when ready
 
 ---
 

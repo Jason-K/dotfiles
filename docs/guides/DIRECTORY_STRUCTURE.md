@@ -1,3 +1,11 @@
+---
+title: Directory Structure Guide
+created: 2026-01-12
+last_updated: 2026-01-12
+category: guides
+tags: [structure, organization, directories]
+---
+
 # Directory Structure Guide
 
 ## Quick Reference

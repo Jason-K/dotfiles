@@ -1,3 +1,11 @@
+---
+title: Directory Status Review Checklist
+created: 2026-01-12
+last_updated: 2026-01-12
+category: guides
+tags: [review, checklist, status]
+---
+
 # Directory Status Review Checklist
 
 Review status of unclear directories. Update as decisions are made.

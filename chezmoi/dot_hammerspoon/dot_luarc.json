@@ -1,0 +1,11 @@
+// ~/.hammerspoon/.luarc.json
+{
+  "runtime.version": "LuaJIT",
+  "workspace.library": [
+    "${env:HOME}/.hammerspoon/Spoons/EmmyLua.spoon/annotations",
+    "${env:HOME}/Scripts/Metascripts/hsLauncher/launcher",
+    "${env:HOME}/Scripts/Metascripts/hsStringEval/src"
+  ],
+  "diagnostics.globals": ["hs", "spoon", "reloadConfig"],
+  "workspace.ignoreDir": [".vscode", "**/.hammerspoon/examples/**"]
+}

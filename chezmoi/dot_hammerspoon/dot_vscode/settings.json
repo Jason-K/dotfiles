@@ -1,0 +1,20 @@
+// ~/.hammerspoon/.vscode/settings.json
+{
+  // Lua LS diagnostics & library
+  "Lua.diagnostics.globals": ["reloadConfig", "hs", "spoon"],
+  "Lua.codeLens.enable": true,
+  "Lua.workspace.ignoreDir": [
+    ".vscode",
+    "**/.hammerspoon/examples",
+    "**/EmmyLua.spoon/annotations/**"
+  ],
+
+  // Standardize on EmmyLuaCodeStyle formatter
+  "[lua]": {
+    "editor.defaultFormatter": "CppCXY.emmylua-codestyle"
+  },
+  "editor.formatOnSave": true,
+
+  // Disable Lua LS formatter to avoid collisions
+  "Lua.format.enable": false
+}

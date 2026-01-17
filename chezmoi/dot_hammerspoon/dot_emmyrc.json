@@ -1,0 +1,58 @@
+{
+    "completion": {
+        "autoRequire": true,
+        "autoRequireFunction": "require",
+        "autoRequireNamingConvention": "camelCase",
+        "callSnippet": false,
+        "postfix": "@"
+    },
+    "signature": {
+        "detailSignatureHelper": false
+    },
+    "diagnostics": {
+        "disable": [ "undefined-global"
+        ],
+        "globals": [],
+        "globalsRegex": [],
+        "severity": {
+            "undefined-global": "warning",
+            "unused": "hint"
+        },
+        "enables": [
+            "undefined-field"
+        ]
+    },
+    "hint": {
+        "paramHint": true,
+        "indexHint": true,
+        "localHint": true,
+        "overrideHint": true
+    },
+    "runtime": {
+        "version": "Lua5.4",
+        "requireLikeFunction": [],
+        "frameworkVersions": [],
+        "extensions": [],
+        "requirePattern": []
+    },
+    "workspace": {
+        "ignoreDir": ["$HOME/.hammerspoon/examples/**", "$HOME/.hammerspoon/Spoons/**/docs/**", "$HOME/.hammerspoon/Spoons/**/tests/**", "$HOME/.hammerspoon/Spoons/**/temp/**", "$HOME/.hammerspoon/Spoons/**/logs/**", "$HOME/.hammerspoon/Spoons/**/backups/**"],
+        "ignoreGlobs": [
+        ],
+        "library": ["$HOME/.hammerspoon/Spoons/EmmyLua.spoon/annotations"],
+        "workspaceRoots": [],
+        "preloadFileSize": 1048576,
+        "encoding": "utf-8"
+    },
+    "resource": {
+        "paths": [
+        ]
+    },
+    "codeLens": {
+        "enable": true
+    },
+    "strict": {
+        "requirePath": false,
+        "typeCall": true
+    }
+}

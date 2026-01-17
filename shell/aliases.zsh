@@ -24,7 +24,7 @@ alias lastdl='open kmtrigger://macro=Open%20most%20recently%20downloaded%20file'
 # ---- Editors & Tools ----
 alias cat='bat'
 alias nano='micro'
-alias code='bash "$HOME/.vscode-launcher.sh"'
+alias code='bash "$HOME/dotfiles/vscode/.vscode-launcher.sh"'
 alias fz='fzf --preview "bat --style=header --color=always --line-range :50 {}" --preview-window=right:60% | xargs open'
 
 # ---- Helium Browser Profiles ----
@@ -47,10 +47,8 @@ alias stapler='/usr/bin/xcrun stapler'
 alias notarytool='/usr/bin/xcrun notarytool'
 
 # ---- Backup Tools ----
-alias settingssentry-backup='/Users/jason/dotfiles/settings/settings_sentry/settingssentry backup -backup="backups" -zip -log="logs"'
-alias settingssentry-restore='/Users/jason/dotfiles/settings/settings_sentry/settingssentry restore -backup="backups" -log="logs"'
-alias mackup-backup='~/dotfiles/mackup/mackup-backup.sh'
-alias mackup-restore='~/dotfiles/mackup/mackup-restore.sh'
+alias backup='~/dotfiles/scripts/backup.sh'
+alias restore='~/dotfiles/scripts/restore.sh'
 
 # ---- Project-Specific ----
 alias kbuild='nocorrect (cd ~/dotfiles/karabiner/karabiner.ts && npm run build)'

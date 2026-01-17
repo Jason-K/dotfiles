@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>56646CAE-A030-491E-9B61-96BF285461A5</key>
+	<array>
+		<dict>
+			<key>MacroActionType</key>
+			<string>Semaphore</string>
+			<key>SemaphoreAction</key>
+			<string>Lock</string>
+			<key>SemaphoreName</key>
+			<string>Quick Record 56646CAE-A030-491E-9B61-96BF285461A5</string>
+			<key>TimeOutAbortsMacro</key>
+			<true/>
+		</dict>
+	</array>
+	<key>F8B308C2-455B-4FD4-974C-EC942362E58E</key>
+	<array>
+		<dict>
+			<key>MacroActionType</key>
+			<string>Semaphore</string>
+			<key>SemaphoreAction</key>
+			<string>Lock</string>
+			<key>SemaphoreName</key>
+			<string>Quick Record F8B308C2-455B-4FD4-974C-EC942362E58E</string>
+			<key>TimeOutAbortsMacro</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Action</key>
+			<string>MoveAndClick</string>
+			<key>Button</key>
+			<integer>1</integer>
+			<key>ClickCount</key>
+			<integer>1</integer>
+			<key>DisplayMatches</key>
+			<false/>
+			<key>DragHorizontalPosition</key>
+			<string>0</string>
+			<key>DragVerticalPosition</key>
+			<string>0</string>
+			<key>Fuzz</key>
+			<integer>15</integer>
+			<key>HorizontalPositionExpression</key>
+			<string>720</string>
+			<key>MacroActionType</key>
+			<string>MouseMoveAndClick</string>
+			<key>Modifiers</key>
+			<integer>0</integer>
+			<key>MouseDrag</key>
+			<string>None</string>
+			<key>Relative</key>
+			<string>Window</string>
+			<key>RelativeCorner</key>
+			<string>TopLeft</string>
+			<key>RestoreMouseLocation</key>
+			<false/>
+			<key>VerticalPositionExpression</key>
+			<string>414</string>
+		</dict>
+		<dict>
+			<key>KeyCode</key>
+			<integer>53</integer>
+			<key>MacroActionType</key>
+			<string>SimulateKeystroke</string>
+			<key>Modifiers</key>
+			<integer>0</integer>
+			<key>ReleaseAll</key>
+			<false/>
+			<key>TargetApplication</key>
+			<dict/>
+			<key>TargetingType</key>
+			<string>Front</string>
+		</dict>
+	</array>
+</dict>
+</plist>

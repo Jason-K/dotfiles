@@ -23,6 +23,15 @@ SCREENSHOTS_FOLDER="${HOME}/Screenshots"
 # - Activity Monitor
 # - Software Updates
 
+# Prompt for confirmation
+echo "This script will change various macOS system defaults."
+read -p "Are you sure you want to continue? (y/N) " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "Aborting."
+    exit 1
+fi
+
 osascript -e 'tell application "System Preferences" to quit'
 
 # Ask for the administrator password upfront

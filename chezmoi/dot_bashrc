@@ -1,0 +1,8 @@
+# >>> Added by Spyder >>>
+alias uninstall-spyder=/Users/jason/Library/spyder-6/uninstall-spyder.sh
+# <<< Added by Spyder <<<
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/jason/.cache/lm-studio/bin"
+# End of LM Studio CLI section
+

@@ -1,0 +1,5 @@
+# /Users/jason/.hammerspoon/.gitmodules
+
+[submodule "Spoons/ClipboardFormatter.spoon"]
+	path = Spoons/ClipboardFormatter.spoon
+	url = git@github.com:Jason-K/hsStringEval.git

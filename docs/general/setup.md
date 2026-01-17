@@ -269,12 +269,69 @@ Edit `macos/macos-defaults.sh` to customize system preferences.
 
 **⚠️ Warning**: These modify system settings. Review before running.
 
+## Backup System
+
+Your dotfiles include an **automated backup and restoration system** for all settings and configurations.
+
+### Quick Start
+
+```bash
+# Install Mackup (backup engine)
+brew install mackup
+
+# Run initial backup
+cd ~/dotfiles
+./scripts/backup.sh --full
+
+# Enable automated backups (catch-up scheduling)
+./scripts/backup-scheduler.sh enable
+
+# Check status
+./scripts/backup-scheduler.sh status
+```
+
+### Key Features
+
+- **Automated backups** with smart catch-up scheduling
+- **Tiered restoration** (essential → apps → full)
+- **Change detection** - only backs up what changed
+- **Safety features** - automatic backups before restore
+- **Clean git history** - backups are gitignored
+
+### Daily Usage
+
+```bash
+# Manual backup
+./scripts/backup.sh
+
+# Restore from backup
+./scripts/restore.sh
+
+# View available backups
+./scripts/restore.sh --list
+```
+
+**For complete documentation, see:** [Backup System Guide](../components/backup-system.md)
+
 ## Maintenance
 
 ### Update Packages
 
 ```bash
 update  # alias for topgrade
+```
+
+### Backup Your Settings
+
+```bash
+# Manual backup (quick)
+./scripts/backup.sh
+
+# Full backup
+./scripts/backup.sh --full
+
+# View backup status
+./scripts/backup-scheduler.sh status
 ```
 
 ### Reload Shell Configuration

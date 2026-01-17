@@ -19,6 +19,11 @@
       "url": "https://api.z.ai/api/mcp/web_reader/mcp",
       "headersHelper": "printf '{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}' \"$Z_AI_API_KEY\""
     },
+    "zai-read": {
+      "type": "http",
+      "url": "https://api.z.ai/api/mcp/zread/mcp",
+      "headersHelper": "printf '{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}' \"$Z_AI_API_KEY\""
+    },
     "context7-mcp": {
       "type": "http",
       "url": "https://mcp.context7.com/mcp",

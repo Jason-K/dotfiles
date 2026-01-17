@@ -13,7 +13,7 @@ if ! git remote get-url "$REMOTE_NAME" >/dev/null 2>&1; then
 fi
 
 echo "==> Fetching upstream..."
-git fetch "$REMOTE_NAME" --tags
+git fetch "$REMOTE_NAME" --tags --force
 
 echo "==> Refreshing $UPSTREAM_DIR from $REMOTE_NAME/main ..."
 mkdir -p "$UPSTREAM_DIR"

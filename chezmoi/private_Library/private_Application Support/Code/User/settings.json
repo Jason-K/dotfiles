@@ -1,0 +1,250 @@
+{
+	"editor.inlineSuggest.enabled": true,
+	"git.autofetch": true,
+	"security.workspace.trust.untrustedFiles": "open",
+	"files.autoSave": "afterDelay",
+	"editor.formatOnPaste": true,
+	"editor.indentSize": "tabSize",
+	"editor.multiCursorModifier": "ctrlCmd",
+	"editor.minimap.size": "fill",
+	"git.enableSmartCommit": true,
+	"files.hotExit": "onExitAndWindowClose",
+	"window.restoreFullscreen": true,
+	"editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+	"editor.codeActionsOnSave": {},
+	"editor.definitionLinkOpensInPeek": true,
+	"editor.language.brackets": [
+		[
+			"{",
+			"}"
+		],
+		[
+			"[",
+			"]"
+		],
+		[
+			"(",
+			")"
+		],
+		[
+			"<",
+			">"
+		],
+		[
+			"/*`n",
+			"`n*/"
+		],
+		[
+			"(*",
+			"*)"
+		],
+		[
+			"(*",
+			"*)"
+		],
+		[
+			"(*",
+			"*)"
+		]
+	],
+	"git.openRepositoryInParentFolders": "always",
+	"window.restoreWindows": "preserve",
+	"github.copilot.advanced": {
+		"enabled": true
+	},
+	"editor.guides.bracketPairs": "active",
+	"[ahk2]": {},
+	"files.associations": {
+		"*.ahk": "ahk",
+		"*.ahk2": "ahk2"
+	},
+	"github.copilot.chat.localeOverride": "en",
+	"path-autocomplete.disableUpOneFolder": false,
+	"path-autocomplete.triggerOutsideStrings": true,
+	"path-autocomplete.useBackslash": true,
+	"path-autocomplete.useSingleBackslash": true,
+	"editor.formatOnSave": true,
+	"diffEditor.experimental.showMoves": true,
+	"diffEditor.wordWrap": "on",
+	"editor.minimap.autohide": "mouseover",
+	"diffEditor.codeLens": true,
+	"editor.inlineSuggest.showToolbar": "always",
+	"workbench.startupEditor": "none",
+	"editor.cursorBlinking": "expand",
+	"editor.cursorSmoothCaretAnimation": "on",
+	"editor.find.autoFindInSelection": "multiline",
+	"workbench.settings.applyToAllProfiles": [
+		"editor.formatOnType",
+		"diffEditor.diffAlgorithm",
+		"editor.tabSize"
+	],
+	"editor.formatOnSaveMode": "modificationsIfAvailable",
+	"editor.stickyTabStops": true,
+	"editor.guides.highlightActiveIndentation": "always",
+	"workbench.tree.renderIndentGuides": "always",
+	"search.showLineNumbers": true,
+	"yaml.schemas": {
+		"file:///c%3A/Users/Jason/.vscode/extensions/docsmsft.docs-yaml-1.0.1/dist/toc.schema.json": "/toc\\.yml/i"
+	},
+	"redhat.telemetry.enabled": false,
+	"editor.quickSuggestions": {
+		"comments": "on",
+		"strings": "on"
+	},
+	"editor.snippetSuggestions": "bottom",
+	"editor.suggest.preview": true,
+	"files.autoGuessEncoding": true,
+	"files.defaultLanguage": "ahk",
+	"explorer.excludeGitIgnore": true,
+	"explorer.fileNesting.enabled": true,
+	"telemetry.telemetryLevel": "off",
+	"ShortcutMenuBar.compareWithSaved": true,
+	"ShortcutMenuBar.goToDefinition": true,
+	"ShortcutMenuBar.showCommands": true,
+	"ShortcutMenuBar.startDebugging": true,
+	"diffEditor.maxComputationTime": 0,
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"workbench.editor.editorActionsLocation": "titleBar",
+	"ShortcutMenuBar.formatWith": true,
+	"ShortcutMenuBar.openSettings": true,
+	"ShortcutMenuBar.toggleRenderWhitespace": true,
+	"ShortcutMenuBar.toggleWordWrap": true,
+	"inlineChat.mode": "preview",
+	"github.copilot.chat.scopeSelection": true,
+	"autoalign.columnWidth": 8,
+	"autoalign.minSeparationLeft": 4,
+	"autoalign.moveableItems": [
+		"~=",
+		":=",
+		"+=",
+		"-=",
+		"!=",
+		"*=",
+		"/=",
+		"%=",
+		"==",
+		"&&",
+		"||",
+		".=",
+		" : ",
+		" ? ",
+		" ;; ",
+		" ; ",
+		"==",
+		"!=",
+		"<=",
+		">=",
+		"=>",
+		"=<",
+		"=~",
+		"**",
+		" ,"
+	],
+	"autoalign.nonMoveableItems": [
+		"/",
+		"*",
+		"#",
+		"for(",
+		"for (",
+		"if(",
+		"if (",
+		"-(",
+		"- (",
+		"(\"",
+		"('",
+		"(`",
+		"&:",
+		">:",
+		"*:",
+		"::",
+		":active",
+		":checked",
+		":disabled",
+		":empty",
+		":enabled",
+		":first-",
+		":focus",
+		":hover",
+		":in-range",
+		":invalid",
+		":lang",
+		":last-",
+		":link",
+		":not",
+		":nth-",
+		":only-",
+		":optional",
+		":out-of-range",
+		":read-",
+		":required",
+		":root",
+		":target",
+		":valid",
+		":visited",
+		"`",
+		"http:",
+		"https:"
+	],
+	"search.searchEditor.singleClickBehaviour": "peekDefinition",
+	"window.confirmBeforeClose": "never",
+	"window.systemColorTheme": "dark",
+	"window.newWindowDimensions": "maximized",
+	"autoalign.separationRight": 4,
+	"editor.find.seedSearchStringFromSelection": "selection",
+	"editor.fontSize": 12,
+	"diffEditor.experimental.useTrueInlineView": true,
+	"diffEditor.hideUnchangedRegions.enabled": true,
+	"editor.inlineSuggest.syntaxHighlightingEnabled": true,
+	"workbench.editor.alwaysShowEditorActions": true,
+	"search.defaultViewMode": "tree",
+	"git.confirmSync": false,
+	"editor.tabCompletion": "on",
+	"editor.guides.indentation": false,
+	"terminal.integrated.env.osx": {
+		"Q_NEW_SESSION": "1"
+	},
+	"editor.accessibilitySupport": "off",
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"launch": {
+		"configurations": [
+			{
+				"type": "bashdb",
+				"request": "launch",
+				"name": "Bash debug (type in name of script)",
+				"program": "${command:AskForScriptName}",
+				"cwd": "${workspaceFolder}",
+				"args": []
+			},
+			{
+				"type": "bashdb",
+				"request": "launch",
+				"name": "Bash debug (select script from list of sh files)",
+				"program": "${command:SelectScriptName}",
+				"cwd": "${workspaceFolder}",
+				"args": []
+			}
+		]
+	},
+	"[shellscript]": {
+		"editor.defaultFormatter": "foxundermoon.shell-format"
+	},
+	"chat.editing.alwaysSaveWithGeneratedChanges": true,
+	"geminicodeassist.project": "adept-compass-55tpm",
+	"direnv.path.executable": "/opt/homebrew/bin/direnv",
+	"workbench.preferredHighContrastColorTheme": "Default Dark Modern",
+	"chat.agent.maxRequests": 50,
+	"chat.tools.terminal.autoApprove": {
+		"lua": true,
+		"cd /Users/jason/.hammerspoon/Spoons/hsLauncher.spoon && lua -e \"local ConfigLoader = require('hsLauncher.main.core.config_loader')\nlocal ACTIONS_MODULE = 'hsLauncher.main.user.actions'\nlocal MENUS_MODULE = 'hsLauncher.main.user.menus'\nlocal EXTERNAL_MODULE = 'hsLauncher.main.user.external_hotkeys'\npackage.preload[ACTIONS_MODULE] = function() return {\n  { name = 'test.action', actions = { 'doSomething()' }, menuDetails = { inMenu = { 'globalRoot' } } }\n} end\npackage.preload[MENUS_MODULE] = function() return {\n  { title = 'globalRoot', description = 'Root', memberRoot = true }\n} end\npackage.preload[EXTERNAL_MODULE] = function() return {} end\nlocal result = ConfigLoader.load()\nprint('ok', result.ok)\nfor _, err in ipairs(result.diagnostics.errors or {}) do\n  print('error', err.code, err.message)\nend\nfor _, warn in ipairs(result.diagnostics.warnings or {}) do\n  print('warn', warn.code, warn.message)\nend\n\"": {
+			"approve": true,
+			"matchCommandLine": true
+		}
+	},
+	"accessibility.signals.codeActionTriggered": {
+		"sound": "off"
+	},
+}

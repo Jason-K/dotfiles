@@ -1,0 +1,41 @@
+# Added by OrbStack: 'orb' SSH host for Linux machines
+# This only works if it's at the top of ssh_config (before any Host blocks).
+# This won't be added again if you remove it.
+Include ~/.orbstack/ssh/config
+
+Host *
+	IdentityAgent ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+	# Send TERM environment variable to remote host
+	# This ensures terminal compatibility when SSHing from Ghostty
+	SendEnv TERM
+	# Also send LANG for proper locale support
+	SendEnv LANG
+	# Keep connections alive
+        ServerAliveInterval 60
+        ServerAliveCountMax 3
+
+# Specific override for OpenCentauri
+Host open-centauri 192.168.1.223
+	User root
+	IdentityFile ~/.ssh/sce/1password/open-centauri-root.pub
+	IdentitiesOnly yes
+	PreferredAuthentications publickey
+
+# Github
+Host github.com
+	User git
+	IdentityFile ~/.ssh/sce/1password/ac26jzfjswxb4vh5fzdubno75i.pub
+	IdentitiesOnly yes
+
+# Octopi
+Host Octopi octopi OctoPi Octopi.local octopi.local 192.168.1.131 octopi.rpi
+	User pi
+	IdentitiesOnly yes
+	PreferredAuthentications publickey
+
+# Ft. Knox (root)
+Host 192.168.20.72
+	User jasonosaj
+	IdentityFile ~/.ssh/sce/1password/5x6p5f7frffkbh23ix7ec7etwe.pub
+
+Include ~/.ssh/1Password/config

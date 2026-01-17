@@ -1,0 +1,442 @@
+{
+  // ~/Library/Application Support/Code - Insiders/User/settings.json
+  // ═════════════════════════════════════════════════════════════════════════════
+  // CORE EDITOR / UX
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  // Workbench & Window
+  "workbench.startupEditor": "none",
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.closeOnFileDelete": true,
+  "workbench.preferredHighContrastColorTheme": "Visual Studio Dark - C++",
+  "window.title": "${dirty}${activeEditorShort} — ${rootName}",
+
+  // Editor Behavior
+  "editor.accessibilitySupport": "off",
+  "editor.renderControlCharacters": false,
+  "editor.wordWrap": "bounded",
+  "editor.wordWrapColumn": 200,
+  "editor.rulers": [200],
+  "editor.linkedEditing": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.formatOnSaveMode": "modificationsIfAvailable",
+  "editor.unicodeHighlight.invisibleCharacters": false,
+
+  // File Management
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.simpleDialog.enable": true,
+  "files.autoSave": "afterDelay",
+
+  // Explorer
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+
+  // Diff Editor
+  "diffEditor.codeLens": true,
+  "diffEditor.ignoreTrimWhitespace": true,
+
+  // Exclusions (keep search/context clean for Copilot Chat #codebase)
+  "files.exclude": {
+    "**/.venv": true,
+    "**/__pycache__": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/node_modules": true
+  },
+  "search.exclude": {
+    "**/.venv": true,
+    "**/__pycache__": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/node_modules": true
+  },
+
+  // File Associations
+  "workbench.editorAssociations": {
+    "*.copilotmd": "vscode.markdown.preview.editor",
+    "*.scpt": "applescript.binary",
+    "*.plist": "default"
+  },
+  "files.associations": {
+    "*.jxa": "jxa",
+    "*.toml": "toml"
+  },
+
+  // Security
+  "security.workspace.trust.untrustedFiles": "prompt",
+
+  // ═════════════════════════════════════════════════════════════════════════════
+  // GIT & VERSION CONTROL
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.openRepositoryInParentFolders": "always",
+  "git.pruneOnFetch": true,
+  "git.rebaseWhenSync": true,
+
+  // GitLens
+  "gitlens.ai.model": "gitkraken",
+  "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+  "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
+  "gitlens.views.commitDetails.files.layout": "tree",
+
+  // ═════════════════════════════════════════════════════════════════════════════
+  // TERMINAL
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  "terminal.external.osxExec": "Ghostty.app",
+  "terminal.integrated.inheritEnv": false, // Control env explicitly; safer with MCP/servers
+  "terminal.integrated.fontFamily": "Meslo LG L DZ For Powerline",
+  "terminal.integrated.scrollback": 20000,
+  "terminal.integrated.enablePersistentSessions": true,
+  "terminal.integrated.enableImages": true,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.profiles.osx": {
+    "zsh": { "path": "/bin/zsh", "args": ["-l"] }
+  },
+  "terminal.integrated.env.osx": {
+    "ANTHROPIC_AUTH_TOKEN": "${env:ANTHROPIC_AUTH_TOKEN}",
+    "Z_AI_API_KEY": "${env:Z_AI_API_KEY}",
+    "CONTEXT7_API_KEY": "${env:CONTEXT7_API_KEY}",
+    "GITHUB_TOKEN": "${env:GITHUB_TOKEN}",
+    "GEMINI_API_KEY": "${env:GEMINI_API_KEY}",
+    "DEEPSEEK_API_KEY": "${env:DEEPSEEK_API_KEY}",
+    "OPENAI_API_KEY": "${env:OPENAI_API_KEY}",
+    "OPENROUTER_API_KEY": "${env:OPENROUTER_API_KEY}",
+    "SMITHERY_API_KEY": "${env:SMITHERY_API_KEY}",
+    "Z_AI_MODE": "ZAI",
+    "Z_WEBSEARCH_URL": "https://api.z.ai/api/mcp/web_search_prime/mcp",
+    "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
+    "API_TIMEOUT_MS": "3000000",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "GLM-4.6",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "GLM-4.6",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "GLM-4.5-Air"
+  },
+
+  // ═════════════════════════════════════════════════════════════════════════════
+  // ACCESSIBILITY
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  "accessibility.signalOptions.volume": 0,
+  "accessibility.signals.chatEditModifiedFile": { "sound": "off" },
+  "accessibility.signals.chatRequestSent": {
+    "announcement": "off",
+    "sound": "off"
+  },
+  "accessibility.signals.chatResponseReceived": { "sound": "off" },
+  "accessibility.signals.noInlayHints": {
+    "announcement": "off",
+    "sound": "off"
+  },
+  "accessibility.signals.progress": { "announcement": "off", "sound": "off" },
+
+  // ═════════════════════════════════════════════════════════════════════════════
+  // LANGUAGE: LUA / HAMMERSPOON
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  "[lua]": {
+    "editor.defaultFormatter": "CppCXY.emmylua-codestyle",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+
+  "Lua.format.enable": false, // Avoid formatter collision with EmmyLua
+  "Lua.runtime.version": "LuaJIT",
+  "Lua.workspace.maxPreload": 5000,
+  "Lua.workspace.checkThirdParty": false,
+  "Lua.workspace.preloadFileSize": 1000,
+  "Lua.workspace.ignoreDir": [".vscode", "**/.hammerspoon/examples/**"],
+  "Lua.workspace.library": [
+    "${env:HOME}/.hammerspoon/Spoons/EmmyLua.spoon/annotations",
+    "${env:HOME}/Scripts/Metascripts/hsLauncher/launcher",
+    "${env:HOME}/Scripts/Metascripts/hsLauncher/config"
+  ],
+  "Lua.diagnostics.globals": ["hs", "spoon", "reloadConfig"],
+  "Lua.diagnostics.ignoredFiles": "Disable",
+  "Lua.hint.enable": true,
+  "Lua.hint.setType": true,
+  "Lua.completion.callSnippet": "Both",
+  "Lua.completion.showParams": true,
+  "Lua.codeLens.enable": true,
+
+  "emmylua.lint.nameStyle": true,
+  "emmylua.name.config": {},
+
+  // ═════════════════════════════════════════════════════════════════════════════
+  // LANGUAGE: PYTHON
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+  "python.analysis.typeCheckingMode": "standard",
+  "python.analysis.autoImportCompletions": true,
+  "python.formatting.provider": "black",
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.terminal.activateEnvironment": false,
+
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports.ruff": "explicit",
+      "source.fixAll.ruff": "explicit"
+    },
+    "editor.formatOnSave": true
+  },
+
+  "ruff.lint.enable": true,
+  "ruff.format.enable": false, // Black owns formatting
+  "ruff.nativeServer": "on",
+  "ruff.importStrategy": "fromEnvironment",
+
+  // ═════════════════════════════════════════════════════════════════════════════
+  // LANGUAGE: JAVASCRIPT / TYPESCRIPT
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[jsonc]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": { "source.organizeImports": "explicit" }
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": { "source.organizeImports": "explicit" }
+  },
+
+  // ═════════════════════════════════════════════════════════════════════════════
+  // LANGUAGE: MARKDOWN
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on"
+  },
+
+  // ═════════════════════════════════════════════════════════════════════════════
+  // LANGUAGE: SHELL / BASH
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  "[shellscript]": { "editor.defaultFormatter": "shakram02.bash-beautify" },
+  "bashIde.shellcheckPath": "/opt/homebrew/bin/shellcheck",
+
+  // ═════════════════════════════════════════════════════════════════════════════
+  // GITHUB COPILOT
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  "github.copilot.enable": {
+    "lua": true,
+    "python": true,
+    "applescript": true,
+    "typescript": true
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+
+  // Copilot Chat
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.chat.generateTests.codeLens": true,
+  "github.copilot.chat.newWorkspaceCreation.enabled": true,
+  "github.copilot.chat.localeOverride": "en",
+  "github.copilot.chat.scopeSelection": true,
+  "github.copilot.chat.nesFetcher": "electron-fetch",
+  "github.copilot.chat.completionsFetcher": "electron-fetch",
+  "github.copilot.chat.byok.ollamaEndpoint": "http://127.0.0.1:11435",
+  "github.copilot.chat.agent.autoFix": true,
+  "github.copilot.chat.agent.currentEditorContext.enabled": true,
+  "github.copilot.chat.newWorkspace.useContext7": true,
+  "github.copilot.chat.notebook.enhancedNextEditSuggestions.enabled": true,
+  "github.copilot.chat.backgroundAgent.enabled": true,
+  "github.copilot.chat.githubMcpServer.enabled": true,
+  "github.copilot.chat.tools.memory.enabled": true,
+
+  // ═════════════════════════════════════════════════════════════════════════════
+  // CHAT / MCP / AGENTS
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  "chat.mcp.autostart": "newAndOutdated",
+  "chat.mcp.assisted.nuget.enabled": true,
+  "chat.mcp.discovery.enabled": {
+    "claude-desktop": true
+  },
+  "chat.viewSessions.enabled": false,
+  "chat.viewSessions.sortOrder": "modifiedDesc",
+  "chat.customAgentInSubagent.enabled": true,
+  "chat.agent.maxRequests": 50,
+
+  "inlineChat.enableV2": true,
+  "inlineChat.lineEmptyHint": true,
+
+  // MCP Servers
+  "servers": {
+    "Code Runner[id=GPCFCR]": {
+      "args": ["run", "--rm", "-i", "formulahendry/mcp-server-code-runner:latest"],
+      "command": "docker"
+    },
+    "Context7[id=JCU9WY]": {
+      "args": ["-y", "@upstash/context7-mcp"],
+      "command": "npx"
+    },
+    "Fetch[id=8A2UUR]": {
+      "args": ["mcp-server-fetch"],
+      "command": "uvx"
+    },
+    "iTerm[id=UG4X56]": {
+      "args": ["-y", "iterm-mcp"],
+      "command": "npx"
+    },
+    "Sequential Thinking[id=Y8E820]": {
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "command": "npx"
+    }
+  },
+
+  // Tool Auto-Approvals (Terminal)
+  "chat.tools.terminal.autoApprove": {
+    "git status": true,
+    "git --no-pager status": true,
+    "git rev-parse --abbrev-ref HEAD": true,
+    "git rev-parse HEAD": true,
+    "git config --get user.name": true,
+    "git config --get user.email": true,
+    "git remote -v": true,
+    "git remote": true,
+    "git branch --list": true,
+    "git tag --list": true,
+    "git --no-pager diff": true,
+    "git --no-pager diff --name-only": true,
+    "git --no-pager log --oneline --decorate --graph -n 50": true,
+    "git --no-pager log --name-only -n 1": true,
+    "git ls-files": true,
+    "git ls-tree -r HEAD --name-only": true,
+    "git show --name-only --pretty=format: HEAD": true,
+    "git checkout": true,
+    "git fetch": true,
+    "git ls-remote": true,
+    "luac": true,
+    "luacheck": true,
+    "awk": true,
+    "uniq": true,
+    "sed": true,
+    "open": true,
+    "defaults": true,
+    "unalias": true,
+    "hs": true,
+    "diff": true,
+    "varlock": true,
+    "npm run build": true,
+    "/opt/homebrew/bin/hs": true,
+    "/Users/jason/Scripts/Metascripts/hsLauncher2/.venv/bin/python": true,
+    "scripts/hsl": true,
+    "/^lua tests/test_runner\\.lua$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^lua -p init\\.lua$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^python3 tools/flatten_lua_tables\\.py --in-place --max-len 260 config/parts/hotkeys\\.lua$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^python3 tools/flatten_lua_tables\\.py --in-place --max-len 260 config/parts/menus\\.lua$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^python3 tools/flatten_lua_tables\\.py --in-place config/parts/hotkeys\\.lua$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^hs -c \"hs\\.reload\\(\\)\"$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^bash scripts/test\\.sh 2>&1 \\| grep -A 7 \"formatClipboardSeed returns false\"$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^lua tests/test_runner\\.lua 2>&1 \\| tail -20$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^lua tests/test_runner\\.lua 2>&1 \\| tail -3$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^cd /Users/jason/Scripts/Metascripts/hsLauncher2 && /opt/homebrew/bin/lua tests/test_runner\\.lua$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^lua tests/test_runner\\.lua 2>&1$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^zsh -c \"alias \\| grep claudex\"$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^osascript -e \"tell application \\\\\"Hammerspoon\\\\\" to reload config\"$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^op run --help 2>&1 \\| head -30$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^cat ~/\\.vscode-insiders/settings\\.json 2>/dev/null \\| python3 -m json\\.tool \\| grep -A 30 \"mcp\\\\\\|claude\" \\| head -50$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "printf": true,
+    "/Users/jason/dotfiles/.claude/claude-secure/claude-smart-simple": true
+  },
+
+  // Tool Auto-Approvals (URLs)
+  "chat.tools.urls.autoApprove": {
+    "https://karabiner-elements.pqrs.org": {
+      "approveRequest": false,
+      "approveResponse": true
+    }
+  },
+
+  // ═════════════════════════════════════════════════════════════════════════════
+  // CLAUDE CODE
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  "claudeCode.preferredLocation": "sidebar",
+  "claudeCode.selectedModel": "glm-4.7",
+  "claudeCode.pathToClaudeCodeExecutable": "/Users/jason/dotfiles/.claude/local/claude-vscode-wrapper",
+  "claudeCode.disableLoginPrompt": true,
+  "claudeCode.useCtrlEnterToSend": true,
+
+  // ═════════════════════════════════════════════════════════════════════════════
+  // EXTENSIONS & TOOLS
+  // ═════════════════════════════════════════════════════════════════════════════
+
+  // Remote extension parity
+  "remote.defaultExtensionsIfInstalledLocally": [
+    "GitHub.copilot",
+    "GitHub.copilot-chat",
+    "GitHub.vscode-pull-request-github"
+  ],
+
+  // CMake & LLDB
+  "cmake.options.statusBarVisibility": "visible",
+  "lldb.launch.expressions": "native",
+  "lldb.library": "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB",
+
+  // Project Manager
+  "projectManager.git.baseFolders": [
+    "~/.hammerspoon",
+    "~/Scripts",
+    "~/Gits"
+  ],
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "chat.useAgentSkills": true,
+  "chat.tools.terminal.outputLocation": "chat"
+}

@@ -65,3 +65,8 @@ todos/
 backups/
 settings/settings_sentry/configs/
 settings/settings_sentry/logs/
+
+# Dotfiles backup system
+settings/mackup/backups/
+*.backup-state
+.dotfiles-backup-state

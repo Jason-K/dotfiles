@@ -1,0 +1,17 @@
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[user]
+	name = Jason
+	email = 80914358+Jason-K@users.noreply.github.com
+  	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM2xAy9wilr5bTTGufUCTrjcsWykpvdaDW/1/NEFPLCi
+[protocol "file"]
+	allow = always
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true

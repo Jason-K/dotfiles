@@ -31,7 +31,7 @@ resolve_secrets() {
     fi
 
     log "Resolving secrets from 1Password (one-time biometric auth)..."
-    
+
     local exports
     exports=$(op run --no-masking --env-file="$ENV_FILE" -- /usr/bin/printenv 2>/dev/null \
         | grep -E '^(ANTHROPIC|Z_AI|CONTEXT7|SMITHERY|GITHUB|GEMINI|DEEPSEEK|OPENAI|OPENROUTER)_') || {
@@ -89,13 +89,13 @@ for name, cfg in mcp.items():
             old
         )
         new = new.replace('$KEY', '${\\1}').replace('${\\1}', '$' + re.search(r'\$\{([A-Z_]+)', old).group(1) if re.search(r'\$\{([A-Z_]+)', old) else '$KEY')
-        
+
         # Simpler approach: just replace the whole thing
         if 'Z_AI_API_KEY' in old:
             new = 'printf \'{"Authorization":"Bearer %s","Accept":"application/json, text/event-stream"}\' "$Z_AI_API_KEY"'
         elif 'CONTEXT7_API_KEY' in old:
             new = 'printf \'{"Authorization":"Bearer %s"}\' "$CONTEXT7_API_KEY"'
-        
+
         if new != old:
             cfg['headersHelper'] = new
             modified = True
@@ -127,6 +127,7 @@ setup_environment() {
     # Non-sensitive config
     export Z_AI_MODE="${Z_AI_MODE:-ZAI}"
     export Z_WEBSEARCH_URL="${Z_WEBSEARCH_URL:-https://api.z.ai/api/mcp/web_search_prime/mcp}"
+    export Z_READ_URL="${Z_READ_URL:-https://api.z.ai/api/mcp/zread/mcp}"
     export ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-https://api.z.ai/api/anthropic}"
     export API_TIMEOUT_MS="${API_TIMEOUT_MS:-3000000}"
     export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1

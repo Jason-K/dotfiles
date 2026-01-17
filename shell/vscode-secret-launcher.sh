@@ -112,7 +112,7 @@ EOF
 
   # Launch VSCode - it will inherit all exported variables
   # The 'code' alias points to VSCode; adjust if using 'code-insiders'
-  /usr/bin/open -a "Visual Studio Code" "${args[@]}"
+  /usr/bin/open -b com.microsoft.VSCodeInsiders "${args[@]}"
 }
 
 # Export the function

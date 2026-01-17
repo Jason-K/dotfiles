@@ -1,9 +1,0 @@
-at.obdev.littlesnitch.agent.plist
-com.adobe.AdobeCreativeCloud.plist.bak
-com.adobe.ARMDCHelper.cc24aef4a1b90ed56a725c38014c95072f92651fb65e1bf9c8e43c37a23d420d.plist.bak
-com.adobe.ccxprocess.plist.bak
-com.microsoft.update.agent.plist
-corp.sap.privileges.agent.plist
-org.xquartz.startx.plist
-us.zoom.updater.login.check.plist
-us.zoom.updater.plist

@@ -539,6 +539,7 @@ if [[ "$AUTH_MODE" == "desktop" ]]; then
     unset ANTHROPIC_API_KEY
     unset Z_AI_API_KEY
     unset ZAI_API_KEY
+    unset Z_READ_URL
     unset CLAUDE_API_KEY
     unset CLAUDE_CODE_AUTH_TOKEN
   fi
@@ -611,6 +612,7 @@ fi
 
 # Base URL and defaults for z.ai if not already configured
 [[ -z "${ANTHROPIC_BASE_URL:-}" ]] && export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
+[[ -z "${Z_READ_URL:-}" ]] && export Z_READ_URL="https://api.z.ai/api/zread"
 [[ -z "${Z_AI_MODE:-}" ]] && export Z_AI_MODE="ZAI"
 [[ -z "${API_TIMEOUT_MS:-}" ]] && export API_TIMEOUT_MS="3000000"
 [[ -z "${ANTHROPIC_DEFAULT_OPUS_MODEL:-}" ]] && export ANTHROPIC_DEFAULT_OPUS_MODEL="GLM-4.7"

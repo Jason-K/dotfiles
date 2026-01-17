@@ -22,6 +22,7 @@ claude-secure() {
   # ─────────────────────────────────────────────────────────────────────────
   export Z_AI_MODE="ZAI"
   export Z_WEBSEARCH_URL="https://api.z.ai/api/mcp/web_search_prime/mcp"
+  export Z_READ_URL="https://api.z.ai/api/mcp/zread/mcp"
   export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
   export API_TIMEOUT_MS="3000000"
   export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
@@ -66,7 +67,7 @@ claude-secure() {
   # ─────────────────────────────────────────────────────────────────────────
   # 3. BACKFILL AND PREVENT RUNTIME OP CALLS
   # ─────────────────────────────────────────────────────────────────────────
-  
+
   # Backfill related vars
   export Z_AI_API_KEY="${Z_AI_API_KEY:-$ANTHROPIC_API_KEY}"
   export ZAI_API_KEY="${ZAI_API_KEY:-$ANTHROPIC_API_KEY}"

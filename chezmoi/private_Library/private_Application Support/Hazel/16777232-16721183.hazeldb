@@ -1,0 +1,2247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Contents</key>
+	<dict>
+		<key>.DS_Store</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>16721507</string>
+		</dict>
+		<key>1955.07.07 - Francis Fernandez - QME report by Dr. Hicks.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>499248894</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>1955.07.07 - Francis Fernandez - QME report by Dr. Hicks.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>499285632</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>1963.11.15 - 20250912 pqme supp weiss.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>520619655</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>1963.11.15 - 20250912 pqme supp weiss.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>520624987</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>1964.04.12 - 16835919-v1-draft pre-trial conference statement1.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-17T02:17:28Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>601881261</string>
+			<key>Predicted Process Time</key>
+			<real>790618923</real>
+			<key>Rule Signature</key>
+			<array>
+				<string>{dateAdded !=[cd] today AND dateAdded hazelIsInTheLast: 1 Week AND ANY displayExtensions ==[cd] "pdf"}:{(removetag:(
+    day1
+),{
+})(addtag:(
+    week1
+),{
+})(color:3,{
+})}</string>
+			</array>
+		</dict>
+		<key>1967.09.10 - Andrew Radford-personnel records.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>494754389</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>1967.09.10 - Andrew Radford-personnel records.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>495536093</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>1990.01.01 - 2025-g064030.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-12T18:21:48Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>594166912</string>
+			<key>Predicted Process Time</key>
+			<real>790539909.79899287</real>
+		</dict>
+		<key>2004.07.24 - Osteomyelitis 10.1016@S0140-67360416727-5.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2004.07.24 - Osteomyelitis 10.1016@S0140-67360416727.skim</string>
+			</array>
+			<key>File ID</key>
+			<string>436736098</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2009.01.01 - Vertebral osteomyelitis in adults- an update - 10.1093@bmb@ldw003.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>436803034</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2009.12.30 - Undated - Bridget Quinn - SDT - john muir medical center.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>467784289</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2020.02.07 - Current Concepts of Osteomyelitis - PIIS0002944020301255.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>437032167</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2021.10.11 - Rene Merritt-Nieskes - proposed Stips.PDF</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2025-12-29T19:13:15Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>582154723</string>
+			<key>Predicted Process Time</key>
+			<real>790545355</real>
+		</dict>
+		<key>2022.06.01 - AME Joshua Gordon MD report dtd 6-30-25.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2022.06.01 - AME Joshua Gordon MD report dtd 6-30.skim</string>
+			</array>
+			<key>File ID</key>
+			<string>444182903</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2024.10.24 - Posttraumatic seizures and epilepsy - UpToDate.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>467937990</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2024.10.24 - Posttraumatic seizures and epilepsy - UpToDate.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>468380161</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025-08-29 - Complete_with_Docusign_20250821_-_Mara_Jon</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>469181658</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.04.15 - Re: Re: Re: Re: Re: Re: Bookhammer, Charles v. Sysco Corporation (41470).pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-13T22:28:29Z</date>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2025.04.15 - Re: Re: Re: Re: Re: Re: Bookhammer, Charles v. Sysco Corporation .pdf</string>
+				<string>2025.04.15 - Re: Re: Re: Re: Re: Re: Bookhammer, Charles v. Sysco Corporation.pdf</string>
+			</array>
+			<key>File ID</key>
+			<string>596044283</string>
+			<key>Predicted Process Time</key>
+			<real>790649851.60287201</real>
+		</dict>
+		<key>2025.04.16 - qme lucas konovalenko md report.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>467758221</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.04.16 - qme lucas konovalenko md report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>467759290</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.04.21 - Wasay Noorani - medical - medicals report for 04-21-25 to 07-17-25.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2025.04.21 - Wasay Noorani - medical - medicals report for 04-21-25 to 07-17.skim</string>
+			</array>
+			<key>File ID</key>
+			<string>466573508</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.05.08 - dr.anderson qme report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>425059918</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.05.21 - Victoria Barber M.D.Report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>432844949</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.05.29 - records to e-File for Dupes.zip</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>278816751</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.06.04 - Brian Caldwell - Dr. Campbell AME report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>439110035</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.06.10 - Timothy West - AME - Dr. Schmitz.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>451032565</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.06.18 - Niki Forghani - wayne anderson do, faan, fahs, QME report-1.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2025.06.18 - Niki Forghani - wayne anderson do, faan, fahs, QME report.md</string>
+			</array>
+			<key>File ID</key>
+			<string>469190032</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.06.18 - Niki Forghani - wayne anderson do, faan, fahs, QME report-1.skim</key>
+		<dict>
+			<key>Date Diffed</key>
+			<date>2025-11-26T17:22:05Z</date>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2025.06.18 - Niki Forghani - wayne anderson do, faan, fahs, QME report.skim</string>
+			</array>
+			<key>File ID</key>
+			<string>469237417</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.06.18 - Niki Forghani - wayne anderson do, faan, fahs, QME report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>456175228</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.06.24 - Tonica The'Son - Dr. Campbell QME report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>439471593</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.07.02 - Cynthia Nickerson - QME william r. campbell, d.o. report.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>469044472</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.07.02 - Cynthia Nickerson - QME william r. campbell, d.o. report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>469071697</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.07.10 - Mark Anderson M.D.Report [26].skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>427207699</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.07.11 - Keenan Goins - QME Mehul Taylor MD Report.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>495790063</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.07.11 - Keenan Goins - QME Mehul Taylor MD Report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>495868938</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.08.05 - Jordan Jester - QME sarbjit dhesi d.c. report.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>495536246</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.08.05 - Jordan Jester - QME sarbjit dhesi d.c. report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>495704216</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.08.06 - gallegos records 2 of 2.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2025.08.06 - gallegos records 2 of.skim</string>
+			</array>
+			<key>File ID</key>
+			<string>423432231</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.08.12 - QME Nataliya Belfor PhD Report [80].skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>561299061</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.08.15 - timothy west - sdt - kp.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>451218502</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.08.29 - QME Chris Shin D.C.L.Ac.Q.M.E.Report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>497371855</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.10 - Felisa Morgan - jacquelyn weiss m.d. report.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>500228475</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.10 - Felisa Morgan - jacquelyn weiss m.d. report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>501508499</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.10 - Guillermo Chavez - liberty mutual w- claim file.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>489880095</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.10 - Guillermo Chavez - liberty mutual w- claim file.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>490289904</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.17 - Guillermo Chavez - richard fernandez md report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>511039593</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.18 - Alisa Jackson - Dr. Renbaum re-eval report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>549699544</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.18 - Jason Perry - dr (suppl rpt req).skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>499499094</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.23 - Andrew Radford - sdt- KPMG Walnut Creek.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>548641503</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.23 - Andrew Radford - sdt- KPMG Walnut Creek.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>548818818</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.23 - Andrew Radford - sdt- concentra urgent care- san leandro II (cd).md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>548724911</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.23 - Andrew Radford - sdt- concentra urgent care- san leandro II (cd).skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>548818905</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.26 - Undated - Beebe Rutledge - mpn - sorted by specialty then city then name.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>497149975</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.29 - Jason Perry - KP SDT combined.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>499365922</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.09.29 - Jason Perry - KP SDT combined.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>499370427</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.10.09 - 10032025152841.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2025.10.09 -.md</string>
+			</array>
+			<key>File ID</key>
+			<string>507683627</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.10.09 - 10032025152841.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2025.10.09 -.skim</string>
+			</array>
+			<key>File ID</key>
+			<string>507711848</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.10.14 - medical records 8-17--25 cd.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>511957194</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.10.14 - qme robert stone d.c report.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>546222694</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.10.14 - qme robert stone d.c report.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>546414052</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.10.17 - Beebe Rutledge - QME - mohammad rasouli MD.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>525561984</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.10.17 - Beebe Rutledge - QME - mohammad rasouli MD.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>525647425</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.10.17 - ROI-authorization.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>514887136</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.10.27 - Rolando Sandoval  - combined docs.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>522885906</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.10.27 - Rolando Sandoval  - combined docs.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>522946612</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.11.07 - Undated - Nolan Lindsey - scif claim file (OCR).ocr.log</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>539128996</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.11.18 - Ernest Christmas - - AME Report - Michael Fujinaka M.D.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>578209238</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.11.18 - Ernest Christmas - AME Report - Michael Fujinaka M.D.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>578233768</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.12.01 - David Garcia Gaspar - AME re-eval with Dr. Fujinaka.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>559991634</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>2025.12.22 - LTC re. Settlement papers for signatures.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2025-12-29T19:55:57Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>582280563</string>
+			<key>Predicted Process Time</key>
+			<real>790552067</real>
+		</dict>
+		<key>2026.01.02 - JasonJK98898-158579677-1.pdf</key>
+		<dict>
+			<key>Date Diffed</key>
+			<date>2026-01-03T06:37:13Z</date>
+			<key>Date Matched</key>
+			<date>2026-01-10T05:03:40Z</date>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2026.01.02 - JasonJK98898-158579677.pdf</string>
+			</array>
+			<key>File ID</key>
+			<string>592344744</string>
+			<key>Predicted Process Time</key>
+			<real>790324444.10533094</real>
+		</dict>
+		<key>2026.01.02 - JasonJK98898-158579677.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-10T03:40:04Z</date>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2026.01.02 - JasonJK98898.pdf</string>
+			</array>
+			<key>File ID</key>
+			<string>592231915</string>
+			<key>Predicted Process Time</key>
+			<real>790314905.86251485</real>
+		</dict>
+		<key>2026.01.04 - JasonJK98898-158579677.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-11T02:14:59Z</date>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2026.01.04 - JasonJK98898.pdf</string>
+			</array>
+			<key>File ID</key>
+			<string>593333285</string>
+			<key>Predicted Process Time</key>
+			<real>790477930.80988693</real>
+		</dict>
+		<key>2026.01.05 - 20251229 stip and award voucher language.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-12T20:17:36Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>594375667</string>
+			<key>Predicted Process Time</key>
+			<real>790554600.9877001</real>
+		</dict>
+		<key>2026.01.05 - SessionNotesWLoot.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-12T09:19:49Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>594114960</string>
+			<key>Predicted Process Time</key>
+			<real>790535919.57153726</real>
+		</dict>
+		<key>2026.01.08 - little league medical release form.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-15T14:51:04Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>597761701</string>
+			<key>Predicted Process Time</key>
+			<real>790790375.66537452</real>
+		</dict>
+		<key>2026.01.11 - DM Helper Users Guide v2.0.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-17T02:17:29Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>601003190</string>
+			<key>Predicted Process Time</key>
+			<real>790476312</real>
+			<key>Rule Signature</key>
+			<array>
+				<string>{dateAdded !=[cd] today AND dateAdded hazelIsInTheLast: 1 Week AND ANY displayExtensions ==[cd] "pdf"}:{(removetag:(
+    day1
+),{
+})(addtag:(
+    week1
+),{
+})(color:3,{
+})}</string>
+			</array>
+		</dict>
+		<key>2026.01.11 - Finn - lvl 2.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-17T02:17:28Z</date>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>2026.01.11 - Finn - lvl.pdf</string>
+			</array>
+			<key>File ID</key>
+			<string>600926499</string>
+			<key>Predicted Process Time</key>
+			<real>790469747</real>
+			<key>Rule Signature</key>
+			<array>
+				<string>{dateAdded !=[cd] today AND dateAdded hazelIsInTheLast: 1 Week AND ANY displayExtensions ==[cd] "pdf"}:{(removetag:(
+    day1
+),{
+})(addtag:(
+    week1
+),{
+})(color:3,{
+})}</string>
+			</array>
+		</dict>
+		<key>2026.01.12 - ExhibitsPage.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-17T02:17:29Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>601885179</string>
+			<key>Predicted Process Time</key>
+			<real>790617978</real>
+			<key>Rule Signature</key>
+			<array>
+				<string>{dateAdded !=[cd] today AND dateAdded hazelIsInTheLast: 1 Week AND ANY displayExtensions ==[cd] "pdf"}:{(removetag:(
+    day1
+),{
+})(addtag:(
+    week1
+),{
+})(color:3,{
+})}</string>
+			</array>
+		</dict>
+		<key>2026.01.13 - Alonzo Horton PTCS rev.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-17T02:17:28Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>602356772</string>
+			<key>Predicted Process Time</key>
+			<real>790618943</real>
+			<key>Rule Signature</key>
+			<array>
+				<string>{dateAdded !=[cd] today AND dateAdded hazelIsInTheLast: 1 Week AND ANY displayExtensions ==[cd] "pdf"}:{(removetag:(
+    day1
+),{
+})(addtag:(
+    week1
+),{
+})(color:3,{
+})}</string>
+			</array>
+		</dict>
+		<key>2026.01.13 - SSC Small C26011310170.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-17T02:17:28Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>603063676</string>
+			<key>Predicted Process Time</key>
+			<real>790625710</real>
+			<key>Rule Signature</key>
+			<array>
+				<string>{dateAdded !=[cd] today AND dateAdded hazelIsInTheLast: 1 Week AND ANY displayExtensions ==[cd] "pdf"}:{(removetag:(
+    day1
+),{
+})(addtag:(
+    week1
+),{
+})(color:3,{
+})}</string>
+			</array>
+		</dict>
+		<key>2026.01.15 - AXS - LTC re AME-PQME Report not MMI.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-17T02:17:29Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>606049294</string>
+			<key>Predicted Process Time</key>
+			<real>790827873</real>
+			<key>Rule Signature</key>
+			<array>
+				<string>{dateAdded !=[cd] today AND dateAdded hazelIsInTheLast: 1 Week AND ANY displayExtensions ==[cd] "pdf"}:{(removetag:(
+    day1
+),{
+})(addtag:(
+    week1
+),{
+})(color:3,{
+})}</string>
+			</array>
+		</dict>
+		<key>20260106 CT WCAB.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-17T02:17:28Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>601708928</string>
+			<key>Predicted Process Time</key>
+			<real>790543807</real>
+			<key>Rule Signature</key>
+			<array>
+				<string>{dateAdded !=[cd] today AND dateAdded hazelIsInTheLast: 1 Week AND ANY displayExtensions ==[cd] "pdf"}:{(removetag:(
+    day1
+),{
+})(addtag:(
+    week1
+),{
+})(color:3,{
+})}</string>
+			</array>
+		</dict>
+		<key>7-7-25_report_by_Dr.Barbara_McQuinn.rtf</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>467694447</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>7-7-25_report_by_Dr.Barbara_McQuinn.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>467685253</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>7_25_24_notice_of_denial.rtf</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>482126028</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>AME_Joseph_Sclafani_M.D.Report_11-20-2025.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>AME_Joseph_Sclafani_M.D.Report_11-20.md</string>
+			</array>
+			<key>File ID</key>
+			<string>603635864</string>
+			<key>Predicted Process Time</key>
+			<real>790647352</real>
+		</dict>
+		<key>AME_Joseph_Sclafani_M.D.Report_11-20-2025.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-17T02:17:29Z</date>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>AME_Joseph_Sclafani_M.D.Report_11-20.pdf</string>
+			</array>
+			<key>File ID</key>
+			<string>603635672</string>
+			<key>Predicted Process Time</key>
+			<real>790647340</real>
+			<key>Rule Signature</key>
+			<array>
+				<string>{dateAdded !=[cd] today AND dateAdded hazelIsInTheLast: 1 Week AND ANY displayExtensions ==[cd] "pdf"}:{(removetag:(
+    day1
+),{
+})(addtag:(
+    week1
+),{
+})(color:3,{
+})}</string>
+			</array>
+		</dict>
+		<key>AME_Joseph_Sclafani_M.D.Report_11-20-2025.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>AME_Joseph_Sclafani_M.D.Report_11-20.skim</string>
+			</array>
+			<key>File ID</key>
+			<string>606904311</string>
+			<key>Predicted Process Time</key>
+			<real>790329600</real>
+		</dict>
+		<key>AME_Michael_F.Dillingham_M.D.Report_08-13-2025.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>AME_Michael_F.Dillingham_M.D.Report_08-13.md</string>
+			</array>
+			<key>File ID</key>
+			<string>552816516</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>AME_Michael_F.Dillingham_M.D.Report_08-13-2025.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>AME_Michael_F.Dillingham_M.D.Report_08-13.skim</string>
+			</array>
+			<key>File ID</key>
+			<string>554288901</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>AME_William_Campbell_DO_Report_08-18-2025[16].skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>526032400</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Adams, Sharon</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>519289313</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Angelo Garza - SDT - Kaiser combined.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>471731528</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Beebe Rutledge</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>350992565</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Bridgette_Quinn-UCSF.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-17T02:17:28Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>604632038</string>
+			<key>Predicted Process Time</key>
+			<real>790721376</real>
+			<key>Rule Signature</key>
+			<array>
+				<string>{dateAdded !=[cd] today AND dateAdded hazelIsInTheLast: 1 Week AND ANY displayExtensions ==[cd] "pdf"}:{(removetag:(
+    day1
+),{
+})(addtag:(
+    week1
+),{
+})(color:3,{
+})}</string>
+			</array>
+		</dict>
+		<key>Dupes SMS</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>427791770</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Emmanuel Nunez</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>318502210</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Exhibits A-D in support of Petition for Commutation.zip</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>505993699</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Felipe Vallejo</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>488917482</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Gaurav_Abbi_M.D.QME_Report_07-25-2025[16].skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>478795038</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Herrera Fernandez, Karina</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>544371720</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Herrerra exhibits</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>466829838</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Hope, Larry</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>575825668</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>I received the Defendant.docx</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>507280946</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Jamie Dias</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>487023640</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>JasonJK98898_158579677.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-12T01:12:16Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>593337763</string>
+			<key>Predicted Process Time</key>
+			<real>790478487.49776578</real>
+		</dict>
+		<key>Joe Deutsch</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>179559563</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Joseph Deutsch</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>187541977</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Mark_Anderson_M.D.Report_07-10-2025[26].skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>427207211</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Matthew Goldman</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>408609663</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Maureen Smart-Calderon</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>200508865</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Mercury poisoning</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>353272744</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Montano, Lenora - penalty petition</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>519997507</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Nolan Lindsey</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>299933203</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Old Files</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>85850666</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>PDFWriter</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>517485502</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Pages from Records produced by Skydive Elsinore LLC to Republic - SDT 116147-02.pdf.xlsx</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array>
+				<string>Pages from Records produced by Skydive Elsinore LLC to Republic - SDT 116147.pdf.xlsx</string>
+			</array>
+			<key>File ID</key>
+			<string>347858218</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Patterson_case_overruled_by_court_of_appeal_11.10.25.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>544187820</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Patterson_case_overruled_by_court_of_appeal_11.10.25.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>544222441</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>QME_Michael_Moore_M.D.Report_08-13-2025[47].pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-17T02:17:28Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>606901220</string>
+			<key>Predicted Process Time</key>
+			<real>790329600</real>
+			<key>Rule Signature</key>
+			<array>
+				<string>{dateAdded ==[cd] today AND ANY displayExtensions ==[cd] "pdf"}:{(addtag:(
+    day1
+),{
+})(color:4,{
+})}</string>
+			</array>
+		</dict>
+		<key>QME_Michael_Moore_M.D.Report_08-13-2025[47].skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>606901223</string>
+			<key>Predicted Process Time</key>
+			<real>790329600</real>
+		</dict>
+		<key>REDACTED FOR TRAINING</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>394843403</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Re.docx</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>507280943</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Roderick Henry AME reports</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>311623776</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>SDT-_Kaiser_Hospital_PMG-_Oakland_7_31_25_Medical_Records_CD.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>471732723</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>SDT-_Kaiser_Hospital_PMG-_Oakland_7_31_25_Medical_Records_CD.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>471760288</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Sandoval, Rolando</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>522812036</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Shaw, Steven</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>503277399</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Tina Fleeton PTCS.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-14T16:46:30Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>596812055</string>
+			<key>Predicted Process Time</key>
+			<real>790710119.4564662</real>
+		</dict>
+		<key>West, Timothy-06-25-24 Audio Statement of Katrina Adair-West.mp3</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>478799285</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>Willingham, Matt</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>550556128</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>dr.fujinaka_m.d_12_1_25.md</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>567485126</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>dr.fujinaka_m.d_12_1_25.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>567700744</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>efiled_dor_re_addtl_panel_psy.pdf</key>
+		<dict>
+			<key>Date Matched</key>
+			<date>2026-01-17T02:17:28Z</date>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>606969975</string>
+			<key>Predicted Process Time</key>
+			<real>790329600</real>
+			<key>Rule Signature</key>
+			<array>
+				<string>{dateAdded ==[cd] today AND ANY displayExtensions ==[cd] "pdf"}:{(addtag:(
+    day1
+),{
+})(color:4,{
+})}</string>
+			</array>
+		</dict>
+		<key>image0.jpeg</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>422207547</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>jasonPerry</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>499352835</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>patrick-kelly2.webp</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>596472794</string>
+			<key>Predicted Process Time</key>
+			<real>790702280.26996636</real>
+		</dict>
+		<key>rfc_exemplars</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>516743332</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>stip_order.skim</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>451139642</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>wordlist.txt</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>471838398</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>zone3.png</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>567798474</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+		<key>zone4.png</key>
+		<dict>
+			<key>Dupe Original Name</key>
+			<array/>
+			<key>File ID</key>
+			<string>567799114</string>
+			<key>Predicted Process Time</key>
+			<real>63113904000</real>
+		</dict>
+	</dict>
+	<key>File Map</key>
+	<dict>
+		<key>16721507</key>
+		<dict>
+			<key>Name</key>
+			<string>.DS_Store</string>
+		</dict>
+		<key>179559563</key>
+		<dict>
+			<key>Name</key>
+			<string>Joe Deutsch</string>
+		</dict>
+		<key>187541977</key>
+		<dict>
+			<key>Name</key>
+			<string>Joseph Deutsch</string>
+		</dict>
+		<key>200508865</key>
+		<dict>
+			<key>Name</key>
+			<string>Maureen Smart-Calderon</string>
+		</dict>
+		<key>278816751</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.05.29 - records to e-File for Dupes.zip</string>
+		</dict>
+		<key>299933203</key>
+		<dict>
+			<key>Name</key>
+			<string>Nolan Lindsey</string>
+		</dict>
+		<key>311623776</key>
+		<dict>
+			<key>Name</key>
+			<string>Roderick Henry AME reports</string>
+		</dict>
+		<key>318502210</key>
+		<dict>
+			<key>Name</key>
+			<string>Emmanuel Nunez</string>
+		</dict>
+		<key>347858218</key>
+		<dict>
+			<key>Name</key>
+			<string>Pages from Records produced by Skydive Elsinore LLC to Republic - SDT 116147-02.pdf.xlsx</string>
+		</dict>
+		<key>350992565</key>
+		<dict>
+			<key>Name</key>
+			<string>Beebe Rutledge</string>
+		</dict>
+		<key>353272744</key>
+		<dict>
+			<key>Name</key>
+			<string>Mercury poisoning</string>
+		</dict>
+		<key>394843403</key>
+		<dict>
+			<key>Name</key>
+			<string>REDACTED FOR TRAINING</string>
+		</dict>
+		<key>408609663</key>
+		<dict>
+			<key>Name</key>
+			<string>Matthew Goldman</string>
+		</dict>
+		<key>422207547</key>
+		<dict>
+			<key>Name</key>
+			<string>image0.jpeg</string>
+		</dict>
+		<key>423432231</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.08.06 - gallegos records 2 of 2.skim</string>
+		</dict>
+		<key>425059918</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.05.08 - dr.anderson qme report.skim</string>
+		</dict>
+		<key>427207211</key>
+		<dict>
+			<key>Name</key>
+			<string>Mark_Anderson_M.D.Report_07-10-2025[26].skim</string>
+		</dict>
+		<key>427207699</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.07.10 - Mark Anderson M.D.Report [26].skim</string>
+		</dict>
+		<key>427791770</key>
+		<dict>
+			<key>Name</key>
+			<string>Dupes SMS</string>
+		</dict>
+		<key>432844949</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.05.21 - Victoria Barber M.D.Report.skim</string>
+		</dict>
+		<key>436736098</key>
+		<dict>
+			<key>Name</key>
+			<string>2004.07.24 - Osteomyelitis 10.1016@S0140-67360416727-5.skim</string>
+		</dict>
+		<key>436803034</key>
+		<dict>
+			<key>Name</key>
+			<string>2009.01.01 - Vertebral osteomyelitis in adults- an update - 10.1093@bmb@ldw003.skim</string>
+		</dict>
+		<key>437032167</key>
+		<dict>
+			<key>Name</key>
+			<string>2020.02.07 - Current Concepts of Osteomyelitis - PIIS0002944020301255.skim</string>
+		</dict>
+		<key>439110035</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.06.04 - Brian Caldwell - Dr. Campbell AME report.skim</string>
+		</dict>
+		<key>439471593</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.06.24 - Tonica The'Son - Dr. Campbell QME report.skim</string>
+		</dict>
+		<key>444182903</key>
+		<dict>
+			<key>Name</key>
+			<string>2022.06.01 - AME Joshua Gordon MD report dtd 6-30-25.skim</string>
+		</dict>
+		<key>451032565</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.06.10 - Timothy West - AME - Dr. Schmitz.skim</string>
+		</dict>
+		<key>451139642</key>
+		<dict>
+			<key>Name</key>
+			<string>stip_order.skim</string>
+		</dict>
+		<key>451218502</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.08.15 - timothy west - sdt - kp.skim</string>
+		</dict>
+		<key>456175228</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.06.18 - Niki Forghani - wayne anderson do, faan, fahs, QME report.skim</string>
+		</dict>
+		<key>466573508</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.04.21 - Wasay Noorani - medical - medicals report for 04-21-25 to 07-17-25.skim</string>
+		</dict>
+		<key>466829838</key>
+		<dict>
+			<key>Name</key>
+			<string>Herrerra exhibits</string>
+		</dict>
+		<key>467685253</key>
+		<dict>
+			<key>Name</key>
+			<string>7-7-25_report_by_Dr.Barbara_McQuinn.skim</string>
+		</dict>
+		<key>467694447</key>
+		<dict>
+			<key>Name</key>
+			<string>7-7-25_report_by_Dr.Barbara_McQuinn.rtf</string>
+		</dict>
+		<key>467758221</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.04.16 - qme lucas konovalenko md report.md</string>
+		</dict>
+		<key>467759290</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.04.16 - qme lucas konovalenko md report.skim</string>
+		</dict>
+		<key>467784289</key>
+		<dict>
+			<key>Name</key>
+			<string>2009.12.30 - Undated - Bridget Quinn - SDT - john muir medical center.md</string>
+		</dict>
+		<key>467937990</key>
+		<dict>
+			<key>Name</key>
+			<string>2024.10.24 - Posttraumatic seizures and epilepsy - UpToDate.md</string>
+		</dict>
+		<key>468380161</key>
+		<dict>
+			<key>Name</key>
+			<string>2024.10.24 - Posttraumatic seizures and epilepsy - UpToDate.skim</string>
+		</dict>
+		<key>469044472</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.07.02 - Cynthia Nickerson - QME william r. campbell, d.o. report.md</string>
+		</dict>
+		<key>469071697</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.07.02 - Cynthia Nickerson - QME william r. campbell, d.o. report.skim</string>
+		</dict>
+		<key>469181658</key>
+		<dict>
+			<key>Name</key>
+			<string>2025-08-29 - Complete_with_Docusign_20250821_-_Mara_Jon</string>
+		</dict>
+		<key>469190032</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.06.18 - Niki Forghani - wayne anderson do, faan, fahs, QME report-1.md</string>
+		</dict>
+		<key>469237417</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.06.18 - Niki Forghani - wayne anderson do, faan, fahs, QME report-1.skim</string>
+		</dict>
+		<key>471731528</key>
+		<dict>
+			<key>Name</key>
+			<string>Angelo Garza - SDT - Kaiser combined.md</string>
+		</dict>
+		<key>471732723</key>
+		<dict>
+			<key>Name</key>
+			<string>SDT-_Kaiser_Hospital_PMG-_Oakland_7_31_25_Medical_Records_CD.md</string>
+		</dict>
+		<key>471760288</key>
+		<dict>
+			<key>Name</key>
+			<string>SDT-_Kaiser_Hospital_PMG-_Oakland_7_31_25_Medical_Records_CD.skim</string>
+		</dict>
+		<key>471838398</key>
+		<dict>
+			<key>Name</key>
+			<string>wordlist.txt</string>
+		</dict>
+		<key>478795038</key>
+		<dict>
+			<key>Name</key>
+			<string>Gaurav_Abbi_M.D.QME_Report_07-25-2025[16].skim</string>
+		</dict>
+		<key>478799285</key>
+		<dict>
+			<key>Name</key>
+			<string>West, Timothy-06-25-24 Audio Statement of Katrina Adair-West.mp3</string>
+		</dict>
+		<key>482126028</key>
+		<dict>
+			<key>Name</key>
+			<string>7_25_24_notice_of_denial.rtf</string>
+		</dict>
+		<key>487023640</key>
+		<dict>
+			<key>Name</key>
+			<string>Jamie Dias</string>
+		</dict>
+		<key>488917482</key>
+		<dict>
+			<key>Name</key>
+			<string>Felipe Vallejo</string>
+		</dict>
+		<key>489880095</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.10 - Guillermo Chavez - liberty mutual w- claim file.md</string>
+		</dict>
+		<key>490289904</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.10 - Guillermo Chavez - liberty mutual w- claim file.skim</string>
+		</dict>
+		<key>494754389</key>
+		<dict>
+			<key>Name</key>
+			<string>1967.09.10 - Andrew Radford-personnel records.md</string>
+		</dict>
+		<key>495536093</key>
+		<dict>
+			<key>Name</key>
+			<string>1967.09.10 - Andrew Radford-personnel records.skim</string>
+		</dict>
+		<key>495536246</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.08.05 - Jordan Jester - QME sarbjit dhesi d.c. report.md</string>
+		</dict>
+		<key>495704216</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.08.05 - Jordan Jester - QME sarbjit dhesi d.c. report.skim</string>
+		</dict>
+		<key>495790063</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.07.11 - Keenan Goins - QME Mehul Taylor MD Report.md</string>
+		</dict>
+		<key>495868938</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.07.11 - Keenan Goins - QME Mehul Taylor MD Report.skim</string>
+		</dict>
+		<key>497149975</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.26 - Undated - Beebe Rutledge - mpn - sorted by specialty then city then name.md</string>
+		</dict>
+		<key>497371855</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.08.29 - QME Chris Shin D.C.L.Ac.Q.M.E.Report.skim</string>
+		</dict>
+		<key>499248894</key>
+		<dict>
+			<key>Name</key>
+			<string>1955.07.07 - Francis Fernandez - QME report by Dr. Hicks.md</string>
+		</dict>
+		<key>499285632</key>
+		<dict>
+			<key>Name</key>
+			<string>1955.07.07 - Francis Fernandez - QME report by Dr. Hicks.skim</string>
+		</dict>
+		<key>499352835</key>
+		<dict>
+			<key>Name</key>
+			<string>jasonPerry</string>
+		</dict>
+		<key>499365922</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.29 - Jason Perry - KP SDT combined.md</string>
+		</dict>
+		<key>499370427</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.29 - Jason Perry - KP SDT combined.skim</string>
+		</dict>
+		<key>499499094</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.18 - Jason Perry - dr (suppl rpt req).skim</string>
+		</dict>
+		<key>500228475</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.10 - Felisa Morgan - jacquelyn weiss m.d. report.md</string>
+		</dict>
+		<key>501508499</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.10 - Felisa Morgan - jacquelyn weiss m.d. report.skim</string>
+		</dict>
+		<key>503277399</key>
+		<dict>
+			<key>Name</key>
+			<string>Shaw, Steven</string>
+		</dict>
+		<key>505993699</key>
+		<dict>
+			<key>Name</key>
+			<string>Exhibits A-D in support of Petition for Commutation.zip</string>
+		</dict>
+		<key>507280943</key>
+		<dict>
+			<key>Name</key>
+			<string>Re.docx</string>
+		</dict>
+		<key>507280946</key>
+		<dict>
+			<key>Name</key>
+			<string>I received the Defendant.docx</string>
+		</dict>
+		<key>507683627</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.10.09 - 10032025152841.md</string>
+		</dict>
+		<key>507711848</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.10.09 - 10032025152841.skim</string>
+		</dict>
+		<key>511039593</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.17 - Guillermo Chavez - richard fernandez md report.skim</string>
+		</dict>
+		<key>511957194</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.10.14 - medical records 8-17--25 cd.skim</string>
+		</dict>
+		<key>514887136</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.10.17 - ROI-authorization.skim</string>
+		</dict>
+		<key>516743332</key>
+		<dict>
+			<key>Name</key>
+			<string>rfc_exemplars</string>
+		</dict>
+		<key>517485502</key>
+		<dict>
+			<key>Name</key>
+			<string>PDFWriter</string>
+		</dict>
+		<key>519289313</key>
+		<dict>
+			<key>Name</key>
+			<string>Adams, Sharon</string>
+		</dict>
+		<key>519997507</key>
+		<dict>
+			<key>Name</key>
+			<string>Montano, Lenora - penalty petition</string>
+		</dict>
+		<key>520619655</key>
+		<dict>
+			<key>Name</key>
+			<string>1963.11.15 - 20250912 pqme supp weiss.md</string>
+		</dict>
+		<key>520624987</key>
+		<dict>
+			<key>Name</key>
+			<string>1963.11.15 - 20250912 pqme supp weiss.skim</string>
+		</dict>
+		<key>522812036</key>
+		<dict>
+			<key>Name</key>
+			<string>Sandoval, Rolando</string>
+		</dict>
+		<key>522885906</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.10.27 - Rolando Sandoval  - combined docs.md</string>
+		</dict>
+		<key>522946612</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.10.27 - Rolando Sandoval  - combined docs.skim</string>
+		</dict>
+		<key>525561984</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.10.17 - Beebe Rutledge - QME - mohammad rasouli MD.md</string>
+		</dict>
+		<key>525647425</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.10.17 - Beebe Rutledge - QME - mohammad rasouli MD.skim</string>
+		</dict>
+		<key>526032400</key>
+		<dict>
+			<key>Name</key>
+			<string>AME_William_Campbell_DO_Report_08-18-2025[16].skim</string>
+		</dict>
+		<key>539128996</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.11.07 - Undated - Nolan Lindsey - scif claim file (OCR).ocr.log</string>
+		</dict>
+		<key>544187820</key>
+		<dict>
+			<key>Name</key>
+			<string>Patterson_case_overruled_by_court_of_appeal_11.10.25.md</string>
+		</dict>
+		<key>544222441</key>
+		<dict>
+			<key>Name</key>
+			<string>Patterson_case_overruled_by_court_of_appeal_11.10.25.skim</string>
+		</dict>
+		<key>544371720</key>
+		<dict>
+			<key>Name</key>
+			<string>Herrera Fernandez, Karina</string>
+		</dict>
+		<key>546222694</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.10.14 - qme robert stone d.c report.md</string>
+		</dict>
+		<key>546414052</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.10.14 - qme robert stone d.c report.skim</string>
+		</dict>
+		<key>548641503</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.23 - Andrew Radford - sdt- KPMG Walnut Creek.md</string>
+		</dict>
+		<key>548724911</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.23 - Andrew Radford - sdt- concentra urgent care- san leandro II (cd).md</string>
+		</dict>
+		<key>548818818</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.23 - Andrew Radford - sdt- KPMG Walnut Creek.skim</string>
+		</dict>
+		<key>548818905</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.23 - Andrew Radford - sdt- concentra urgent care- san leandro II (cd).skim</string>
+		</dict>
+		<key>549699544</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.09.18 - Alisa Jackson - Dr. Renbaum re-eval report.skim</string>
+		</dict>
+		<key>550556128</key>
+		<dict>
+			<key>Name</key>
+			<string>Willingham, Matt</string>
+		</dict>
+		<key>552816516</key>
+		<dict>
+			<key>Name</key>
+			<string>AME_Michael_F.Dillingham_M.D.Report_08-13-2025.md</string>
+		</dict>
+		<key>554288901</key>
+		<dict>
+			<key>Name</key>
+			<string>AME_Michael_F.Dillingham_M.D.Report_08-13-2025.skim</string>
+		</dict>
+		<key>560104032</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.12.01 - David Garcia Gaspar - AME re-eval with Dr. Fujinaka.skim</string>
+		</dict>
+		<key>561299061</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.08.12 - QME Nataliya Belfor PhD Report [80].skim</string>
+		</dict>
+		<key>567485126</key>
+		<dict>
+			<key>Name</key>
+			<string>dr.fujinaka_m.d_12_1_25.md</string>
+		</dict>
+		<key>567700744</key>
+		<dict>
+			<key>Name</key>
+			<string>dr.fujinaka_m.d_12_1_25.skim</string>
+		</dict>
+		<key>567798474</key>
+		<dict>
+			<key>Name</key>
+			<string>zone3.png</string>
+		</dict>
+		<key>567799114</key>
+		<dict>
+			<key>Name</key>
+			<string>zone4.png</string>
+		</dict>
+		<key>575825668</key>
+		<dict>
+			<key>Name</key>
+			<string>Hope, Larry</string>
+		</dict>
+		<key>578209238</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.11.18 - Ernest Christmas - - AME Report - Michael Fujinaka M.D.md</string>
+		</dict>
+		<key>578316012</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.11.18 - Ernest Christmas - AME Report - Michael Fujinaka M.D.skim</string>
+		</dict>
+		<key>582154723</key>
+		<dict>
+			<key>Name</key>
+			<string>2021.10.11 - Rene Merritt-Nieskes - proposed Stips.PDF</string>
+		</dict>
+		<key>582280563</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.12.22 - LTC re. Settlement papers for signatures.pdf</string>
+		</dict>
+		<key>592231915</key>
+		<dict>
+			<key>Name</key>
+			<string>2026.01.02 - JasonJK98898-158579677.pdf</string>
+		</dict>
+		<key>592344744</key>
+		<dict>
+			<key>Name</key>
+			<string>2026.01.02 - JasonJK98898-158579677-1.pdf</string>
+		</dict>
+		<key>593333285</key>
+		<dict>
+			<key>Name</key>
+			<string>2026.01.04 - JasonJK98898-158579677.pdf</string>
+		</dict>
+		<key>593337763</key>
+		<dict>
+			<key>Name</key>
+			<string>JasonJK98898_158579677.pdf</string>
+		</dict>
+		<key>594114960</key>
+		<dict>
+			<key>Name</key>
+			<string>2026.01.05 - SessionNotesWLoot.pdf</string>
+		</dict>
+		<key>594166912</key>
+		<dict>
+			<key>Name</key>
+			<string>1990.01.01 - 2025-g064030.pdf</string>
+		</dict>
+		<key>594383325</key>
+		<dict>
+			<key>Name</key>
+			<string>2026.01.05 - 20251229 stip and award voucher language.pdf</string>
+		</dict>
+		<key>596044283</key>
+		<dict>
+			<key>Name</key>
+			<string>2025.04.15 - Re: Re: Re: Re: Re: Re: Bookhammer, Charles v. Sysco Corporation (41470).pdf</string>
+		</dict>
+		<key>596472794</key>
+		<dict>
+			<key>Name</key>
+			<string>patrick-kelly2.webp</string>
+		</dict>
+		<key>596812055</key>
+		<dict>
+			<key>Name</key>
+			<string>Tina Fleeton PTCS.pdf</string>
+		</dict>
+		<key>597761701</key>
+		<dict>
+			<key>Name</key>
+			<string>2026.01.08 - little league medical release form.pdf</string>
+		</dict>
+		<key>600926499</key>
+		<dict>
+			<key>Name</key>
+			<string>2026.01.11 - Finn - lvl 2.pdf</string>
+		</dict>
+		<key>601003190</key>
+		<dict>
+			<key>Name</key>
+			<string>2026.01.11 - DM Helper Users Guide v2.0.pdf</string>
+		</dict>
+		<key>601711877</key>
+		<dict>
+			<key>Name</key>
+			<string>20260106 CT WCAB.pdf</string>
+		</dict>
+		<key>602329754</key>
+		<dict>
+			<key>Name</key>
+			<string>2026.01.12 - ExhibitsPage.pdf</string>
+		</dict>
+		<key>602356539</key>
+		<dict>
+			<key>Name</key>
+			<string>1964.04.12 - 16835919-v1-draft pre-trial conference statement1.pdf</string>
+		</dict>
+		<key>602356772</key>
+		<dict>
+			<key>Name</key>
+			<string>2026.01.13 - Alonzo Horton PTCS rev.pdf</string>
+		</dict>
+		<key>603063676</key>
+		<dict>
+			<key>Name</key>
+			<string>2026.01.13 - SSC Small C26011310170.pdf</string>
+		</dict>
+		<key>603635864</key>
+		<dict>
+			<key>Name</key>
+			<string>AME_Joseph_Sclafani_M.D.Report_11-20-2025.md</string>
+		</dict>
+		<key>604632038</key>
+		<dict>
+			<key>Name</key>
+			<string>Bridgette_Quinn-UCSF.pdf</string>
+		</dict>
+		<key>606049294</key>
+		<dict>
+			<key>Name</key>
+			<string>2026.01.15 - AXS - LTC re AME-PQME Report not MMI.pdf</string>
+		</dict>
+		<key>606901220</key>
+		<dict>
+			<key>Name</key>
+			<string>QME_Michael_Moore_M.D.Report_08-13-2025[47].pdf</string>
+		</dict>
+		<key>606901223</key>
+		<dict>
+			<key>Name</key>
+			<string>QME_Michael_Moore_M.D.Report_08-13-2025[47].skim</string>
+		</dict>
+		<key>606904309</key>
+		<dict>
+			<key>Name</key>
+			<string>AME_Joseph_Sclafani_M.D.Report_11-20-2025.pdf</string>
+		</dict>
+		<key>606904311</key>
+		<dict>
+			<key>Name</key>
+			<string>AME_Joseph_Sclafani_M.D.Report_11-20-2025.skim</string>
+		</dict>
+		<key>606969975</key>
+		<dict>
+			<key>Name</key>
+			<string>efiled_dor_re_addtl_panel_psy.pdf</string>
+		</dict>
+		<key>85850666</key>
+		<dict>
+			<key>Name</key>
+			<string>Old Files</string>
+		</dict>
+	</dict>
+	<key>Last Poll Time</key>
+	<date>2026-01-17T02:17:29Z</date>
+	<key>Version</key>
+	<integer>3</integer>
+</dict>
+</plist>

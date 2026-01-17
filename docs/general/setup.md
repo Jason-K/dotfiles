@@ -17,197 +17,74 @@ On a new machine:
 ```bash
 git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-./bootstrap.sh
+./scripts/restore.sh
 ```
+
+This will:
+1. Install Homebrew and Chezmoi.
+2. Apply your configuration settings via Chezmoi.
+3. Install applications from the Brewfile.
 
 ## Structure
 
 ```
 dotfiles/
-├── .claude/                   # Claude Code configuration (moved from ~/.claude)
-│   ├── local/                # Claude CLI binary
-│   ├── subagents-registry/   # 125+ specialized Claude subagents
-│   │   └── categories/       # 10 agent categories
-│   ├── plugins/              # Claude plugins
-│   └── projects/             # Project-specific settings
-├── shell/                    # Shell configuration files
-│   ├── .zshrc               # Main zsh configuration
-│   ├── .zshenv              # Environment variables
-│   ├── .p10k.zsh            # Powerlevel10k theme config
-│   ├── .env.schema          # API key specs for Varlock (1Password integration)
-│   └── claude-setup.sh      # Interactive Claude subagent installer
-├── bin/                     # Custom scripts
-├── git/                     # Git configuration
-├── hammerspoon/             # Hammerspoon automation
-├── hazel/                   # Hazel rules
-├── karabiner/               # Karabiner Elements config
-│   └── karabiner.ts/        # TypeScript config builder
-├── km/                      # Keyboard Maestro macros
-├── macos/                   # macOS system preferences
-│   ├── dock.sh
-│   └── macos-defaults.sh
-├── vscode/                  # VS Code settings
-├── Brewfile                 # Homebrew packages
-├── bootstrap.sh             # Full setup for new machines
-├── install.sh               # Symlink dotfiles to ~
-└── README.md                # This file
+├── chezmoi/                 # Source of Truth for all config files (Shell, Apps, etc.)
+│   ├── dot_zshrc           # Main zsh config
+│   ├── dot_hammerspoon/    # Hammerspoon config
+│   └── private_Library/    # App Support configs (Hazel, Typinator, etc.)
+├── shell/                   # Modular shell library (aliases, functions, sourced by .zshrc)
+├── scripts/                 # Maintenance scripts
+│   ├── backup.sh           # Backs up settings and captures inventory
+│   └── restore.sh          # Restores settings and installs apps
+├── backups/                 # Timestamped system inventories
+├── karabiner/               # Karabiner Elements config builder
+├── macos/                   # macOS system defaults script
+└── docs/                    # Documentation
 ```
 
-## Files
+## Files & Configuration
 
-### Shell Configuration
+### Chezmoi (The Core)
+We use [Chezmoi](https://www.chezmoi.io/) to manage configuration files.
+- **Source:** `~/dotfiles/chezmoi/`
+- **Destination:** Your Home Directory (`~`)
+- **Key Files:**
+  - `dot_zshrc` → `~/.zshrc`
+  - `dot_zshenv` → `~/.zshenv`
+  - `dot_hammerspoon/` → `~/.hammerspoon/`
 
-All shell configuration files live in `~/dotfiles/shell/` and are symlinked to `~`:
+### Shell Library
+While `~/.zshrc` is managed by Chezmoi, it sources modular files from `~/dotfiles/shell/`:
+- `aliases.zsh`: Command shortcuts
+- `functions.zsh`: Custom utility functions
+- `exports.zsh`: Environmental variables
 
-- **`.zshrc`**: Main interactive shell configuration
-  - Oh My Zsh with Powerlevel10k theme
-  - Fast syntax highlighting
-  - fzf integration for fuzzy finding
-  - zoxide for smart directory jumping
-  - Custom aliases and functions
+This allows for a clean separation: Chezmoi handles the *entry point* (`.zshrc`), but the *logic* remains in the Git repo at `~/dotfiles/shell`.
 
-- **`.zshenv`**: Environment variables loaded for all shells
+## Maintenance
 
-- **`.p10k.zsh`**: Powerlevel10k prompt configuration
+### Making Changes
+1. **Edit** the file on your local machine (e.g., `nano ~/.zshrc`).
+2. **Run** `scripts/backup.sh` to capture the change.
+   - This runs `chezmoi re-add`, capturing your edit into the repo.
+   - It captures a system inventory.
+   - It commits the changes to Git.
 
-- **`.zsh_secrets`**: API keys and secrets (see Security below)
+### Installing New Apps
+1. `brew install <package>`
+2. `scripts/backup.sh` (this will update the inventory in `backups/`)
 
-### Key Features
-
-**Performance Optimizations:**
-- Completion cache with 24-hour refresh cycle
-- Conditional tool initialization (only load if installed)
-- Parallel PATH management to avoid duplicates
-- Fast syntax highlighting instead of OMZ default
-
-**Tool Wrappers:**
-- `claude()` - Claude CLI with automatic `.env.schema` management and subagent installer
-  - `claude setup` - Interactive agent selection wizard
-  - `claude list-agents` - Browse available agents
-  - `claude help` - Show enhanced help
-- `open_codex` / `open-codex` - OpenCodex with varlock secret injection
-- `y()` - Yazi file manager with smart directory switching
-- `fif()` - Fuzzy search file contents with preview
-- `fkill()` - Interactive process killer with fzf
-
-**Aliases:**
-- Modern replacements: `eza` for ls, `bat` for cat, `micro` for nano
-- Quick navigation: `..`, `...`, `docs`, `scripts`, etc.
-- Maintenance: `update`, `fixmb`, `lscleanup`, `emptytrash`
-
-## Installation
-
-### New Machine Setup
-
-Run the bootstrap script to set up everything:
-
-```bash
-./bootstrap.sh
-```
-
-This will:
-1. Install Xcode Command Line Tools
-2. Install Homebrew
-3. Install packages from Brewfile
-4. Install Oh My Zsh and plugins
-5. Create symlinks to dotfiles
-6. Optionally apply macOS defaults
-
-### Update Existing Installation
-
-If you've already run bootstrap and just want to update symlinks:
-
-```bash
-./install.sh
-```
-
-### Manual Symlink Creation
-
-The `install.sh` script creates these symlinks:
-
-```bash
-~/.zshrc -> ~/dotfiles/shell/.zshrc
-~/.zshenv -> ~/dotfiles/shell/.zshenv
-~/.p10k.zsh -> ~/dotfiles/shell/.p10k.zsh
-~/.zsh_secrets -> ~/dotfiles/shell/.zsh_secrets
-```
+### Performance
+- **Fast Startup:** We use `fast-syntax-highlighting` and optimized usage of `nvm`/`pyenv` to keep shell startup under 0.5s.
+- **Benchmarks:** Run `time zsh -i -c exit` to test.
 
 ## Security
+Secrets (API keys) are excluded from this repo.
+- **Method:** We use `~/.zsh_secrets` (sourced by `.zshrc`).
+- **Management:** This file is in `.gitignore`. You must manually create it or populate it from 1Password on a new machine.
 
-### API Keys & Secrets
-
-The `.zsh_secrets` file stores API keys and is:
-- **Included in `.gitignore`** to prevent accidental commits
-- Set to `600` permissions (owner read/write only)
-- Located at `~/dotfiles/shell/.zsh_secrets` with symlink from `~`
-
-**Template:**
-
-```bash
-# API Keys - DO NOT COMMIT TO GIT
-
-# Gemini API
-export GEMINI_API_KEY="your-key-here"
-
-# DeepSeek API
-export DEEPSEEK_API_KEY="your-key-here"
-
-# OpenAI API
-export OPENAI_API_KEY="your-key-here"
-
-# OpenRouter API
-export OPENROUTER_API_KEY="your-key-here"
-
-# Context7 API
-export CONTEXT7_KEY="your-key-here"
-
-# Z.ai GLM API (for Claude Code)
-export ANTHROPIC_AUTH_TOKEN="your-key-here"
-export Z_AI_API_KEY="your-key-here"
-export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
-```
-
-**Alternative: 1Password / Varlock**
-
-For enhanced security, consider using:
-- [1Password CLI](https://developer.1password.com/docs/cli/) for secret management
-- [Varlock](https://github.com/yourusername/varlock) for just-in-time secret injection
-
-## Dependencies
-
-### Required
-
-- macOS (tested on macOS 11+)
-- [Homebrew](https://brew.sh/)
-- Git (via Xcode Command Line Tools)
-
-### Installed by Bootstrap
-
-See `Brewfile` for complete list. Key tools:
-- **Zsh**: Default shell
-- **Oh My Zsh**: Zsh configuration framework
-- **Powerlevel10k**: Fast, customizable prompt
-- **fzf**: Fuzzy finder
-- **eza**: Modern ls replacement
-- **bat**: Cat with syntax highlighting
-- **zoxide**: Smarter cd command
-- **ripgrep**: Fast grep alternative
-- **yazi**: Terminal file manager
-
-## Customization
-
-### Adding New Dotfiles
-
-1. Move file to appropriate directory in `~/dotfiles/`
-2. Add symlink creation to `install.sh`
-3. Update this README
-
-### Modifying Shell Configuration
-
-Edit files in `~/dotfiles/shell/`:
-- Changes take effect immediately (files are symlinked)
-- Run `source ~/.zshrc` to reload configuration
-- Test startup time: `for i in {1..5}; do time zsh -i -c exit; done`
+See [Security Guide](security.md) for details.
 
 ### Karabiner Configuration
 

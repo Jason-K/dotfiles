@@ -1,7 +1,7 @@
 ---
 title: Documentation Index
 created: 2026-01-12
-last_updated: 2026-01-12
+last_updated: 2026-01-16
 category: index
 tags: [index, documentation, toc]
 ---
@@ -14,19 +14,19 @@ Complete listing of all dotfiles documentation with metadata.
 
 | Category | Documents | Last Updated |
 |----------|-----------|--------------|
-| [General](#general) | 3 docs | 2026-01-12 |
+| [General](#general) | 3 docs | 2026-01-16 |
 | [Reviews](#reviews) | 5 docs | 2026-01-12 |
-| [Guides](#guides) | 2 docs | 2026-01-12 |
-| [Components](#components) | 3 docs | 2026-01-12 |
+| [Guides](#guides) | 1 docs | 2026-01-16 |
+| [Components](#components) | 3 docs | 2026-01-16 |
 
 ---
 
 ## General Documentation
 
 ### [Setup Guide](general/setup.md)
-**Purpose:** Installation and configuration instructions
-**Created:** 2025-12-06 | **Updated:** 2026-01-12
-**Tags:** setup, installation, bootstrap
+**Purpose:** Installation and configuration instructions (Chezmoi-based)
+**Created:** 2025-12-06 | **Updated:** 2026-01-16
+**Tags:** setup, installation, chezmoi
 
 Quick start, installation guide, shell configuration, features, customization, and troubleshooting.
 
@@ -101,23 +101,23 @@ Executive summary of review findings and next steps.
 
 ### [Directory Structure Guide](guides/DIRECTORY_STRUCTURE.md)
 **Purpose:** Explanation of every directory in dotfiles
-**Created:** 2026-01-12 | **Updated:** 2026-01-12
+**Created:** 2026-01-12 | **Updated:** 2026-01-16
 **Tags:** structure, organization, directories
 
-Quick reference table, active directories, placeholder directories (pending migration), and directories needing review.
-
----
-
-### [Directory Status Review](guides/DIRECTORY_STATUS_REVIEW.md)
-**Purpose:** Checklist for unclear directory decisions
-**Created:** 2026-01-12 | **Updated:** 2026-01-12
-**Tags:** review, checklist, status
-
-Decision framework for km/, hazel/, typinator/ directories with action items.
+Quick reference table and active directories.
 
 ---
 
 ## Components
+
+### [Dotfiles Backup System](components/backup-system.md)
+**Purpose:** Comprehensive backup documentation
+**Created:** 2025-01-13 | **Updated:** 2026-01-16
+**Tags:** backup, restore, chevmoi, automation
+
+Documentation for the `script/backup.sh` and `scripts/restore.sh` workflows.
+
+---
 
 ### [Karabiner Configuration](components/karabiner.md)
 **Purpose:** Key remapping with karabiner.ts
@@ -159,12 +159,6 @@ Complete record of shell configuration refactoring with before/after metrics. Se
 
 ## Document Maintenance
 
-### Stale Documents (Not updated in 6+ months)
-*None as of 2026-01-12*
-
-### Recently Updated (Last 30 days)
-- All documentation consolidated and updated 2026-01-12
-
 ### Metadata Format
 All documents use YAML frontmatter for tracking:
 ```yaml
@@ -179,15 +173,5 @@ tags: [tag1, tag2]
 
 ---
 
-## Document Lifecycle
-
-1. **Create** - Add YAML frontmatter with creation date
-2. **Update** - Modify `last_updated` field when editing
-3. **Review** - Check for stale content every 6 months
-4. **Archive** - Move to `docs/archived/` when obsolete
-
----
-
-**Total Documents:** 13 active, 1 archived
-**Last Updated:** 2026-01-12
-**Next Review:** 2026-07-12 (6 months)
+**Total Documents:** 12 active, 1 archived
+**Last Updated:** 2026-01-16

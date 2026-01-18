@@ -7,7 +7,6 @@
 # ---- Configuration ----
 typeset -A LAZY_TOOLS=(
 	[conda]="/opt/anaconda3/bin/conda shell.zsh hook"
-	[mise]="$HOME/.local/bin/mise activate zsh"
 	[thefuck]="thefuck --alias"
 	[tv]="tv init zsh"
 )
@@ -41,12 +40,7 @@ if [[ -x "/opt/anaconda3/bin/conda" ]]; then
 	}
 fi
 
-# mise - Runtime version manager
-if [[ -x "$HOME/.local/bin/mise" ]]; then
-	mise() {
-		_lazy_load_tool mise "$@"
-	}
-fi
+
 
 # thefuck - Command corrector
 if command -v thefuck >/dev/null 2>&1; then

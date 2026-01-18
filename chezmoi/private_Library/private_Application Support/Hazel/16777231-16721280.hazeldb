@@ -4,6 +4,13 @@
 <dict>
 	<key>Contents</key>
 	<dict>
+		<key> - BOM Screw Snatcher Pickup Tool .xlsx</key>
+		<dict>
+			<key>File ID</key>
+			<string>607561467</string>
+			<key>Found Busy Time</key>
+			<date>2026-01-18T02:14:22Z</date>
+		</dict>
 		<key>.DS_Store</key>
 		<dict>
 			<key>File ID</key>
@@ -3271,6 +3278,11 @@
 			<key>Predicted Process Time</key>
 			<real>63113904000</real>
 		</dict>
+		<key>~$ - BOM Screw Snatcher Pickup Tool .xlsx</key>
+		<dict>
+			<key>File ID</key>
+			<string>607561551</string>
+		</dict>
 		<key>~$2026.01.07 - Judges-Virtual-Courtroom.xlsx</key>
 		<dict>
 			<key>File ID</key>
@@ -5744,6 +5756,16 @@
 			<key>Name</key>
 			<string>2026.01.16 - 2025.10.27 - alisa jackson - indemnity payemnts.xlsx</string>
 		</dict>
+		<key>607561467</key>
+		<dict>
+			<key>Name</key>
+			<string> - BOM Screw Snatcher Pickup Tool .xlsx</string>
+		</dict>
+		<key>607561551</key>
+		<dict>
+			<key>Name</key>
+			<string>~$ - BOM Screw Snatcher Pickup Tool .xlsx</string>
+		</dict>
 		<key>88428867</key>
 		<dict>
 			<key>Name</key>
@@ -5751,7 +5773,7 @@
 		</dict>
 	</dict>
 	<key>Last Poll Time</key>
-	<date>2026-01-16T23:34:05Z</date>
+	<date>2026-01-18T02:14:22Z</date>
 	<key>Version</key>
 	<integer>3</integer>
 </dict>

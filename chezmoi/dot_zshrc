@@ -3,35 +3,6 @@
 # ==================================================================
 # Structure: Core config → Completions → Modules → PATH
 
-# ---- Guard: ensure ~/.zshrc is a symlink to ~/dotfiles/shell/.zshrc
-if [[ -o interactive ]]; then
-  _EXPECTED="$HOME/dotfiles/shell/.zshrc"
-
-  _notify() {
-    /usr/bin/osascript -e "display notification \"$1\" with title \"zshrc guard\""
-  }
-
-  if [[ ! -L "$HOME/.zshrc" ]]; then
-    _notify "~/.zshrc is NOT a symlink (using local file?)"
-  else
-    _RESOLVED="$(
-      if command -v realpath >/dev/null 2>&1; then
-        realpath "$HOME/.zshrc" 2>/dev/null
-      else
-        python3 - <<'PY' "$HOME/.zshrc" 2>/dev/null
-import os,sys
-print(os.path.realpath(sys.argv[1]))
-PY
-      fi
-    )"
-    if [[ "$_RESOLVED" != "$_EXPECTED" ]]; then
-      _notify "~/.zshrc points to: ${_RESOLVED}\nExpected: ${_EXPECTED}"
-    fi
-  fi
-
-  unset _EXPECTED _RESOLVED
-fi
-
 # ---- 0) P10k Instant Prompt (MUST be first) ----------------------
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"

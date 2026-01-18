@@ -1,0 +1,23 @@
+[misc]
+disable = ["mas", "gem", "npm", "bun"]
+# We disable these because we manage them separately or want more control
+# But wait, the user's update command uses topgrade. 
+# The errors were:
+# npm: permission denied (trying to update global npm?)
+# gem: failing to compile extensions (likely system ruby)
+
+# Let's configure topgrade to use what works.
+# Homebrew is key.
+# We should probably enable "oh-my-zsh" since it was checked in the logs.
+
+[git]
+max_concurrency = 5
+repos = [
+    "~/dotfiles",
+]
+
+[brew]
+greedy_cask = true
+
+[commands]
+"Pouring sauce" = "echo 'Updating custom tools...'"

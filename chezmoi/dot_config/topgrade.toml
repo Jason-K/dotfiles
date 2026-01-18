@@ -1,0 +1,33 @@
+[misc]
+# Run `sudo -v` to cache credentials at the start of the run
+pre_sudo = true
+
+# Sudo command to be used
+sudo_command = "sudo"
+
+# Disable specific steps
+# "gem", "ruby_gems": caused failures due to system ruby / compilation issues
+# "node", "bun": managed via mise, avoided system permission issues
+# "mas": often requires manual interaction or sign-in
+disable = ["gem", "ruby_gems", "node", "bun", "mas"]
+
+# Do not ask to retry failed steps
+no_retry = true
+
+# Cleanup temporary or old files
+cleanup = true
+
+[git]
+max_concurrency = 5
+repos = [
+    "~/dotfiles",
+]
+
+[brew]
+greedy_cask = true
+greedy_latest = true
+greedy_auto_updates = true
+autoremove = true
+
+[commands]
+"Pouring sauce" = "echo 'Updating custom tools...'"

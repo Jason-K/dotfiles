@@ -2,3 +2,23 @@
 Library/Application Support/Keyboard Maestro/*.sqlite
 Library/Application Support/Keyboard Maestro/Revisions*
 Library/Application Support/Keyboard Maestro/Keyboard Maestro Clipboards*
+
+# Junk / Caches
+.DS_Store
+**/.DS_Store
+**/.git
+**/.gitignore
+*.swp
+*.bak
+*.backup
+
+# Application Caches & Backups
+**/karabiner/automatic_backups
+**/karabiner/assets
+**/karabiner/README.md
+**/Hammerspoon/Spoons/EmmyLua.spoon/annotations
+Library/Application Support/Hazel
+.config/raycast/config.json
+.config/gh/hosts.yml
+.config/raycast/config.json
+.config/gh/hosts.yml

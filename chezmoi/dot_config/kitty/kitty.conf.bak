@@ -1,0 +1,349 @@
+# =============================================================================
+# Kitty Configuration - Ported from iTerm2
+# Generated: 2025-12-23
+# Source: iTerm2 settings export
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# FONTS
+# Source: "Normal Font" = "JetBrainsMonoNFM-Regular 13"
+# Source: "Non Ascii Font" = "Monaco 12"
+# -----------------------------------------------------------------------------
+font_family      JetBrains Mono NF
+bold_font        JetBrains Mono NF Bold
+italic_font      JetBrains Mono NF Italic
+bold_italic_font JetBrains Mono NF Bold Italic
+font_size        13.0
+
+# Font rendering (Source: ASCII Anti Aliased = 1, Thin Strokes = 2)
+text_composition_strategy platform
+# Disable ligatures (Source: ASCII Ligatures = 0)
+disable_ligatures always
+
+# Spacing (Source: Horizontal Spacing = 1, Vertical Spacing = 1)
+adjust_line_height  0
+adjust_column_width 0
+
+# Powerline glyphs (Source: Draw Powerline Glyphs = 1)
+# Kitty renders these natively with Nerd Font
+
+# -----------------------------------------------------------------------------
+# CURSOR
+# Source: Blinking Cursor = 1, Cursor Color = black
+# -----------------------------------------------------------------------------
+cursor                  #000000
+cursor_text_color       #ffffff
+cursor_shape            beam
+cursor_beam_thickness   1.5
+cursor_blink_interval   0.5
+cursor_stop_blinking_after 0
+
+# Hide cursor when unfocused (Source: Cursor Hidden When Unfocused = 1)
+# Note: Kitty doesn't have direct equivalent, but focus_follows_mouse helps
+
+# -----------------------------------------------------------------------------
+# SCROLLBACK
+# Source: Unlimited Scrollback = 1, Scrollback Lines = 0 (unlimited)
+# -----------------------------------------------------------------------------
+scrollback_lines        100000
+scrollback_pager        less --chop-long-lines --RAW-CONTROL-CHARS +INPUT_LINE_NUMBER
+scrollback_pager_history_size 100
+scrollback_fill_enlarged_window yes
+
+# -----------------------------------------------------------------------------
+# MOUSE
+# Source: Mouse Reporting = 1
+# -----------------------------------------------------------------------------
+mouse_hide_wait         3.0
+url_color               #328EEE
+url_style               curly
+open_url_with           default
+url_prefixes            file ftp ftps gemini git gopher http https irc ircs kitty mailto news sftp ssh
+detect_urls             yes
+copy_on_select          no
+# Source: CopySelection = 0
+
+# Paste on middle click (Source: Button,2,1,, = kPasteFromClipboardPointerAction)
+mouse_map middle release ungrabbed paste_from_clipboard
+
+# -----------------------------------------------------------------------------
+# TERMINAL BELL
+# Source: Visual Bell = 1, Silence Bell = 0, Flashing Bell = 0
+# -----------------------------------------------------------------------------
+enable_audio_bell       no
+visual_bell_duration    0.1
+visual_bell_color       #ff5555
+window_alert_on_bell    yes
+bell_on_tab             "🔔 "
+
+# -----------------------------------------------------------------------------
+# WINDOW LAYOUT
+# Source: Columns = 80, Rows = 25
+# -----------------------------------------------------------------------------
+remember_window_size    no
+initial_window_width    80c
+initial_window_height   25c
+enabled_layouts         splits,tall,fat,grid,stack
+window_resize_step_cells 2
+window_resize_step_lines 2
+window_border_width     1pt
+draw_minimal_borders    yes
+window_margin_width     0
+single_window_margin_width -1
+window_padding_width    4
+placement_strategy      center
+
+# Source: Disable Window Resizing = 1
+# Note: Kitty always allows resize, but we set fixed initial size
+
+# -----------------------------------------------------------------------------
+# TAB BAR
+# Source: TabViewType = 1, TabStyleWithAutomaticOption = 6
+# -----------------------------------------------------------------------------
+tab_bar_edge            top
+tab_bar_margin_width    0.0
+tab_bar_margin_height   0.0 0.0
+tab_bar_style           powerline
+tab_bar_align           left
+tab_bar_min_tabs        1
+tab_switch_strategy     previous
+tab_fade                0.25 0.5 0.75 1
+tab_separator           " "
+tab_powerline_style     slanted
+tab_activity_symbol     ⚡
+tab_title_max_length    25
+tab_title_template      "{index}: {title}"
+active_tab_title_template "{index}: {title}"
+active_tab_foreground   #fafafa
+active_tab_background   #5c6370
+active_tab_font_style   bold
+inactive_tab_foreground #abb2bf
+inactive_tab_background #282c34
+inactive_tab_font_style normal
+
+# -----------------------------------------------------------------------------
+# COLOR SCHEME - LIGHT MODE (Primary from your settings)
+# Source: Background Color = 0.98,0.98,0.98 (near white)
+# Source: Foreground Color = 0.063,0.063,0.063 (near black)
+# -----------------------------------------------------------------------------
+
+# Basic colors
+foreground              #101010
+background              #fafafa
+selection_foreground    #000000
+selection_background    #b3d7ff
+
+# Cursor (light mode)
+# cursor #000000  # Already set above
+
+# Black (Source: Ansi 0 = 0.078,0.098,0.118)
+color0                  #141e1e
+color8                  #686868
+
+# Red (Source: Ansi 1 = 0.707,0.237,0.163)
+color1                  #b43c2a
+color9                  #dd7975
+
+# Green (Source: Ansi 2 = 0,0.761,0)
+color2                  #00c200
+color10                 #58e790
+
+# Yellow (Source: Ansi 3 = 0.781,0.770,0)
+color3                  #c7c400
+color11                 #ece100
+
+# Blue (Source: Ansi 4 = 0.154,0.265,0.782)
+color4                  #2744c8
+color12                 #a7abf2
+
+# Magenta (Source: Ansi 5 = 0.752,0.249,0.745)
+color5                  #c040be
+color13                 #e17ee1
+
+# Cyan (Source: Ansi 6 = 0,0.774,0.782)
+color6                  #00c5c7
+color14                 #60fdff
+
+# White (Source: Ansi 7 = 0.781,0.781,0.781)
+color7                  #c7c7c7
+color15                 #ffffff
+
+# Link color (Source: Link Color = 0.198,0.558,0.934)
+url_color               #328eee
+
+# Mark colors (optional)
+mark1_foreground        #101010
+mark1_background        #fef052
+mark2_foreground        #101010
+mark2_background        #7de8ff
+mark3_foreground        #101010
+mark3_background        #d79aff
+
+# -----------------------------------------------------------------------------
+# macOS SPECIFIC
+# Source: Option Key Sends = 2 (Esc+), Right Option Key Sends = 0 (Normal)
+# -----------------------------------------------------------------------------
+macos_option_as_alt             left
+macos_quit_when_last_window_closed yes
+macos_window_resizable          yes
+macos_thicken_font              0.2
+macos_traditional_fullscreen    no
+macos_show_window_title_in      window
+macos_menubar_title_max_length  0
+macos_colorspace                displayp3
+
+# Hide from dock (Source: HideFromDockAndAppSwitcher = 1)
+# Note: Requires launch agent or manual setting, not directly in kitty.conf
+
+# -----------------------------------------------------------------------------
+# ADVANCED
+# Source: Terminal Type = xterm-256color
+# -----------------------------------------------------------------------------
+term                    xterm-256color
+shell_integration       enabled
+allow_hyperlinks        yes
+# Clipboard access (Source: AllowClipboardAccess = 1)
+clipboard_control       write-clipboard write-primary read-clipboard read-primary
+clipboard_max_size      512
+
+# Bracketed paste (Source: BracketedPasteMode = 1)
+# Enabled by default in kitty
+
+# Mouse reporting (Source: Mouse Reporting = 1)
+# Enabled by default
+
+# -----------------------------------------------------------------------------
+# KEYBOARD SHORTCUTS
+# Ported from iTerm2 Keyboard Map
+# -----------------------------------------------------------------------------
+
+# Clear default shortcuts and rebuild
+clear_all_shortcuts     no
+
+# -- Tab Management --
+map cmd+t               new_tab_with_cwd
+map cmd+w               close_tab
+map cmd+shift+]         next_tab
+map cmd+shift+[         previous_tab
+map cmd+1               goto_tab 1
+map cmd+2               goto_tab 2
+map cmd+3               goto_tab 3
+map cmd+4               goto_tab 4
+map cmd+5               goto_tab 5
+map cmd+6               goto_tab 6
+map cmd+7               goto_tab 7
+map cmd+8               goto_tab 8
+map cmd+9               goto_tab 9
+
+# -- Window/Split Management --
+# Source: 0xf702-0x300000 = Action 2 (Select Split Left)
+# Source: 0xf703-0x300000 = Action 0 (Select Split Right)
+map cmd+d               launch --location=vsplit --cwd=current
+map cmd+shift+d         launch --location=hsplit --cwd=current
+map cmd+alt+left        neighboring_window left
+map cmd+alt+right       neighboring_window right
+map cmd+alt+up          neighboring_window up
+map cmd+alt+down        neighboring_window down
+
+# Resize splits
+map cmd+ctrl+left       resize_window narrower 3
+map cmd+ctrl+right      resize_window wider 3
+map cmd+ctrl+up         resize_window taller 3
+map cmd+ctrl+down       resize_window shorter 3
+
+# -- Scrolling --
+# Source: 0xf729-0x100000 = Action 5 (Scroll to Top)
+# Source: 0xf72b-0x100000 = Action 4 (Scroll to Bottom)
+map cmd+home            scroll_home
+map cmd+end             scroll_end
+map cmd+page_up         scroll_page_up
+map cmd+page_down       scroll_page_down
+map shift+page_up       scroll_page_up
+map shift+page_down     scroll_page_down
+
+# -- Line Editing (from your Keyboard Map) --
+# Source: 0x7f-0x100000 = 0x15 (Ctrl+U - kill line backward)
+map cmd+backspace       send_text all \x15
+
+# Source: 0x7f-0x80000 = Esc+Del (kill word backward)
+map alt+backspace       send_text all \x1b\x7f
+
+# Source: 0xf702-0x280000 = Esc+b (word left)
+map alt+left            send_text all \x1bb
+
+# Source: 0xf703-0x280000 = Esc+f (word right)
+map alt+right           send_text all \x1bf
+
+# Source: 0xf702-0x300000 = 0x1 (Ctrl+A - beginning of line)
+map cmd+left            send_text all \x01
+
+# Source: 0xf703-0x300000 = 0x5 (Ctrl+E - end of line)
+map cmd+right           send_text all \x05
+
+# Source: 0xf728-0x0 = 0x4 (Ctrl+D - delete forward)
+map fn+backspace        send_text all \x04
+
+# Source: 0xf728-0x80000 = Esc+d (kill word forward)
+map alt+delete          send_text all \x1bd
+
+# Source: 0x7a-0x100000 = 0x1f (Undo)
+map cmd+z               send_text all \x1f
+
+# Source: 0x5a-0x120000 = 0x18 0x1f (Redo - Ctrl+X Ctrl+Shift+-)
+map cmd+shift+z         send_text all \x18\x1f
+
+# -- Search --
+map cmd+f               launch --type=overlay --stdin-source=@screen_scrollback fzf --no-sort --no-mouse -i --tac
+
+# -- Font Size --
+map cmd+plus            change_font_size all +1.0
+map cmd+equal           change_font_size all +1.0
+map cmd+minus           change_font_size all -1.0
+map cmd+0               change_font_size all 0
+
+# -- Clear Screen --
+map cmd+k               clear_terminal scroll active
+
+# -- Copy/Paste --
+map cmd+c               copy_to_clipboard
+map cmd+v               paste_from_clipboard
+
+# -- Fullscreen --
+map cmd+enter           toggle_fullscreen
+map cmd+ctrl+f          toggle_fullscreen
+
+# -- Reload Config --
+map cmd+ctrl+,          load_config_file
+map ctrl+shift+f5       load_config_file
+
+# -- Open Config --
+map cmd+,               edit_config_file
+
+# -- Hints (URL/Path selection) --
+map cmd+shift+e         open_url_with_hints
+map cmd+shift+p         kitten hints --type path --program -
+
+# -- Broadcast to all windows (like iTerm2 broadcast) --
+map cmd+shift+i         launch --allow-remote-control kitty +kitten broadcast
+
+# -----------------------------------------------------------------------------
+# REMOTE CONTROL
+# Enable for scripting (replaces iTerm2 AppleScript API)
+# -----------------------------------------------------------------------------
+allow_remote_control    socket-only
+listen_on               unix:/tmp/kitty-$PPID
+remote_control_password ""
+
+# -----------------------------------------------------------------------------
+# PERFORMANCE
+# -----------------------------------------------------------------------------
+repaint_delay           10
+input_delay             3
+sync_to_monitor         yes
+
+# -----------------------------------------------------------------------------
+# INCLUDES
+# Load additional theme files if they exist
+# -----------------------------------------------------------------------------
+# include ~/.config/kitty/themes/current-theme.conf
+# include ~/.config/kitty/local.conf

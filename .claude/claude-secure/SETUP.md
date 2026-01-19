@@ -58,13 +58,18 @@ Now you can use these commands:
 claude --help
 claude --dangerously-skip-permissions
 
-# Smart sandbox (auto-detect preset, recommended)
+# Docker Sandbox (RECOMMENDED)
+claude-docker --help
+cdocker --dangerously-skip-permissions
+
+# Smart sandbox (Legacy deprecated macOS sandbox)
 claude-smart --help
 claude-smart --dangerously-skip-permissions
 
-# Quick aliases (point to claude-smart)
-c --help
-cl --dangerously-skip-permissions
+# Quick aliases
+c --help                         # claude-smart
+cl --dangerously-skip-permissions # claude-smart
+cdocker --help                   # claude-docker
 
 # Explicit preset sandbox
 claude-sandbox hsLauncher --help
@@ -221,11 +226,11 @@ Choose based on your needs:
 Do you want full system access?
   ├─ YES → use `claude` (vanilla mode)
   └─ NO → use `claude-smart` (recommended)
-       ├─ In configured project? → auto-uses preset
-       └─ In unknown directory? → creates temp sandbox
+       ├─ In configured project? → auto-uses preset (Docker supports this too!)
+       └─ In unknown directory? → creates temp container/sandbox
 
 Need explicit preset control?
-  └─ YES → use `claude-sandbox <preset>`
+  └─ YES → use `cdocker --preset <name>` (or `claude-sandbox` for legacy)
 ```
 
 Default aliases (`c`, `cl`) point to `claude-smart` for safety.

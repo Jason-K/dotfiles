@@ -6,13 +6,19 @@ A secure sandbox wrapper for Claude Code with intelligent project detection.
 
 ```bash
 # Add to your shell profile
-echo 'source /Users/jason/dotfiles/.claude/claude-secure/iterm2-integration.sh' >> ~/.zshrc
+# Add to your shell profile
+echo 'source /Users/jason/dotfiles/.claude/claude-secure/term-integration.sh' >> ~/.zshrc
 source ~/.zshrc
+
 
 # Vanilla Claude (no wrapper, no sandbox)
 claude --dangerously-skip-permissions
 
-# Smart sandbox (auto-detect preset, safe)
+# Docker Sandbox (RECOMMENDED: Strong isolation)
+claude-docker --dangerously-skip-permissions
+cdocker --dangerously-skip-permissions   # Quick alias
+
+# Smart sandbox (Legacy deprecated macOS sandbox)
 claude-smart --dangerously-skip-permissions
 c --dangerously-skip-permissions       # Quick alias
 ```
@@ -20,16 +26,19 @@ c --dangerously-skip-permissions       # Quick alias
 ## Commands
 
 - **`claude`** – Vanilla Claude binary with no modifications
-- **`claude-smart`** – Intelligent sandbox with preset auto-detection (recommended)
+- **`claude-docker`** – Docker-based sandbox (Recommended for security)
+- **`claude-smart`** – Legacy macOS sandbox with preset auto-detection
 - **`claude-sandbox <preset>`** – Explicit sandbox with specific preset
 - **`claude-desktop`** – Smart sandbox using Claude Desktop credentials (no env injection)
 - **`c`, `cl`** – Quick aliases for `claude-smart`
-- **`cdesk`** – Quick alias for `claude-desktop`
+- **`cdocker`** – Quick alias for `claude-docker`
 
 ## Features
 
-- 🎯 **Smart Project Detection**: Automatically finds project-specific configurations
-- 🔒 **Secure Sandboxing**: macOS sandbox restricts access to only necessary directories
+- 🎯 **Smart Project Detection**: Automatically finds project-specific configurations (Works in Docker & Legacy modes)
+- 🔒 **Secure Sandboxing**:
+  - **Docker (Recommended)**: Linux container with 100% filesystem isolation. Mirrors host paths for seamless workflow.
+  - **Legacy (Deprecated)**: macOS sandbox with limited isolation.
 - 📁 **Read-Only Dotfiles**: Protects your dotfiles from accidental modification
 - 📝 **Audit Logging**: All sessions logged with full details
 - 🚀 **One-Command Usage**: Works in any directory with automatic fallback
@@ -47,8 +56,23 @@ c --dangerously-skip-permissions       # Quick alias
 - `SETUP.md` - Complete setup guide
 - `shims/` - Tool shims for secure execution
 
+## Prerequisites (for Docker Mode)
+
+1.  **Docker** or **OrbStack** (recommended for macOS) must be installed and running.
+2.  **1Password CLI (`op`)** must be installed to inject secrets securely.
+
 ## Security
 
+### Docker Mode (Recommended)
+- **Strong Isolation**: Runs in a Linux VM (via Docker/OrbStack). Your host filesystem is invisible.
+- **Volatile**: Container is destroyed after every run (`--rm`).
+- **Secret Safety**: Secrets are injected into the container environment (visible inside the container, but isolated from host).
+- **Mounts**:
+  - **Auto-Detection**: If a `projects.toml` preset is found, mounts the project root + allowed paths to their **exact host paths** (mirroring).
+  - **Fallback**: Mounts current directory to `/app`.
+  - **Context**: `~/.ssh` and `~/.gitconfig` (Read-only).
+
+### Legacy Sandbox Mode (Deprecated)
 - **Home Directory Protection**: `no_home=true` blocks all home access by default
 - **Read-Only Dotfiles**: Your dotfiles can be read but not modified
 - **Project Isolation**: Only allows access to specific project directories

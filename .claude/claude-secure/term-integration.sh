@@ -7,9 +7,25 @@
 # ─────────────────────────────────────────────────────────────────────────────
 CLAUDE_SECURE_DIR="$HOME/dotfiles/.claude/claude-secure"
 CLAUDE_LAUNCHER="$CLAUDE_SECURE_DIR/claude-launcher.sh"
+CLAUDE_DOCKER_SCRIPT="$CLAUDE_SECURE_DIR/claude-docker.sh"
 CLAUDE_WRAPPER="$CLAUDE_SECURE_DIR/claude-secure-wrapper.sh"
 CLAUDE_SMART="$CLAUDE_SECURE_DIR/claude-smart-simple"
 CLAUDE_ENV_FILE="$CLAUDE_SECURE_DIR/.claude-env"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DOCKER: Secure Container (RECOMMENDED)
+# ─────────────────────────────────────────────────────────────────────────────
+
+claude-docker() {
+    if [[ ! -x "$CLAUDE_DOCKER_SCRIPT" ]]; then
+        echo "❌ Claude Docker script not found: $CLAUDE_DOCKER_SCRIPT" >&2
+        return 1
+    fi
+    "$CLAUDE_DOCKER_SCRIPT" "$@"
+}
+
+alias cdocker='claude-docker'
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CORE: Single auth then launch

@@ -7,7 +7,9 @@ set -euo pipefail
 
 SCRIPT_DIR="${0:A:h}"
 ENV_FILE="$SCRIPT_DIR/.claude-env"
-CLAUDE_BIN="$HOME/dotfiles/.claude/local/claude"
+# Use Node.js 20 (installed via brew) to avoid crashes on Node 22
+NODE_BIN="/opt/homebrew/opt/node@20/bin/node"
+CLI_JS="$HOME/dotfiles/.claude/local/node_modules/@anthropic-ai/claude-code/cli.js"
 CLAUDE_JSON="$HOME/.claude.json"
 
 log() { print -ru2 -- "[claude-secure] $*"; }
@@ -149,6 +151,10 @@ setup_environment() {
     fi
 }
 
+
+
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # 4. TTY HANDLING
 # ─────────────────────────────────────────────────────────────────────────────
@@ -171,15 +177,16 @@ ensure_tty() {
 # MAIN
 # ─────────────────────────────────────────────────────────────────────────────
 main() {
-    [[ -x "$CLAUDE_BIN" ]] || die "Claude binary not found: $CLAUDE_BIN"
+    [[ -x "$NODE_BIN" ]] || die "Node.js 20 binary not found: $NODE_BIN"
+    [[ -f "$CLI_JS" ]] || die "Claude CLI script not found: $CLI_JS"
 
     resolve_secrets
     setup_environment
     patch_mcp_configs
     ensure_tty "$@"
 
-    log "Launching Claude..."
-    exec "$CLAUDE_BIN" "$@"
+    log "Launching Claude with Node 20..."
+    exec "$NODE_BIN" "$CLI_JS" "$@"
 }
 
 main "$@"

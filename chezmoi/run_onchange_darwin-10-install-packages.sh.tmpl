@@ -5,4 +5,5 @@
 set -euo pipefail
 
 echo "🍺 Homebrew Bundle: Installing/Updating packages..."
-brew bundle install --file="$HOME/dotfiles/brew/Brewfile"
+brew bundle install --quiet --file="$HOME/dotfiles/brew/Brewfile"
+

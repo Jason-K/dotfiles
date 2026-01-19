@@ -2,7 +2,12 @@
 # backup.sh - Intelligent tiered backup system for dotfiles
 # Supports change detection, scheduled backups, and dry-run mode
 
+
+# Ensure Homebrew and local binaries are in PATH (crucial for cron/launchd)
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+
 set -euo pipefail
+
 
 # ============================================================================
 # CONFIGURATION

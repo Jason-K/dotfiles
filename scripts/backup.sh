@@ -34,26 +34,29 @@ readonly NC='\033[0m' # No Color
 # ============================================================================
 
 log_info() {
-    echo -e "${GREEN}✓${NC} $1"
+    echo -e "$(date '+%Y-%m-%d %H:%M:%S') ${GREEN}✓${NC} $1"
 }
 
 log_section() {
-    echo -e "\n${BLUE}▸${NC} $1\n"
+    echo -e "\n$(date '+%Y-%m-%d %H:%M:%S') ${BLUE}▸${NC} $1\n"
 }
 
+
 log_warn() {
-    echo -e "${YELLOW}⚠${NC} $1"
+    echo -e "$(date '+%Y-%m-%d %H:%M:%S') ${YELLOW}⚠${NC} $1"
 }
 
 log_error() {
-    echo -e "${RED}✗${NC} $1"
+    echo -e "$(date '+%Y-%m-%d %H:%M:%S') ${RED}✗${NC} $1"
 }
+
 
 log_debug() {
     if [[ "${DEBUG:-0}" == "1" ]]; then
-        echo -e "${BLUE}┃${NC} $1" >&2
+        echo -e "$(date '+%Y-%m-%d %H:%M:%S') ${BLUE}┃${NC} $1" >&2
     fi
 }
+
 
 # ============================================================================
 # STATE MANAGEMENT

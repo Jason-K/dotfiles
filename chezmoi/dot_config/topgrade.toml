@@ -31,3 +31,4 @@ autoremove = true
 
 [commands]
 "Pouring sauce" = "echo 'Updating custom tools...'"
+"Backing up dotfiles" = "/Users/jason/dotfiles/scripts/backup.sh --essential"

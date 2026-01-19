@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# macos-defaults.sh hash: {{ include (joinPath .chezmoi.homeDir "dotfiles/macos/macos-defaults.sh") | sha256sum }}
+
+set -euo pipefail
+
+echo "🍏 macOS Defaults: Applying system preferences..."
+# Pipe 'yes' to bypass the "Are you sure?" prompt in the script
+yes | "$HOME/dotfiles/macos/macos-defaults.sh"

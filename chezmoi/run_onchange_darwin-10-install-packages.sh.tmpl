@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Brewfile hash: {{ include (joinPath .chezmoi.homeDir "dotfiles/brew/Brewfile") | sha256sum }}
+
+set -euo pipefail
+
+echo "🍺 Homebrew Bundle: Installing/Updating packages..."
+brew bundle install --file="$HOME/dotfiles/brew/Brewfile"

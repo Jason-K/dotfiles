@@ -4,7 +4,7 @@ tap "candid82/brew"
 tap "caskly/tap", "https://github.com/caskly/tap.git"
 tap "dail8859/notepadnext"
 tap "daniyalmaster693/casks"
-tap "dmno-dev/tap"
+
 tap "domt4/autoupdate"
 tap "fastrepl/hyprnote"
 tap "felixkratz/formulae"
@@ -14,7 +14,7 @@ tap "knqyf263/pet"
 tap "koekeishiya/formulae"
 tap "nikitabobko/tap"
 tap "romankurnovskii/cask"
-tap "updatest/tap", "https://github.com/updatest/tap.git"
+
 tap "yqrashawn/goku"
 tap "zimengxiong/tools"
 # GNU internationalization (i18n) and localization (l10n) library
@@ -200,7 +200,7 @@ brew "zsh-autocomplete"
 # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
 # varlock is a tool to load and validate .env files
-brew "dmno-dev/tap/varlock"
+
 # A window border system for macOS
 brew "felixkratz/formulae/borders"
 # Simple command-line snippet manager
@@ -222,7 +222,7 @@ cask "apparency"
 # Tool for digging into binary files
 cask "archaeology"
 # Multi-track audio editor and recorder
-cask "audacity"
+
 # File manager
 cask "bloom"
 # Prevents your sleeping computer from connecting to Bluetooth accessories
@@ -230,25 +230,25 @@ cask "bluesnooze"
 # Scriptable scratchpad for developers
 cask "boop"
 # Enter calculations into any Service-aware app
-cask "calcservice"
+
 # E-books management software
 cask "calibre"
 # Fastest file searching tool
-cask "cardinal-search"
+
 # Homebrew cask management and app update tool
 cask "caskly@beta"
 # OpenAI's official ChatGPT desktop app
 cask "chatgpt"
 # OpenAI's official browser with ChatGPT built in
-cask "chatgpt-atlas"
+
 # Anthropic's official Claude AI desktop app
 cask "claude"
 # Mounts cloud storages as local discs
-cask "cloudmounter"
+
 # Family of tools to build, test and package software
 cask "cmake-app"
 # Track and budget money
-cask "copilot-money"
+
 # Customise menu item keyboard shortcuts
 cask "customshortcuts"
 # JSON Viewer
@@ -278,11 +278,11 @@ cask "duplicati"
 # Alternative to Apple's DiskImageMounter app
 cask "fastdmg"
 # Desktop client for Filen.io
-cask "filen"
+
 # File finder
 cask "find-any-file"
 # Utility for customizing which browser to start
-cask "finicky"
+
 cask "font-fira-code-nerd-font"
 cask "font-hack-nerd-font"
 cask "font-jetbrains-mono-nerd-font"
@@ -291,7 +291,7 @@ cask "font-symbols-only-nerd-font"
 # Re-enable the font smoothing controls
 cask "fontsmoothingadjuster"
 # Terminal emulator that uses platform-native UI and GPU acceleration
-cask "ghostty"
+
 # Desktop client for GitHub repositories
 cask "github"
 # Xcode extension for GitHub Copilot
@@ -325,7 +325,7 @@ cask "keka"
 # Automation software
 cask "keyboard-maestro"
 # Open-source keystroke visualiser
-cask "keycastr"
+
 # Tool to show what is persistently installed on the computer
 cask "knockknock"
 # Automatically quit apps when their last window is closed
@@ -339,7 +339,7 @@ cask "libreoffice"
 # Host-based application firewall
 cask "little-snitch"
 # Discover, download, and run local LLMs
-cask "lm-studio"
+
 # Clipboard manager
 cask "maccy"
 # Track and update to the latest versions of installed software
@@ -365,7 +365,7 @@ cask "onyx"
 # G-code generator for 3D printers
 cask "orcaslicer"
 # WebKit based web browser
-cask "orion"
+
 # Utility to uninstall apps and remove leftover files from old/uninstalled apps
 cask "pearcleaner"
 # Show photos or camera feeds on the desktop
@@ -377,7 +377,7 @@ cask "pocket-casts"
 # Process monitor
 cask "processspy"
 # File search app
-cask "profind"
+
 # Client for Proton Drive
 cask "proton-drive"
 # Client for Proton Mail and Proton Calendar
@@ -385,7 +385,7 @@ cask "proton-mail"
 # Bridges Proton Mail to email clients supporting IMAP and SMTP protocols
 cask "proton-mail-bridge"
 # Quick Look generator for Markdown files
-cask "qlmarkdown"
+
 # Thumbnails, static previews, cover art and metadata for video files
 cask "qlvideo"
 # Better Finder alternative
@@ -393,7 +393,7 @@ cask "qspace-pro"
 # All-in-one bookmark manager
 cask "raindropio"
 # Imaging utility to install operating systems to a microSD card
-cask "raspberry-pi-imager"
+
 # Control your tools with a few keystrokes
 cask "raycast"
 # Emoji picker optimised for blind people
@@ -421,7 +421,7 @@ cask "spotify"
 # Customise mouse buttons, wheels and cursor speed
 cask "steermouse"
 # Search and click text anywhere on screen
-cask "superkey"
+
 # Dictation tool including LLM reformatting
 cask "superwhisper"
 # VPN client for secure internet access and private browsing
@@ -437,7 +437,7 @@ cask "syncthing-app"
 # Quicklook extension for source files
 cask "syntax-highlight"
 # Task manager for teams
-cask "taskade"
+
 # Tool to explore all the running tasks (processes)
 cask "taskexplorer"
 # Desktop client for Telegram messenger
@@ -461,7 +461,7 @@ cask "trezor-suite"
 # Tool to automate the insertion of frequently used text and graphics
 cask "typinator"
 # All in one app update tool for macOS including Homebrew cask management
-cask "updatest@beta"
+
 # Multimedia player
 cask "vlc"
 # Voice to text app
@@ -469,13 +469,13 @@ cask "voiceink"
 # Rust-based terminal
 cask "warp"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
-cask "wezterm"
+
 # Native desktop client for WhatsApp
 cask "whatsapp"
 # Network protocol analyzer
 cask "wireshark-app"
 # Tool that provides commands for working with selected text
-cask "wordservice"
+
 # Open-source version of the X.Org X Window System
 cask "xquartz"
 # Multiplayer code editor

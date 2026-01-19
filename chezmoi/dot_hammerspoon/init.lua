@@ -89,7 +89,7 @@ dofile(hsLauncherRoot .. "/init.lua")
 -- This registers the hammerspoon://layer_indicator URL scheme
 -- for Karabiner integration without needing the hs CLI helper
 pcall(function()
-    local indicator_path = os.getenv("HOME") .. "/dotfiles/hammerspoon/karabiner_layer_indicator_url.lua"
+    local indicator_path = os.getenv("HOME") .. "/.hammerspoon/karabiner_layer_indicator_url.lua"
     if hs.fs.attributes(indicator_path) then
         dofile(indicator_path)
         hs.printf("[LayerIndicator] Loaded from: %s", indicator_path)
@@ -101,7 +101,7 @@ end)
 -- Confirm Hammerspoon has loaded
 hs.alert.show("Hammerspoon loaded")
 
--- Mitigation: noisy hs.ipc error when client disconnects early.
+-- Mitigation: noisy hs.ipc error when client disconnects early.w
 -- Sometimes the `hs` CLI (or other IPC clients) disconnects before
 -- Hammerspoon replies, leading to "ipc port is no longer valid (early)".
 -- Wrap the default handler to suppress that specific error.

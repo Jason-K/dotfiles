@@ -297,7 +297,7 @@ if [[ -f "$ENV_FILE" && -x "$(command -v op)" ]]; then
 
 
     # -------------------------------------------------------------------------
-    # 4a. Standard Z.AI Defaults
+    # 4a. Standard Z.AI Defaults & Configuration
     # -------------------------------------------------------------------------
     export Z_AI_MODE="${Z_AI_MODE:-ZAI}"
     export Z_WEBSEARCH_URL="${Z_WEBSEARCH_URL:-https://api.z.ai/api/mcp/web_search_prime/mcp}"
@@ -306,57 +306,68 @@ if [[ -f "$ENV_FILE" && -x "$(command -v op)" ]]; then
     export API_TIMEOUT_MS="${API_TIMEOUT_MS:-3000000}"
     export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
     
+    # Model defaults (from legacy launcher)
+    export ANTHROPIC_DEFAULT_OPUS_MODEL="${ANTHROPIC_DEFAULT_OPUS_MODEL:-GLM-4.7}"
+    export ANTHROPIC_DEFAULT_SONNET_MODEL="${ANTHROPIC_DEFAULT_SONNET_MODEL:-GLM-4.7}"
+    export ANTHROPIC_DEFAULT_HAIKU_MODEL="${ANTHROPIC_DEFAULT_HAIKU_MODEL:-GLM-4.5-Air}"
+
+    # Prevent runtime biometric prompts
+    export HEADERS_HELPER_MODE="env"
+    export HEADERS_HELPER_DISABLE_OP="1"
+    
     # -------------------------------------------------------------------------
     # 4b. Secrets from 1Password
     # -------------------------------------------------------------------------
-    # Load secrets into current shell environment first
-    # This avoids 'op run' wrapping the interactive docker process.
-    log "Loading secrets from 1Password..."
-    
-    # We filter only the keys we care about
-    OP_OUTPUT=$(op run --env-file="$ENV_FILE" -- /usr/bin/env | tr -d '\r')
-    
-    while IFS= read -r line; do
-        if [[ "$line" =~ ^(ANTHROPIC_|Z_AI_|ZAI_|CONTEXT7_|SMITHERY_|GITHUB_|GEMINI_|DEEPSEEK_|OPENAI_|OPENROUTER_).+=.+ ]]; then
-             export "$line"
-        fi
-    done <<< "$OP_OUTPUT"
-
-    # Resolve Auth Conflict (Match legacy behavior)
-    # If both API Key and Auth Token are present, prefer API Key and drop Token
-    if [[ -n "${ANTHROPIC_API_KEY:-}" && -n "${ANTHROPIC_AUTH_TOKEN:-}" ]]; then
-        log "Resolving auth conflict: unset ANTHROPIC_AUTH_TOKEN (preferring API Key)"
-        unset ANTHROPIC_AUTH_TOKEN
-    fi
-
-    # Construct -e flags for ALL relevant variables (Secrets + Config)
-    # We explicitly list the config vars we just set defaults for.
-    SECRET_ARGS=()
-    
-    # Config keys
-    CONFIG_KEYS=(
-        "Z_AI_MODE"
-        "Z_WEBSEARCH_URL"
-        "Z_READ_URL"
-        "ANTHROPIC_BASE_URL"
-        "API_TIMEOUT_MS"
-        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC"
-    )
-    for key in "${CONFIG_KEYS[@]}"; do
+    # Secret keys - we blindly pass -e for all of them.
+    # If they are set in the environment (by op run), Docker picks them up.
+    # If they are unset, they remain unset in the container.
+    for key in "${SECRET_KEYS[@]}"; do
          SECRET_ARGS+=("-e" "$key")
     done
 
-    # Secret keys (dynamic check)
-    for key in "${SECRET_KEYS[@]}"; do
-        if [[ -n "${!key:-}" ]]; then
-             SECRET_ARGS+=("-e" "$key")
-        fi
-    done
+    # -------------------------------------------------------------------------
+    # 5. EXECUTION STRATEGY (Robust Wrapper Mode)
+    # -------------------------------------------------------------------------
+    # We do NOT capture secrets in the host shell to avoid masking issues.
+    # Instead, we rely on 'op run' to inject them into the Docker client process,
+    # and use -e flags to pass them through.
+    # We handle variable logic (backfills, conflicts) INSIDE the container via a shell wrapper.
 
     # User mapping
     USER_ID="$(id -u)"
     GROUP_ID="$(id -g)"
     
+    # Define the container entrypoint script
+    # This runs INSIDE the container to handle logic safely with raw keys
+    CONTAINER_SCRIPT='
+        # Backfill Z_AI_API_KEY if missing but ANTHROPIC_API_KEY exists
+        if [ -z "${Z_AI_API_KEY:-}" ] && [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+            export Z_AI_API_KEY="$ANTHROPIC_API_KEY"
+        fi
+        if [ -z "${ZAI_API_KEY:-}" ] && [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+            export ZAI_API_KEY="$ANTHROPIC_API_KEY"
+        fi
+
+        # Resolve Auth Conflict
+        if [ -n "${ANTHROPIC_API_KEY:-}" ] && [ -n "${ANTHROPIC_AUTH_TOKEN:-}" ]; then
+            unset ANTHROPIC_AUTH_TOKEN
+        fi
+
+        # Execute payload
+        if [ "$1" = "--debug-env" ]; then
+            exec /usr/bin/env
+        else
+            # Pre-flight check
+            if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+                echo "❌ [claude-docker] Error: ANTHROPIC_API_KEY is MISSING in container."
+            elif echo "$ANTHROPIC_API_KEY" | grep -q "<concealed"; then
+                echo "❌ [claude-docker] Error: ANTHROPIC_API_KEY is MASKED in container."
+            fi
+            
+            exec claude "$@"
+        fi
+    '
+
     # Base Docker Args
     DOCKER_CMD=(
         "docker" "run" "--rm" "-it"
@@ -367,33 +378,40 @@ if [[ -f "$ENV_FILE" && -x "$(command -v op)" ]]; then
         "${DOCKER_MOUNTS[@]}"
         "-w" "$WORKDIR_TARGET"
         "${SECRET_ARGS[@]}"
+        "--entrypoint" "/bin/sh"
+        "$IMAGE_NAME"
+        "-c" "$CONTAINER_SCRIPT"
+        "claude-wrapper" 
     )
-    
+
+    # Handle DEBUG mode argument passing
     if [[ -n "$DEBUG_ENV_MODE" ]]; then
-        log "DEBUG MODE: Starting container with /usr/bin/env..."
-        exec "${DOCKER_CMD[@]}" --entrypoint /usr/bin/env "$IMAGE_NAME"
+         DOCKER_CMD+=("--debug-env")
     else
-        log "Starting container..."
-        exec "${DOCKER_CMD[@]}" "$IMAGE_NAME" "${CLAUDE_ARGS[@]:-}"
+         DOCKER_CMD+=("${CLAUDE_ARGS[@]:-}")
     fi
-    
+
+    # Final Execution
+    log "Starting container (via op run)..."
+    exec op run --no-masking --env-file "$ENV_FILE" -- "${DOCKER_CMD[@]}"
+
 else
     log "WARNING: Secrets not injected (1Password not found or env file missing)"
     
-    # Base Docker Args for Fallback
-    DOCKER_CMD=(
-        "docker" "run" "--rm" "-it"
-        "--user" "$(id -u):$(id -g)"
-        "--network" "host"
-        "-v" "$HOME/.ssh:/home/claude/.ssh:ro"
-        "-v" "$HOME/.gitconfig:/home/claude/.gitconfig:ro"
-        "${DOCKER_MOUNTS[@]}"
-        "-w" "$WORKDIR_TARGET"
-    )
+    # Fallback without op wrapper (similar logic but no secrets)
+    CONTAINER_SCRIPT='exec claude "$@"'
+    if [[ -n "$DEBUG_ENV_MODE" ]]; then CONTAINER_SCRIPT='exec /usr/bin/env'; fi
 
-    if [[ -n "$DEBUG_ENV_MODE" ]]; then
-        exec "${DOCKER_CMD[@]}" --entrypoint /usr/bin/env "$IMAGE_NAME"
-    else
-        exec "${DOCKER_CMD[@]}" "$IMAGE_NAME" "${CLAUDE_ARGS[@]:-}"
-    fi
+    docker run --rm -it \
+        --user "$(id -u):$(id -g)" \
+        --network host \
+        -v "$HOME/.ssh:/home/claude/.ssh:ro" \
+        -v "$HOME/.gitconfig:/home/claude/.gitconfig:ro" \
+        "${DOCKER_MOUNTS[@]}" \
+        -w "$WORKDIR_TARGET" \
+        --entrypoint /bin/sh \
+        "$IMAGE_NAME" \
+        -c "$CONTAINER_SCRIPT" \
+        "claude-wrapper" \
+        "${CLAUDE_ARGS[@]:-}"
 fi

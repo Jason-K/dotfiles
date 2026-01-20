@@ -5,22 +5,26 @@ FROM node:20-slim
 # - git, openssh-client: for git operations
 # - curl, less: utilities
 # - python3: often needed for scripts
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    git \
-    openssh-client \
-    curl \
-    less \
-    python3 \
+# Install runtime dependencies
+# We NEED python3 for the config injection script
+RUN apt-get update && apt-get install -y \
     ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+    git \
+    ssh \
+    python3 \
+    --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Claude Code globally
 # We install as root. Runtime execution will be as the host user (via --user flag).
 RUN npm install -g @anthropic-ai/claude-code
 
-# Create a writable home directory for the runtime user (whatever UID it is)
-RUN mkdir -p /home/claude && chmod 777 /home/claude
-ENV HOME=/home/claude
+# Setup Environment for Runtime User
+# 1. Allow writing to /etc/passwd so we can inject the host user at runtime
+# 2. Create /home/claude with 777 permissions so ANY user (UID 501, etc) can write to it
+RUN chmod 666 /etc/passwd && \
+    mkdir -p /home/claude/.config && \
+    chmod -R 777 /home/claude
 
 # Set up working directory
 WORKDIR /app

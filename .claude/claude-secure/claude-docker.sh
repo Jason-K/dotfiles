@@ -306,6 +306,9 @@ if [[ -f "$ENV_FILE" && -x "$(command -v op)" ]]; then
     export API_TIMEOUT_MS="${API_TIMEOUT_MS:-3000000}"
     export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
     
+    # Force managed mode flags
+    CLAUDE_ARGS+=("--dangerously-skip-permissions")
+
     # Model defaults (from legacy launcher)
     export ANTHROPIC_DEFAULT_OPUS_MODEL="${ANTHROPIC_DEFAULT_OPUS_MODEL:-GLM-4.7}"
     export ANTHROPIC_DEFAULT_SONNET_MODEL="${ANTHROPIC_DEFAULT_SONNET_MODEL:-GLM-4.7}"
@@ -321,6 +324,31 @@ if [[ -f "$ENV_FILE" && -x "$(command -v op)" ]]; then
     # Secret keys - we blindly pass -e for all of them.
     # If they are set in the environment (by op run), Docker picks them up.
     # If they are unset, they remain unset in the container.
+    SECRET_ARGS=()
+    
+    # 4. PREPARE CONFIG ARGS (Passed via -e)
+    # These are safe configuration variables (URLs, models, etc)
+    CONFIG_KEYS=(
+        "Z_AI_MODE"
+        "Z_WEBSEARCH_URL"
+        "Z_READ_URL"
+        "ANTHROPIC_BASE_URL"
+        "API_TIMEOUT_MS"
+        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC"
+        "ANTHROPIC_DEFAULT_OPUS_MODEL"
+        "ANTHROPIC_DEFAULT_SONNET_MODEL"
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL"
+        "HEADERS_HELPER_MODE"
+        "HEADERS_HELPER_DISABLE_OP"
+    )
+
+    CONFIG_ARGS=() 
+    for key in "${CONFIG_KEYS[@]}"; do
+        if [[ -n "${!key:-}" ]]; then
+            CONFIG_ARGS+=("-e" "$key=${!key}")
+        fi
+    done
+    # 2. Secret Keys (Defined at top)
     for key in "${SECRET_KEYS[@]}"; do
          SECRET_ARGS+=("-e" "$key")
     done
@@ -340,7 +368,7 @@ if [[ -f "$ENV_FILE" && -x "$(command -v op)" ]]; then
     # Define the container entrypoint script
     # This runs INSIDE the container to handle logic safely with raw keys
     CONTAINER_SCRIPT='
-        # Backfill Z_AI_API_KEY if missing but ANTHROPIC_API_KEY exists
+        # 1. Backfill Z.AI keys if needed
         if [ -z "${Z_AI_API_KEY:-}" ] && [ -n "${ANTHROPIC_API_KEY:-}" ]; then
             export Z_AI_API_KEY="$ANTHROPIC_API_KEY"
         fi
@@ -348,27 +376,109 @@ if [[ -f "$ENV_FILE" && -x "$(command -v op)" ]]; then
             export ZAI_API_KEY="$ANTHROPIC_API_KEY"
         fi
 
-        # Resolve Auth Conflict
+        # 2. Resolve Auth Conflict
         if [ -n "${ANTHROPIC_API_KEY:-}" ] && [ -n "${ANTHROPIC_AUTH_TOKEN:-}" ]; then
             unset ANTHROPIC_AUTH_TOKEN
         fi
 
-        # Execute payload
+        # 0. SETUP ENV & USER
+        export HOME="/home/claude"
+        export XDG_CONFIG_HOME="$HOME/.config"
+        export CLAUDE_CONFIG_DIR="$HOME/.config/claude-code"
+
+        # Patch /etc/passwd if whoami fails (fixing "cannot find name for user ID")
+        if ! whoami >/dev/null 2>&1; then
+            if [ -w /etc/passwd ]; then
+                echo "claude:x:$(id -u):$(id -g):Claude:$HOME:/bin/sh" >> /etc/passwd
+            fi
+        fi
+
+        # We use python3 to generate the JSON safely
+        # We use single quotes for the shell variable, so we wrap the python command in escaped single quotes '\''
+        # and use double quotes exclusively inside the python script.
+        python3 -c '\''
+import json
+import os
+import sys
+
+# Hardcode home since we forced it in shell
+home = "/home/claude"
+api_key = os.environ.get("ANTHROPIC_API_KEY")
+base_url = os.environ.get("ANTHROPIC_BASE_URL", "https://api.z.ai/api/anthropic")
+
+# DATA 1: Secrets/Auth (usually .claude.json or config.json)
+auth_data = {}
+if api_key:
+    auth_data["primaryApiKey"] = api_key
+    auth_data["ANTHROPIC_API_KEY"] = api_key
+auth_data["hasCompletedOnboarding"] = True
+auth_data["agreedToTerms"] = True
+
+# DATA 2: Settings (usually settings.json)
+settings_data = {}
+settings_data["anthropicBaseUrl"] = base_url
+settings_data["ANTHROPIC_BASE_URL"] = base_url
+settings_data["verbose"] = True
+settings_data["disableTelemetry"] = True
+settings_data["hasCompletedOnboarding"] = True 
+
+def write_json(path, data):
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as f:
+            json.dump(data, f, indent=2)
+        print(f"[claude-docker] Wrote config to {path}")
+    except Exception as e:
+        print(f"[claude-docker] Failed to write {path}: {e}")
+
+# PATH 1: ~/.claude.json (Legacy Root)
+root_data = {**auth_data, **settings_data}
+write_json(os.path.join(home, ".claude.json"), root_data)
+
+# PATH 2: ~/.claude/config.json (Likely Auth)
+write_json(os.path.join(home, ".claude", "config.json"), auth_data)
+
+# PATH 3: ~/.claude/settings.json (Likely Global Settings)
+write_json(os.path.join(home, ".claude", "settings.json"), settings_data)
+
+# PATH 4: XDG Config (~/.config/claude-code/config.json)
+write_json(os.path.join(home, ".config", "claude-code", "config.json"), root_data)
+
+# Update .bashrc safely (avoiding f-string syntax errors with quotes)
+bashrc_path = os.path.join(home, ".bashrc")
+try:
+    with open(bashrc_path, "a") as f:
+        f.write(f"\nexport ANTHROPIC_BASE_URL=\"{base_url}\"\n")
+        f.write(f"export ANTHROPIC_API_KEY=\"{api_key}\"\n")
+    print(f"[claude-docker] Appended env vars to {bashrc_path}")
+except Exception as e:
+    print(f"[claude-docker] Failed to update .bashrc: {e}")
+'\''
+
+        # 4. DIAGNOSTICS & PRE-FLIGHT
+        echo "🔍 [claude-docker] Diagnostics:"
+        echo "   User: $(whoami) ($(id -u):$(id -g))"
+        echo "   HOME: $HOME"
+        echo "   XDG_CONFIG_HOME: $XDG_CONFIG_HOME"
+        
+        echo "   Checking config file permissions:"
+        ls -la "$HOME/.claude.json" 2>/dev/null || echo "   ~/.claude.json missing!"
+        ls -la "$HOME/.claude/config.json" 2>/dev/null || echo "   ~/.claude/config.json missing!"
+        ls -la "$HOME/.claude/settings.json" 2>/dev/null || echo "   ~/.claude/settings.json missing!"
+        ls -la "$HOME/.config/claude-code/config.json" 2>/dev/null || echo "   XDG Config missing!"
+
+        # 5. Execute payload
+        echo "🚀 [claude-docker] Launching Claude..."
         if [ "$1" = "--debug-env" ]; then
             exec /usr/bin/env
         else
-            # Pre-flight check
-            if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
-                echo "❌ [claude-docker] Error: ANTHROPIC_API_KEY is MISSING in container."
-            elif echo "$ANTHROPIC_API_KEY" | grep -q "<concealed"; then
-                echo "❌ [claude-docker] Error: ANTHROPIC_API_KEY is MASKED in container."
-            fi
-            
             exec claude "$@"
         fi
     '
 
-    # Base Docker Args
+    # -------------------------------------------------------------------------
+    # 7. EXECUTION
+    # -------------------------------------------------------------------------
     DOCKER_CMD=(
         "docker" "run" "--rm" "-it"
         "--user" "$USER_ID:$GROUP_ID"
@@ -378,6 +488,7 @@ if [[ -f "$ENV_FILE" && -x "$(command -v op)" ]]; then
         "${DOCKER_MOUNTS[@]}"
         "-w" "$WORKDIR_TARGET"
         "${SECRET_ARGS[@]}"
+        "${CONFIG_ARGS[@]}"
         "--entrypoint" "/bin/sh"
         "$IMAGE_NAME"
         "-c" "$CONTAINER_SCRIPT"
@@ -413,5 +524,6 @@ else
         "$IMAGE_NAME" \
         -c "$CONTAINER_SCRIPT" \
         "claude-wrapper" \
+        "${CONFIG_ARGS[@]}" \
         "${CLAUDE_ARGS[@]:-}"
 fi

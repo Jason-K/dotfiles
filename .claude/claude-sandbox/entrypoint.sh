@@ -70,6 +70,9 @@ EOF
     echo "Configured Z.AI endpoint + MCP servers."
     echo "Configuration written to:"
     ls -l /home/node/.claude/config.json
+    
+    echo "Symlink Verification:"
+    ls -ld /Users/jason/.claude || echo "Failed to list /Users/jason/.claude"
 }
 
 setup_config

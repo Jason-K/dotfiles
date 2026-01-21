@@ -263,7 +263,6 @@
   "chat.mcp.discovery.enabled": {
     "claude-desktop": true
   },
-  "chat.viewSessions.enabled": false,
   "chat.viewSessions.sortOrder": "modifiedDesc",
   "chat.customAgentInSubagent.enabled": true,
   "chat.agent.maxRequests": 50,
@@ -438,5 +437,6 @@
   ],
   "workbench.secondarySideBar.defaultVisibility": "hidden",
   "chat.useAgentSkills": true,
-  "chat.tools.terminal.outputLocation": "chat"
+  "chat.tools.terminal.outputLocation": "chat",
+  "workbench.activityBar.location": "top"
 }

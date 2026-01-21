@@ -4,6 +4,12 @@
 
 set -euo pipefail
 
-echo "🍺 Homebrew Bundle: Installing/Updating packages..."
-brew bundle install --quiet --file="$HOME/dotfiles/brew/Brewfile"
+brewfile="$HOME/dotfiles/brew/Brewfile"
+
+if brew bundle check --file="$brewfile" &>/dev/null; then
+  echo "🍺 Homebrew Bundle: Dependencies satisfied."
+else
+  echo "🍺 Homebrew Bundle: Installing/Updating packages..."
+  brew bundle install --quiet --file="$brewfile"
+fi
 

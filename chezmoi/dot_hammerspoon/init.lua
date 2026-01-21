@@ -83,7 +83,18 @@ if not FormatClipSeed then
 end
 
 -- Initialize hsLauncher
-dofile(hsLauncherRoot .. "/init.lua")
+hs.printf("[hsLauncher] Attempting to load from: %s", hsLauncherRoot .. "/init.lua")
+local ok, result = pcall(function()
+    dofile(hsLauncherRoot .. "/init.lua")
+end)
+
+if not ok then
+    local errorMsg = tostring(result or "Unknown error")
+    hs.printf("[hsLauncher ERROR] Failed to load: %s", errorMsg)
+    hs.alert.show("hsLauncher failed to load: " .. errorMsg)
+else
+    hs.printf("[hsLauncher] Successfully loaded")
+end
 
 -- Initialize Karabiner Layer Indicator URL handler
 -- This registers the hammerspoon://layer_indicator URL scheme

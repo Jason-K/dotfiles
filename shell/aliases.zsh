@@ -47,6 +47,7 @@ alias stapler='/usr/bin/xcrun stapler'
 alias notarytool='/usr/bin/xcrun notarytool'
 
 # ---- Backup Tools ----
+alias brew-migrator='~/Library/Python/3.9/bin/brew-migrator'
 alias backup='~/dotfiles/scripts/backup.sh --essential'
 alias restore='~/dotfiles/scripts/restore.sh'
 

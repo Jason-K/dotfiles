@@ -9,7 +9,7 @@
   "workbench.editor.enablePreview": false,
   "workbench.editor.closeOnFileDelete": true,
   "workbench.preferredHighContrastColorTheme": "Visual Studio Dark - C++",
-  "window.title": "${dirty}${activeEditorShort} — ${rootName}",
+  "window.title": "${dirty}${activeEditorLong} — ${rootNameShort}",
 
   // Editor Behavior
   "editor.accessibilitySupport": "off",

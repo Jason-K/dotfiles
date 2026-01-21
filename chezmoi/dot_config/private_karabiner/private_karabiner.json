@@ -1464,11 +1464,12 @@
                                 "to_if_held_down": [
                                     {
                                         "repeat": false,
-                                        "key_code": "p",
+                                        "key_code": "f9",
                                         "modifiers": [
                                             "command",
                                             "option",
-                                            "control"
+                                            "control",
+                                            "shift"
                                         ]
                                     }
                                 ],
@@ -1765,7 +1766,7 @@
                         ]
                     },
                     {
-                        "description": "T hold -> Terminal Here",
+                        "description": "T hold -> Todoist",
                         "manipulators": [
                             {
                                 "type": "basic",
@@ -1785,7 +1786,7 @@
                                 ],
                                 "to_if_held_down": [
                                     {
-                                        "shell_command": "osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript"
+                                        "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.todoist.mac.Todoist' && echo 'Todoist launched'"
                                     }
                                 ],
                                 "to_delayed_action": {

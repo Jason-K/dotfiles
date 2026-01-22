@@ -71,7 +71,6 @@ run_container() {
         -e ZAI_API_KEY \
         -e OPENAI_API_KEY \
         -e CONTEXT7_API_KEY \
-        -e SMITHERY_API_KEY \
         -e GITHUB_TOKEN \
         -e Z_AI_MODE \
         -e Z_WEBSEARCH_URL \

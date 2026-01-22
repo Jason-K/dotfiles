@@ -544,7 +544,6 @@ mas "Wayback Machine", id: 1472432422
 mas "Xcode", id: 497799835
 mas "XSpeak", id: 6748146688
 mas "YABA", id: 6747272081
-vscode "actboy168.extension-path"
 vscode "alefragnani.project-manager"
 vscode "anthropic.claude-code"
 vscode "bladnman.auto-align"

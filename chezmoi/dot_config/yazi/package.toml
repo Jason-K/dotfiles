@@ -10,8 +10,8 @@ hash = "56fdabc96fc1f4d53c96eb884b02a5be"
 
 [[plugin.deps]]
 use = "Shallow-Seek/djvu-view"
-rev = "b281c7f"
-hash = "8205db73f10e23dbfe3436e7bec7b8b2"
+rev = "f218aa6"
+hash = "522db0412d7839c8c343f9c733713d24"
 
 [[plugin.deps]]
 use = "wylie102/duckdb"

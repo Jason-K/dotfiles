@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 # Idempotent macOS tweaks (examples)
-COMPUTER_NAME="JJK_MBP"
+COMPUTER_NAME="JJK-MBP"
 LANGUAGES=(en-US)
 LOCALE="en_US@currency=USD"
 MEASUREMENT_UNITS="inches"

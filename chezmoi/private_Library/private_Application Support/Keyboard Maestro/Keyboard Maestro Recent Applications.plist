@@ -4,19 +4,11 @@
 <array>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>com.jinghaoshe.qspace.pro</string>
+		<string>me.tdinh.devutils-setapp</string>
 		<key>Name</key>
-		<string>QSpace Pro</string>
+		<string>DevUtils</string>
 		<key>NewFile</key>
-		<string>/Applications/QSpace Pro.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.apple.Terminal</string>
-		<key>Name</key>
-		<string>Terminal</string>
-		<key>NewFile</key>
-		<string>/System/Applications/Utilities/Terminal.app</string>
+		<string>/Applications/Setapp/DevUtils.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
@@ -28,67 +20,11 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>net.imput.helium</string>
-		<key>Name</key>
-		<string>Helium</string>
-		<key>NewFile</key>
-		<string>/Applications/Helium.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.chabomakers.Antinote-setapp</string>
-		<key>Name</key>
-		<string>Antinote</string>
-		<key>NewFile</key>
-		<string>/Applications/Setapp/Antinote.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.apple.MobileSMS</string>
-		<key>Name</key>
-		<string>Messages</string>
-		<key>NewFile</key>
-		<string>/System/Applications/Messages.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.microsoft.teams2</string>
-		<key>Name</key>
-		<string>Microsoft Teams</string>
-		<key>NewFile</key>
-		<string>/Applications/Microsoft Teams.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.houdah.HoudahSpot-setapp</string>
-		<key>Name</key>
-		<string>HoudahSpot</string>
-		<key>NewFile</key>
-		<string>/Applications/Setapp/HoudahSpot.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
 		<string>com.busymac.busycontacts-setapp</string>
 		<key>Name</key>
 		<string>BusyContacts</string>
 		<key>NewFile</key>
 		<string>~/Applications/Setapp/BusyContacts.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.busymac.busycal-setapp</string>
-		<key>Name</key>
-		<string>BusyCal</string>
-		<key>NewFile</key>
-		<string>~/Applications/Setapp/BusyCal.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.todoist.mac.Todoist</string>
-		<key>Name</key>
-		<string>Todoist</string>
-		<key>NewFile</key>
-		<string>/Applications/Todoist.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
@@ -100,67 +36,11 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>com.corecode.MacUpdater</string>
+		<string>app.spokenly</string>
 		<key>Name</key>
-		<string>MacUpdater</string>
+		<string>Spokenly</string>
 		<key>NewFile</key>
-		<string>/Applications/MacUpdater.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.anthropic.claudefordesktop</string>
-		<key>Name</key>
-		<string>Claude</string>
-		<key>NewFile</key>
-		<string>/Applications/Claude.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>dev.kdrag0n.MacVirt</string>
-		<key>Name</key>
-		<string>OrbStack</string>
-		<key>NewFile</key>
-		<string>/Applications/OrbStack.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.latenightsw.ScriptDebugger8</string>
-		<key>Name</key>
-		<string>Script Debugger</string>
-		<key>NewFile</key>
-		<string>/Applications/Script Debugger.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.1password.1password</string>
-		<key>Name</key>
-		<string>1Password</string>
-		<key>NewFile</key>
-		<string>/Applications/1Password.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>net.sourceforge.skim-app.skim</string>
-		<key>Name</key>
-		<string>Skim</string>
-		<key>NewFile</key>
-		<string>/Applications/Skim.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.asiafu.Bloom</string>
-		<key>Name</key>
-		<string>Bloom</string>
-		<key>NewFile</key>
-		<string>/Applications/Bloom.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.google.antigravity</string>
-		<key>Name</key>
-		<string>Antigravity</string>
-		<key>NewFile</key>
-		<string>/Applications/Antigravity.app</string>
+		<string>/Applications/Spokenly.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
@@ -172,6 +52,46 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
+		<string>com.todoist.mac.Todoist</string>
+		<key>Name</key>
+		<string>Todoist</string>
+		<key>NewFile</key>
+		<string>/Applications/Todoist.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.chabomakers.Antinote-setapp</string>
+		<key>Name</key>
+		<string>Antinote</string>
+		<key>NewFile</key>
+		<string>/Applications/Setapp/Antinote.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.anthropic.claudefordesktop</string>
+		<key>Name</key>
+		<string>Claude</string>
+		<key>NewFile</key>
+		<string>/Applications/Claude.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.microsoft.teams2</string>
+		<key>Name</key>
+		<string>Microsoft Teams</string>
+		<key>NewFile</key>
+		<string>/Applications/Microsoft Teams.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.asiafu.Bloom</string>
+		<key>Name</key>
+		<string>Bloom</string>
+		<key>NewFile</key>
+		<string>/Applications/Bloom.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
 		<string>com.microsoft.Outlook</string>
 		<key>Name</key>
 		<string>Microsoft Outlook</string>
@@ -180,35 +100,19 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>com.max-langer.Latest</string>
+		<string>net.sourceforge.skim-app.skim</string>
 		<key>Name</key>
-		<string>Latest</string>
+		<string>Skim</string>
 		<key>NewFile</key>
-		<string>/Applications/Latest.app</string>
+		<string>/Applications/Skim.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>at.obdev.littlesnitch.networkmonitor</string>
+		<string>net.imput.helium</string>
 		<key>Name</key>
-		<string>Little Snitch Network Monitor</string>
+		<string>Helium</string>
 		<key>NewFile</key>
-		<string>/Applications/Little Snitch.app/Contents/Components/Little Snitch Network Monitor.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>notion.id</string>
-		<key>Name</key>
-		<string>Notion</string>
-		<key>NewFile</key>
-		<string>/Applications/Notion.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.microsoft.Word</string>
-		<key>Name</key>
-		<string>Microsoft Word</string>
-		<key>NewFile</key>
-		<string>/Applications/Microsoft Word.app</string>
+		<string>/Applications/Helium.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
@@ -220,11 +124,67 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
+		<string>net.kovidgoyal.kitty</string>
+		<key>Name</key>
+		<string>kitty</string>
+		<key>NewFile</key>
+		<string>/Applications/kitty.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.houdah.HoudahSpot-setapp</string>
+		<key>Name</key>
+		<string>HoudahSpot</string>
+		<key>NewFile</key>
+		<string>/Applications/Setapp/HoudahSpot.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
 		<string>org.pqrs.Karabiner-Elements.Settings</string>
 		<key>Name</key>
 		<string>Karabiner-Elements</string>
 		<key>NewFile</key>
 		<string>/Applications/Karabiner-Elements.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.apple.Terminal</string>
+		<key>Name</key>
+		<string>Terminal</string>
+		<key>NewFile</key>
+		<string>/System/Applications/Utilities/Terminal.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>smmall.site.Cloud-setapp</string>
+		<key>Name</key>
+		<string>Smmall Cloud</string>
+		<key>NewFile</key>
+		<string>/Applications/Setapp/Smmall Cloud.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>InspiratioNULL.GemPT</string>
+		<key>Name</key>
+		<string>GemPT</string>
+		<key>NewFile</key>
+		<string>/Applications/GemPT.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.apple.mobilephone</string>
+		<key>Name</key>
+		<string>Phone</string>
+		<key>NewFile</key>
+		<string>/System/Applications/Phone.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>eu.davidbures.cork</string>
+		<key>Name</key>
+		<string>Cork</string>
+		<key>NewFile</key>
+		<string>/Applications/Cork.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
@@ -236,14 +196,6 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>org.pqrs.Karabiner-EventViewer</string>
-		<key>Name</key>
-		<string>Karabiner-EventViewer</string>
-		<key>NewFile</key>
-		<string>/Applications/Karabiner-EventViewer.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
 		<string>com.alienator88.Pearcleaner</string>
 		<key>Name</key>
 		<string>Pearcleaner</string>
@@ -252,51 +204,131 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>at.obdev.littlesnitch</string>
+		<string>dev.zed.Zed</string>
 		<key>Name</key>
-		<string>Little Snitch</string>
+		<string>Zed</string>
 		<key>NewFile</key>
-		<string>/Applications/Little Snitch.app</string>
+		<string>/Applications/Zed.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>com.apple.systempreferences</string>
+		<string>com.objective-see.KnockKnock</string>
 		<key>Name</key>
-		<string>System Settings</string>
+		<string>KnockKnock</string>
 		<key>NewFile</key>
-		<string>/System/Applications/System Settings.app</string>
+		<string>/Applications/KnockKnock.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>com.dadroit.Viewer</string>
+		<string>com.devon-technologies.ThumbsUp</string>
 		<key>Name</key>
-		<string>Dadroit JSON Viewer</string>
+		<string>ThumbsUp</string>
 		<key>NewFile</key>
-		<string>~/Applications/Dadroit JSON Viewer.app</string>
+		<string>/Applications/ThumbsUp.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>com.apple.AppStore</string>
+		<string>com.superduper.superwhisper</string>
 		<key>Name</key>
-		<string>App Store</string>
+		<string>superwhisper</string>
 		<key>NewFile</key>
-		<string>/System/Applications/App Store.app</string>
+		<string>/Applications/superwhisper.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>net.kovidgoyal.kitty</string>
+		<string>com.adobe.Acrobat.Pro</string>
 		<key>Name</key>
-		<string>kitty</string>
+		<string>Adobe Acrobat</string>
 		<key>NewFile</key>
-		<string>/Applications/kitty.app</string>
+		<string>/Applications/Adobe Acrobat DC/Adobe Acrobat.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>com.microsoft.Excel</string>
+		<string>com.github.domt4.homebrew-autoupdate.autoupdater</string>
 		<key>Name</key>
-		<string>Microsoft Excel</string>
+		<string>brew-autoupdate</string>
 		<key>NewFile</key>
-		<string>/Applications/Microsoft Excel.app</string>
+		<string>/opt/homebrew/Library/Taps/domt4/homebrew-autoupdate/notifier/brew-autoupdate.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.guidedways.TodoMac-setapp</string>
+		<key>Name</key>
+		<string>2Do</string>
+		<key>NewFile</key>
+		<string>~/Applications/Setapp/2Do.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>jp.plentycom.app.SteerMouse</string>
+		<key>Name</key>
+		<string>SteerMouse</string>
+		<key>NewFile</key>
+		<string>/Applications/SteerMouse.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.3bitlab.PiPad</string>
+		<key>Name</key>
+		<string>PiPad</string>
+		<key>NewFile</key>
+		<string>/Applications/PiPad.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.busymac.busycal-setapp</string>
+		<key>Name</key>
+		<string>BusyCal</string>
+		<key>NewFile</key>
+		<string>~/Applications/Setapp/BusyCal.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.mothersruin.Archaeology</string>
+		<key>Name</key>
+		<string>Archaeology</string>
+		<key>NewFile</key>
+		<string>/Applications/Archaeology.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.mothersruin.Apparency</string>
+		<key>Name</key>
+		<string>Apparency</string>
+		<key>NewFile</key>
+		<string>/Applications/Apparency.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.jinghaoshe.qspace.pro</string>
+		<key>Name</key>
+		<string>QSpace Pro</string>
+		<key>NewFile</key>
+		<string>/Applications/QSpace Pro.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.apple.MobileSMS</string>
+		<key>Name</key>
+		<string>Messages</string>
+		<key>NewFile</key>
+		<string>/System/Applications/Messages.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.microsoft.Word</string>
+		<key>Name</key>
+		<string>Microsoft Word</string>
+		<key>NewFile</key>
+		<string>/Applications/Microsoft Word.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.revpdf.editor</string>
+		<key>Name</key>
+		<string>RevPDF Editor</string>
+		<key>NewFile</key>
+		<string>/Applications/RevPDF Editor.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
@@ -308,6 +340,182 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
+		<string>com.fewtarius.syntheticautonomicmind</string>
+		<key>Name</key>
+		<string>SAM</string>
+		<key>NewFile</key>
+		<string>/Applications/SAM.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.google.antigravity</string>
+		<key>Name</key>
+		<string>Antigravity</string>
+		<key>NewFile</key>
+		<string>/Applications/Antigravity.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.1password.1password</string>
+		<key>Name</key>
+		<string>1Password</string>
+		<key>NewFile</key>
+		<string>/Applications/1Password.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.apple.systempreferences</string>
+		<key>Name</key>
+		<string>System Settings</string>
+		<key>NewFile</key>
+		<string>/System/Applications/System Settings.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.max-langer.Latest</string>
+		<key>Name</key>
+		<string>Latest</string>
+		<key>NewFile</key>
+		<string>/Applications/Latest.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>io.xpipe.app</string>
+		<key>Name</key>
+		<string>XPipe</string>
+		<key>NewFile</key>
+		<string>/Applications/XPipe.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.mothersruin.SuspiciousPackageApp</string>
+		<key>Name</key>
+		<string>Suspicious Package</string>
+		<key>NewFile</key>
+		<string>/Applications/Suspicious Package.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>co.eclecticlight.SilentKnight</string>
+		<key>Name</key>
+		<string>SilentKnight</string>
+		<key>NewFile</key>
+		<string>/Applications/SilentKnight.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>org.sveinbjorn.Platypus</string>
+		<key>Name</key>
+		<string>Platypus</string>
+		<key>NewFile</key>
+		<string>/Applications/Platypus.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>org.libreoffice.script</string>
+		<key>Name</key>
+		<string>LibreOffice</string>
+		<key>NewFile</key>
+		<string>/Applications/LibreOffice.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>app.legcord.Legcord</string>
+		<key>Name</key>
+		<string>Legcord</string>
+		<key>NewFile</key>
+		<string>/Applications/legcord.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>org.cmake.cmake</string>
+		<key>Name</key>
+		<string>CMake</string>
+		<key>NewFile</key>
+		<string>/Applications/CMake.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.aone.keka</string>
+		<key>Name</key>
+		<string>Keka</string>
+		<key>NewFile</key>
+		<string>/Applications/Keka.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.chamburr.Glance</string>
+		<key>Name</key>
+		<string>Glance</string>
+		<key>NewFile</key>
+		<string>/Applications/Glance.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.bouncetechnologies.Font-Smoothing-Adjuster</string>
+		<key>Name</key>
+		<string>Font Smoothing Adjuster</string>
+		<key>NewFile</key>
+		<string>/Applications/Font Smoothing Adjuster.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>org.tempel.findanyfile</string>
+		<key>Name</key>
+		<string>Find Any File</string>
+		<key>NewFile</key>
+		<string>/Applications/Find Any File.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>org.sveinbjorn.FastDMG</string>
+		<key>Name</key>
+		<string>FastDMG</string>
+		<key>NewFile</key>
+		<string>/Applications/FastDMG.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.apple.dt.Xcode</string>
+		<key>Name</key>
+		<string>Xcode</string>
+		<key>NewFile</key>
+		<string>/Applications/Xcode.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.latenightsw.ScriptDebugger8</string>
+		<key>Name</key>
+		<string>Script Debugger</string>
+		<key>NewFile</key>
+		<string>/Applications/Script Debugger.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.electron.ollama</string>
+		<key>Name</key>
+		<string>Ollama</string>
+		<key>NewFile</key>
+		<string>/Applications/Ollama.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>org.whispersystems.signal-desktop</string>
+		<key>Name</key>
+		<string>Signal</string>
+		<key>NewFile</key>
+		<string>/Applications/Signal.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.apple.AppStore</string>
+		<key>Name</key>
+		<string>App Store</string>
+		<key>NewFile</key>
+		<string>/System/Applications/App Store.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
 		<string>com.setapp.DesktopClient</string>
 		<key>Name</key>
 		<string>Setapp</string>
@@ -316,19 +524,107 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
+		<string>ch.protonmail.desktop</string>
+		<key>Name</key>
+		<string>Proton Mail</string>
+		<key>NewFile</key>
+		<string>/Applications/Proton Mail.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.microsoft.Excel</string>
+		<key>Name</key>
+		<string>Microsoft Excel</string>
+		<key>NewFile</key>
+		<string>/Applications/Microsoft Excel.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.apple.printcenter</string>
+		<key>Name</key>
+		<string>Print Center</string>
+		<key>NewFile</key>
+		<string>/System/Applications/Utilities/Print Center.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>org.pqrs.Karabiner-EventViewer</string>
+		<key>Name</key>
+		<string>Karabiner-EventViewer</string>
+		<key>NewFile</key>
+		<string>/Applications/Karabiner-EventViewer.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.apple.reminders</string>
+		<key>Name</key>
+		<string>Reminders</string>
+		<key>NewFile</key>
+		<string>/System/Applications/Reminders.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.apple.installer</string>
+		<key>Name</key>
+		<string>Installer</string>
+		<key>NewFile</key>
+		<string>/System/Library/CoreServices/Installer.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>notion.id</string>
+		<key>Name</key>
+		<string>Notion</string>
+		<key>NewFile</key>
+		<string>/Applications/Notion.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>so.amie.electron-app-setapp</string>
+		<key>Name</key>
+		<string>Amie</string>
+		<key>NewFile</key>
+		<string>/Applications/Setapp/Amie.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>com.corecode.MacUpdater</string>
+		<key>Name</key>
+		<string>MacUpdater</string>
+		<key>NewFile</key>
+		<string>/Applications/MacUpdater.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>dev.kdrag0n.MacVirt</string>
+		<key>Name</key>
+		<string>OrbStack</string>
+		<key>NewFile</key>
+		<string>/Applications/OrbStack.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>at.obdev.littlesnitch.networkmonitor</string>
+		<key>Name</key>
+		<string>Little Snitch Network Monitor</string>
+		<key>NewFile</key>
+		<string>/Applications/Little Snitch.app/Contents/Components/Little Snitch Network Monitor.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
+		<string>at.obdev.littlesnitch</string>
+		<key>Name</key>
+		<string>Little Snitch</string>
+		<key>NewFile</key>
+		<string>/Applications/Little Snitch.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
 		<string>com.floxtop.demo</string>
 		<key>Name</key>
 		<string>Floxtop Demo</string>
 		<key>NewFile</key>
 		<string>/Applications/Floxtop Demo.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.github.domt4.homebrew-autoupdate.autoupdater</string>
-		<key>Name</key>
-		<string>brew-autoupdate</string>
-		<key>NewFile</key>
-		<string>/opt/homebrew/Library/Taps/domt4/homebrew-autoupdate/notifier/brew-autoupdate.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
@@ -345,14 +641,6 @@
 		<string>Tips</string>
 		<key>NewFile</key>
 		<string>/System/Applications/Tips.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.adobe.Acrobat.Pro</string>
-		<key>Name</key>
-		<string>Adobe Acrobat</string>
-		<key>NewFile</key>
-		<string>/Applications/Adobe Acrobat DC/Adobe Acrobat.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
@@ -380,14 +668,6 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>com.fewtarius.syntheticautonomicmind</string>
-		<key>Name</key>
-		<string>SAM</string>
-		<key>NewFile</key>
-		<string>/Applications/SAM.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
 		<string>com.spatialread.desktop</string>
 		<key>Name</key>
 		<string>SpatialRead</string>
@@ -410,14 +690,6 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>com.apple.mobilephone</string>
-		<key>Name</key>
-		<string>Phone</string>
-		<key>NewFile</key>
-		<string>/System/Applications/Phone.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
 		<string>com.grammarly.ProjectLlama</string>
 		<key>Name</key>
 		<string>Grammarly Desktop</string>
@@ -426,43 +698,11 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>com.googlecode.iterm2</string>
-		<key>Name</key>
-		<string>iTerm</string>
-		<key>NewFile</key>
-		<string>~/Applications/iTerm.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
 		<string>com.HyperartFlow.Barbee.bb-agent</string>
 		<key>Name</key>
 		<string>ShowAllMenuBarItems</string>
 		<key>NewFile</key>
 		<string>/Applications/Barbee.app/Contents/MacOS/bb-agent.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>so.amie.electron-app-setapp</string>
-		<key>Name</key>
-		<string>Amie</string>
-		<key>NewFile</key>
-		<string>/Applications/Setapp/Amie.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>dev.zed.Zed</string>
-		<key>Name</key>
-		<string>Zed</string>
-		<key>NewFile</key>
-		<string>/Applications/Zed.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>app.spokenly</string>
-		<key>Name</key>
-		<string>Spokenly</string>
-		<key>NewFile</key>
-		<string>/Applications/Spokenly.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
@@ -490,22 +730,6 @@
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>
-		<string>com.apple.printcenter</string>
-		<key>Name</key>
-		<string>Print Center</string>
-		<key>NewFile</key>
-		<string>/System/Applications/Utilities/Print Center.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>eu.davidbures.cork</string>
-		<key>Name</key>
-		<string>Cork</string>
-		<key>NewFile</key>
-		<string>/Applications/Cork.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
 		<string>com.apple.Console</string>
 		<key>Name</key>
 		<string>Console</string>
@@ -527,222 +751,6 @@
 		<string>Barbee</string>
 		<key>NewFile</key>
 		<string>/Applications/Barbee.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.superduper.superwhisper</string>
-		<key>Name</key>
-		<string>superwhisper</string>
-		<key>NewFile</key>
-		<string>/Applications/superwhisper.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.dinoki.osaurus</string>
-		<key>Name</key>
-		<string>Osaurus</string>
-		<key>NewFile</key>
-		<string>/Applications/Osaurus.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>smmall.site.Cloud-setapp</string>
-		<key>Name</key>
-		<string>Smmall Cloud</string>
-		<key>NewFile</key>
-		<string>/Applications/Setapp/Smmall Cloud.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.microsoft.errorreporting</string>
-		<key>Name</key>
-		<string>Microsoft Error Reporting</string>
-		<key>NewFile</key>
-		<string>/Applications/OneDrive.app/Contents/SharedSupport/Microsoft Error Reporting.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.apple.installer</string>
-		<key>Name</key>
-		<string>Installer</string>
-		<key>NewFile</key>
-		<string>/System/Library/CoreServices/Installer.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.guidedways.TodoMac-setapp</string>
-		<key>Name</key>
-		<string>2Do</string>
-		<key>NewFile</key>
-		<string>~/Applications/Setapp/2Do.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>jp.plentycom.app.SteerMouse</string>
-		<key>Name</key>
-		<string>SteerMouse</string>
-		<key>NewFile</key>
-		<string>/Applications/SteerMouse.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.softfever3d.orca-slicer</string>
-		<key>Name</key>
-		<string>OrcaSlicer</string>
-		<key>NewFile</key>
-		<string>/Applications/OrcaSlicer.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>us.zoom.xos</string>
-		<key>Name</key>
-		<string>zoom</string>
-		<key>NewFile</key>
-		<string>/Applications/zoom.us.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.apple.iWork.Numbers</string>
-		<key>Name</key>
-		<string>Numbers</string>
-		<key>NewFile</key>
-		<string>/Applications/Numbers.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>org.tempel.findanyfile</string>
-		<key>Name</key>
-		<string>Find Any File</string>
-		<key>NewFile</key>
-		<string>/Applications/Find Any File.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.charliemonroe.Permute-setapp</string>
-		<key>Name</key>
-		<string>Permute</string>
-		<key>NewFile</key>
-		<string>/Applications/Setapp/Permute.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.apple.ScriptEditor2</string>
-		<key>Name</key>
-		<string>Script Editor</string>
-		<key>NewFile</key>
-		<string>/System/Applications/Utilities/Script Editor.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.apple.dt.Xcode</string>
-		<key>Name</key>
-		<string>Xcode</string>
-		<key>NewFile</key>
-		<string>/Applications/Xcode.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.stairways.keyboardmaestro.editor</string>
-		<key>Name</key>
-		<string>Keyboard Maestro</string>
-		<key>NewFile</key>
-		<string>/Applications/Keyboard Maestro.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.apple.Music</string>
-		<key>Name</key>
-		<string>Music</string>
-		<key>NewFile</key>
-		<string>/System/Applications/Music.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.3bitlab.PiPad</string>
-		<key>Name</key>
-		<string>PiPad</string>
-		<key>NewFile</key>
-		<string>/Applications/PiPad.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.kapeli.dash-setapp</string>
-		<key>Name</key>
-		<string>Dash</string>
-		<key>NewFile</key>
-		<string>/Applications/Setapp/Dash.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>ch.protonmail.desktop</string>
-		<key>Name</key>
-		<string>Proton Mail</string>
-		<key>NewFile</key>
-		<string>/Applications/Proton Mail.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.openai.chat</string>
-		<key>Name</key>
-		<string>ChatGPT</string>
-		<key>NewFile</key>
-		<string>/Applications/ChatGPT.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.apple.FaceTime</string>
-		<key>Name</key>
-		<string>FaceTime</string>
-		<key>NewFile</key>
-		<string>/System/Applications/FaceTime.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.apple.TestFlight</string>
-		<key>Name</key>
-		<string>TestFlight</string>
-		<key>NewFile</key>
-		<string>/Applications/TestFlight.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.itone.ProcessSpy</string>
-		<key>Name</key>
-		<string>ProcessSpy</string>
-		<key>NewFile</key>
-		<string>/Applications/ProcessSpy.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.apple.ActivityMonitor</string>
-		<key>Name</key>
-		<string>Activity Monitor</string>
-		<key>NewFile</key>
-		<string>/System/Applications/Utilities/Activity Monitor.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.manzoni.app-setapp</string>
-		<key>Name</key>
-		<string>Manzoni</string>
-		<key>NewFile</key>
-		<string>/Applications/Setapp/Manzoni.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.taperlabs.shadow</string>
-		<key>Name</key>
-		<string>Shadow</string>
-		<key>NewFile</key>
-		<string>/Applications/Shadow.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>com.microsoft.edgemac</string>
-		<key>Name</key>
-		<string>Microsoft Edge</string>
-		<key>NewFile</key>
-		<string>/Applications/Microsoft Edge.app</string>
 	</dict>
 </array>
 </plist>

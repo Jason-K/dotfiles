@@ -119,6 +119,18 @@ update() {
 		return 1
 	}
 
+	local sudo_pass
+	sudo_pass=$(op read "op://Private/Mac/password" 2>/dev/null) || {
+		echo "Error: Failed to read Mac password from 1Password" >&2
+		return 1
+	}
+
+	# Pre-authenticate sudo
+	echo "$sudo_pass" | sudo -S -v 2>/dev/null || {
+		echo "Error: Sudo authentication failed" >&2
+		return 1
+	}
+
 	if ! command -v topgrade >/dev/null 2>&1; then
 		echo "Error: topgrade not found. Install with: brew install topgrade" >&2
 		return 1

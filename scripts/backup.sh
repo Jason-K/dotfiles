@@ -386,9 +386,7 @@ capture_quick_inventory() {
     if brew --version >/dev/null 2>&1; then
         brew update >/dev/null 2>&1 || true
         brew bundle dump --force --file="$inventory_dir/Brewfile" 2>/dev/null || failed_sections+=("brew-bundle")
-        brew leaves > "$inventory_dir/apps/brew_leaves.txt" 2>/dev/null || failed_sections+=("brew-leaves")
-        brew list --cask > "$inventory_dir/apps/brew_casks.txt" 2>/dev/null || failed_sections+=("brew-casks")
-        brew list > "$inventory_dir/apps/brew_formulae.txt" 2>/dev/null || failed_sections+=("brew-formulae")
+
     else
         failed_sections+=("homebrew")
     fi
@@ -509,8 +507,8 @@ capture_inventory() {
     fi
 
     # Create inventory summary
-    local app_count=$(wc -l < "$inventory_dir/apps/brew_formulae.txt" 2>/dev/null || echo "0")
-    local cask_count=$(wc -l < "$inventory_dir/apps/brew_casks.txt" 2>/dev/null || echo "0")
+    local app_count=$(grep "^brew " "$inventory_dir/Brewfile" 2>/dev/null | wc -l | tr -d ' ' || echo "0")
+    local cask_count=$(grep "^cask " "$inventory_dir/Brewfile" 2>/dev/null | wc -l | tr -d ' ' || echo "0")
 
     log_info "Inventory captured: $app_count formulae, $cask_count casks"
 }

@@ -4,6 +4,14 @@
 <array>
 	<dict>
 		<key>BundleIdentifier</key>
+		<string>net.sourceforge.skim-app.skim</string>
+		<key>Name</key>
+		<string>Skim</string>
+		<key>NewFile</key>
+		<string>/Applications/Skim.app</string>
+	</dict>
+	<dict>
+		<key>BundleIdentifier</key>
 		<string>me.tdinh.devutils-setapp</string>
 		<key>Name</key>
 		<string>DevUtils</string>
@@ -97,14 +105,6 @@
 		<string>Microsoft Outlook</string>
 		<key>NewFile</key>
 		<string>/Applications/Microsoft Outlook.app</string>
-	</dict>
-	<dict>
-		<key>BundleIdentifier</key>
-		<string>net.sourceforge.skim-app.skim</string>
-		<key>Name</key>
-		<string>Skim</string>
-		<key>NewFile</key>
-		<string>/Applications/Skim.app</string>
 	</dict>
 	<dict>
 		<key>BundleIdentifier</key>

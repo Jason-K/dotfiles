@@ -600,7 +600,7 @@
                                 ],
                                 "to_if_held_down": [
                                     {
-                                        "shell_command": "open -a Bloom /Users/jason"
+                                        "shell_command": "/Users/jason/Scripts/Metascripts/open_finder_here --finder bloom"
                                     }
                                 ],
                                 "to_delayed_action": {
@@ -1549,7 +1549,7 @@
                                 ],
                                 "to_if_held_down": [
                                     {
-                                        "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'"
+                                        "shell_command": "/Users/jason/Scripts/Metascripts/open_finder_here --finder qspace"
                                     }
                                 ],
                                 "to_delayed_action": {
@@ -1963,6 +1963,85 @@
                                         {
                                             "halt": true,
                                             "key_code": "w",
+                                            "modifiers": []
+                                        }
+                                    ]
+                                },
+                                "conditions": [
+                                    {
+                                        "type": "variable_unless",
+                                        "name": "space_mod",
+                                        "value": 1
+                                    },
+                                    {
+                                        "type": "variable_unless",
+                                        "name": "space_a_sublayer",
+                                        "value": 1
+                                    },
+                                    {
+                                        "type": "variable_unless",
+                                        "name": "space_m_sublayer",
+                                        "value": 1
+                                    },
+                                    {
+                                        "type": "variable_unless",
+                                        "name": "space_c_sublayer",
+                                        "value": 1
+                                    },
+                                    {
+                                        "type": "variable_unless",
+                                        "name": "space_d_sublayer",
+                                        "value": 1
+                                    },
+                                    {
+                                        "type": "variable_unless",
+                                        "name": "space_f_sublayer",
+                                        "value": 1
+                                    },
+                                    {
+                                        "type": "variable_unless",
+                                        "name": "space_s_sublayer",
+                                        "value": 1
+                                    },
+                                    {
+                                        "type": "variable_unless",
+                                        "name": "space_w_sublayer",
+                                        "value": 1
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "description": "X hold -> Copy file",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "x"
+                                },
+                                "parameters": {
+                                    "basic.to_if_alone_timeout_milliseconds": 300,
+                                    "basic.to_if_held_down_threshold_milliseconds": 300
+                                },
+                                "to_if_alone": [
+                                    {
+                                        "halt": true,
+                                        "key_code": "x",
+                                        "modifiers": []
+                                    }
+                                ],
+                                "to_if_held_down": [
+                                    {
+                                        "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/act_on_file.sh copy"
+                                    }
+                                ],
+                                "to_delayed_action": {
+                                    "to_if_invoked": [],
+                                    "to_if_canceled": [
+                                        {
+                                            "halt": true,
+                                            "key_code": "x",
                                             "modifiers": []
                                         }
                                     ]

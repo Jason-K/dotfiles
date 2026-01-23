@@ -46,11 +46,11 @@ for line in $missing_entries; do
     # Check if we should ignore this (sometimes check reports weird things)
     if [[ -z "$name" ]]; then continue; fi
 
-    echo -ne "❓ Package ${RED}${name}${NC} is missing. Remove from Brewfile? [y/N] "
+    echo -ne "❓ Package ${RED}${name}${NC} is missing. Did you uninstall this intentionally? (y = remove from Brewfile, n = reinstall) [y/N] "
     read -r response
     
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        echo -e "${GREEN}Removing ${name}...${NC}"
+        echo -e "${GREEN}Removing ${name} from Brewfile...${NC}"
         # Use simple grep/sed sequence to safely remove the line
         # Match "cask 'name'" or 'cask "name"' or just 'cask name' depending on Brewfile format
         # typically Brewfile uses: cask "name"
@@ -64,7 +64,7 @@ for line in $missing_entries; do
         
         echo "   Removed."
     else
-        echo "   Kept (will be reinstalled)."
+        echo "   Kept in Brewfile (will be reinstalled)."
     fi
 done
 

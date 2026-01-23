@@ -99,6 +99,36 @@ cling() {
 	fi
 }
 
+# ---- Safe Homebrew Uninstall ----
+# Usage: unbrew <package>
+# Uninstalls package and removes it from the DOTFILES Brewfile to prevent reinstallation
+unbrew() {
+    local package="$1"
+    local brewfile="$HOME/dotfiles/brew/Brewfile"
+
+    if [[ -z "$package" ]]; then
+        echo "Usage: unbrew <package>"
+        return 1
+    fi
+
+    echo "📦 Uninstalling $package..."
+    brew uninstall "$package" || return 1
+
+    if [[ -f "$brewfile" ]]; then
+        if grep -q "$package" "$brewfile"; then
+            echo "📝 Removing $package from Brewfile..."
+            # Delete lines containing the package name matched roughly to avoid partial matches on similar names if possible
+            # We match the package name surrounded by quotes or spaces
+            sed -i '' "/['\"]$package['\"]/d" "$brewfile"
+            # Fallback for unquoted if needed, but let's stick to quotes first as Brewfile usually uses them
+            # If the user uses unquoted args (rare in generated files), we can handle that later.
+            echo "✅ Removed from $brewfile"
+        else
+            echo "ℹ️  $package not found in $brewfile"
+        fi
+    fi
+}
+
 # ---- System update function (requires 1Password) ----
 # Usage: update [--dry-run] [topgrade options]
 # Runs topgrade with GitHub token from 1Password
@@ -124,6 +154,11 @@ update() {
 		echo "Error: Failed to read Mac password from 1Password" >&2
 		return 1
 	}
+
+	# Run reconciliation to check for uninstalled apps
+	if [[ -x "$HOME/dotfiles/scripts/brew-reconcile.sh" ]]; then
+		"$HOME/dotfiles/scripts/brew-reconcile.sh"
+	fi
 
 	# Pre-authenticate sudo
 	echo "$sudo_pass" | sudo -S -v 2>/dev/null || {

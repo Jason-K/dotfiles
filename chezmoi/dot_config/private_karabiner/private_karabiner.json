@@ -600,7 +600,7 @@
                                 ],
                                 "to_if_held_down": [
                                     {
-                                        "shell_command": "/Users/jason/Scripts/Metascripts/open_finder_here --finder bloom"
+                                        "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action bloom"
                                     }
                                 ],
                                 "to_delayed_action": {
@@ -910,7 +910,7 @@
                                 ],
                                 "to_if_held_down": [
                                     {
-                                        "shell_command": "osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript"
+                                        "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action iterm"
                                     }
                                 ],
                                 "to_delayed_action": {
@@ -1068,7 +1068,7 @@
                                 ],
                                 "to_if_held_down": [
                                     {
-                                        "shell_command": "osascript ~/Scripts/Application_Specific/kitty/kitty_openHere.applescript"
+                                        "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty"
                                     }
                                 ],
                                 "to_delayed_action": {
@@ -1549,7 +1549,7 @@
                                 ],
                                 "to_if_held_down": [
                                     {
-                                        "shell_command": "/Users/jason/Scripts/Metascripts/open_finder_here --finder qspace"
+                                        "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action qspace"
                                     }
                                 ],
                                 "to_delayed_action": {
@@ -2033,7 +2033,7 @@
                                 ],
                                 "to_if_held_down": [
                                     {
-                                        "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/act_on_file.sh copy"
+                                        "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action copy"
                                     }
                                 ],
                                 "to_delayed_action": {

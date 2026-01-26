@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 
 # Install Claude Code globally
+# Install Claude Code globally
 # We install as root. Runtime execution will be as the host user (via --user flag).
 RUN npm install -g @anthropic-ai/claude-code
 

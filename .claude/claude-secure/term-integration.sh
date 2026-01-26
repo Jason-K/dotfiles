@@ -21,6 +21,10 @@ claude-docker() {
         echo "❌ Claude Docker script not found: $CLAUDE_DOCKER_SCRIPT" >&2
         return 1
     fi
+
+    # Pre-resolve secrets before calling docker script
+    _claude_resolve_secrets || return 1
+
     "$CLAUDE_DOCKER_SCRIPT" "$@"
 }
 

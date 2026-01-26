@@ -200,6 +200,11 @@ while [[ $# -gt 0 ]]; do
             DEBUG_ENV_MODE=1
             shift
             ;;
+        --run-cmd)
+            RUN_CMD_MODE=1
+            CLAUDE_ARGS+=("--run-cmd")
+            shift
+            ;;
         *)
             CLAUDE_ARGS+=("$1")
             shift
@@ -275,7 +280,323 @@ fi
 # -----------------------------------------------------------------------------
 # SECRETS & EXECUTION
 # -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+# SECRETS & EXECUTION
+# -----------------------------------------------------------------------------
 SECRET_ARGS=()
+
+# 4. PREPARE CONFIG ARGS (Passed via -e)
+# These are safe configuration variables (URLs, models, etc)
+CONFIG_KEYS=(
+    "Z_AI_MODE"
+    "Z_WEBSEARCH_URL"
+    "Z_READ_URL"
+    "ANTHROPIC_BASE_URL"
+    "API_TIMEOUT_MS"
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC"
+    "ANTHROPIC_DEFAULT_OPUS_MODEL"
+    "ANTHROPIC_DEFAULT_SONNET_MODEL"
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL"
+    "HEADERS_HELPER_MODE"
+    "HEADERS_HELPER_DISABLE_OP"
+    # Also pass these through if they exist in env (host fallback)
+    "ANTHROPIC_API_KEY"
+    "ANTHROPIC_AUTH_TOKEN"
+    "Z_AI_API_KEY"
+    "ZAI_API_KEY"
+    "CONTEXT7_API_KEY"
+    "SMITHERY_API_KEY"
+    "GITHUB_TOKEN"
+    "GEMINI_API_KEY"
+    "DEEPSEEK_API_KEY"
+    "OPENAI_API_KEY"
+    "OPENROUTER_API_KEY"
+)
+
+# -------------------------------------------------------------------------
+# 4a. Standard Z.AI Defaults & Configuration
+# -------------------------------------------------------------------------
+export Z_AI_MODE="${Z_AI_MODE:-ZAI}"
+export Z_WEBSEARCH_URL="${Z_WEBSEARCH_URL:-https://api.z.ai/api/mcp/web_search_prime/mcp}"
+export Z_READ_URL="${Z_READ_URL:-https://api.z.ai/api/mcp/zread/mcp}"
+export ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-https://api.z.ai/api/anthropic}"
+export API_TIMEOUT_MS="${API_TIMEOUT_MS:-3000000}"
+export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+
+# Force managed mode flags (only if executing claude)
+if [[ -z "${RUN_CMD_MODE:-}" ]]; then
+    CLAUDE_ARGS+=("--dangerously-skip-permissions")
+fi
+
+# Model defaults (from legacy launcher)
+export ANTHROPIC_DEFAULT_OPUS_MODEL="${ANTHROPIC_DEFAULT_OPUS_MODEL:-GLM-4.7}"
+export ANTHROPIC_DEFAULT_SONNET_MODEL="${ANTHROPIC_DEFAULT_SONNET_MODEL:-GLM-4.7}"
+export ANTHROPIC_DEFAULT_HAIKU_MODEL="${ANTHROPIC_DEFAULT_HAIKU_MODEL:-GLM-4.5-Air}"
+
+# Prevent runtime biometric prompts
+export HEADERS_HELPER_MODE="env"
+export HEADERS_HELPER_DISABLE_OP="1"
+
+# 4b. Config Args
+CONFIG_ARGS=() 
+for key in "${CONFIG_KEYS[@]}"; do
+    if [[ -n "${!key:-}" ]]; then
+        CONFIG_ARGS+=("-e" "$key=${!key}")
+    fi
+done
+
+# -------------------------------------------------------------------------
+# 5. EXECUTION STRATEGY (Robust Wrapper Mode)
+# -------------------------------------------------------------------------
+
+# User mapping
+USER_ID="$(id -u)"
+GROUP_ID="$(id -g)"
+
+# Define the container entrypoint script
+# This runs INSIDE the container to handle logic safely with raw keys
+CONTAINER_SCRIPT='
+    # 1. Backfill Z.AI keys if needed
+    if [ -z "${Z_AI_API_KEY:-}" ] && [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+        export Z_AI_API_KEY="$ANTHROPIC_API_KEY"
+    fi
+    if [ -z "${ZAI_API_KEY:-}" ] && [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+        export ZAI_API_KEY="$ANTHROPIC_API_KEY"
+    fi
+
+    # 2. Resolve Auth Conflict
+    if [ -n "${ANTHROPIC_API_KEY:-}" ] && [ -n "${ANTHROPIC_AUTH_TOKEN:-}" ]; then
+        unset ANTHROPIC_AUTH_TOKEN
+    fi
+
+    # 0. SETUP ENV & USER
+    export HOME="/home/claude"
+    export XDG_CONFIG_HOME="$HOME/.config"
+    export CLAUDE_CONFIG_DIR="$HOME/.config/claude-code"
+
+    # Patch /etc/passwd if whoami fails (fixing "cannot find name for user ID")
+    if ! whoami >/dev/null 2>&1; then
+        if [ -w /etc/passwd ]; then
+            echo "claude:x:$(id -u):$(id -g):Claude:$HOME:/bin/sh" >> /etc/passwd
+        fi
+    fi
+
+    # -------------------------------------------------------------------------
+    # PROXY SETUP (To bypass client-side key validation)
+    # -------------------------------------------------------------------------
+    # Claude Code enforces "sk-ant-" prefix. Z.AI keys look like "6bcc...".
+    # We use a dummy key for Claude Code, and swap it for the REAL key in a local proxy.
+
+    export REAL_ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-https://api.z.ai/api/anthropic}"
+    export PROXY_PORT="8888"
+    export LOCAL_PROXY_URL="http://127.0.0.1:$PROXY_PORT"
+    
+    # Write the Node.js Proxy
+    cat > /tmp/auth_proxy.js <<EOF
+const http = require("http");
+const https = require("https");
+const url = require("url");
+
+const TARGET_URL = process.env.REAL_ANTHROPIC_BASE_URL;
+const REAL_KEY = process.env.Z_AI_API_KEY;
+const DEBUG = process.env.VERBOSE_PROXY === "1";
+
+console.log("[Proxy] Starting Auth Proxy...");
+console.log("[Proxy] Target: " + TARGET_URL);
+if (!REAL_KEY) {
+    console.warn("[Proxy] WARNING: Z_AI_API_KEY is not set! Requests will likely fail.");
+}
+
+const server = http.createServer((req, res) => {
+    try {
+        if (DEBUG) console.log("[Proxy] Request: " + req.method + " " + req.url);
+
+        const target = new URL(TARGET_URL);
+        const options = {
+            hostname: target.hostname,
+            port: target.port || 443,
+            path: req.url, // Path usually includes /v1/...
+            method: req.method,
+            headers: { ...req.headers },
+            rejectUnauthorized: false 
+        };
+
+        // Key Swap Logic
+        // We replace the dummy key (sk-ant-dummy...) with the real Z.AI key
+        if (REAL_KEY) {
+            options.headers["x-api-key"] = REAL_KEY;
+            // Ensure we don"t send conflicting auth tokens if present
+            // delete options.headers["authorization"]; 
+        }
+        
+        // Host header should match target
+        options.headers["host"] = target.hostname;
+
+        const proxyReq = https.request(options, (proxyRes) => {
+            res.writeHead(proxyRes.statusCode, proxyRes.headers);
+            proxyRes.pipe(res, { end: true });
+        });
+
+        proxyReq.on("error", (e) => {
+            console.error("[Proxy] Upstream Error: " + e.message);
+            res.writeHead(502);
+            res.end("Proxy Upstream Error");
+        });
+
+        req.pipe(proxyReq, { end: true });
+
+    } catch (e) {
+        console.error("[Proxy] Handler Error: " + e.message);
+        res.writeHead(500);
+        res.end("Proxy Internal Error");
+    }
+});
+
+server.listen(parseInt(process.env.PROXY_PORT), "127.0.0.1", () => {
+    console.log("[Proxy] Listening on 127.0.0.1:" + process.env.PROXY_PORT);
+});
+EOF
+
+    # Start Proxy in Background
+    # We use nohup to ensure it stays alive, though & is usually enough in entrypoint
+    node /tmp/auth_proxy.js > /tmp/proxy.log 2>&1 &
+    PROXY_PID=$!
+    # Wait a moment for proxy to start
+    sleep 1
+
+    # -------------------------------------------------------------------------
+    # CONFIG GENERATION
+    # -------------------------------------------------------------------------
+    
+    # We use python3 to generate the JSON safely
+    # We use single quotes for the shell variable, so we wrap the python command in escaped single quotes '\''
+    # and use double quotes exclusively inside the python script.
+    python3 -c '\''
+import json
+import os
+import sys
+
+# Hardcode home since we forced it in shell
+home = "/home/claude"
+# USE PROXY URL for Claude Code configuration
+base_url = os.environ.get("LOCAL_PROXY_URL", "http://127.0.0.1:8888")
+
+# USE DUMMY KEY for validation bypass
+# Must start with sk-ant- to satisfy client-side regex
+dummy_key = "sk-ant-api03-dummy-key-for-local-proxy-bypass-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-aaaaaa"
+
+# DATA 2: Settings (usually settings.json)
+settings_data = {}
+settings_data["anthropicBaseUrl"] = base_url
+settings_data["ANTHROPIC_BASE_URL"] = base_url
+settings_data["verbose"] = True
+settings_data["disableTelemetry"] = True
+settings_data["hasCompletedOnboarding"] = True 
+settings_data["agreedToTerms"] = True
+settings_data["theme"] = "dark" 
+
+# Merge Auth into Settings (Critical: claude-code may look for keys in settings.json)
+# We inject the DUMMY key here. The PROXY swaps it.
+settings_data["primaryApiKey"] = dummy_key
+settings_data["apiKey"] = dummy_key
+settings_data["ANTHROPIC_API_KEY"] = dummy_key
+
+def write_json(path, data):
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as f:
+            json.dump(data, f, indent=2)
+        print(f"[claude-docker] Wrote config to {path}")
+    except Exception as e:
+        print(f"[claude-docker] Failed to write {path}: {e}")
+
+# PATH 1: ~/.claude.json (Legacy Root - Memory/Sessions)
+# Some versions use this for everything if singular
+write_json(os.path.join(home, ".claude.json"), settings_data)
+
+# PATH 2: ~/.claude/config.json (Likely Auth - Keeping for compat)
+write_json(os.path.join(home, ".claude", "config.json"), settings_data)
+
+# PATH 3: ~/.claude/settings.json (Main Config for Claude Code)
+write_json(os.path.join(home, ".claude", "settings.json"), settings_data)
+
+# PATH 4: XDG Config (~/.config/claude-code/config.json & settings.json)
+write_json(os.path.join(home, ".config", "claude-code", "config.json"), settings_data)
+write_json(os.path.join(home, ".config", "claude-code", "settings.json"), settings_data)
+
+# PATH 5: XDG Config Alternative (~/.config/claude/settings.json)
+write_json(os.path.join(home, ".config", "claude", "settings.json"), settings_data)
+
+# PATH 6: Managed Settings (Global Override - /etc/claude-code/managed-settings.json)
+# We try to write this if we have permission (we might not if running as non-root, but we are root or 501?)
+# Actually, inside the container we might be root initially? 
+# No, we run `python3 -c` via `sh -c`. The `docker run --user` argument sets the user.
+# So we likely CANNOT write to /etc. 
+# But lets try just in case /etc/claude-code exists and is writable (unlikely).
+write_json("/etc/claude-code/managed-settings.json", settings_data)
+
+# Update .bashrc safely (avoiding f-string syntax errors with quotes)
+bashrc_path = os.path.join(home, ".bashrc")
+try:
+    with open(bashrc_path, "a") as f:
+        f.write(f"\nexport ANTHROPIC_BASE_URL=\"{base_url}\"\n")
+        f.write(f"export ANTHROPIC_API_KEY=\"{dummy_key}\"\n")
+    print(f"[claude-docker] Appended env vars to {bashrc_path}")
+except Exception as e:
+    print(f"[claude-docker] Failed to update .bashrc: {e}")
+'\''
+
+    # 4. DIAGNOSTICS & PRE-FLIGHT
+    echo "🔍 [claude-docker] Diagnostics:"
+    echo "   User: $(whoami) ($(id -u):$(id -g))"
+    echo "   HOME: $HOME"
+    echo "   XDG_CONFIG_HOME: $XDG_CONFIG_HOME"
+    
+    echo "   Checking config file permissions:"
+    ls -la "$HOME/.claude.json" 2>/dev/null || echo "   ~/.claude.json missing!"
+    ls -la "$HOME/.claude/config.json" 2>/dev/null || echo "   ~/.claude/config.json missing!"
+    ls -la "$HOME/.claude/settings.json" 2>/dev/null || echo "   ~/.claude/settings.json missing!"
+    ls -la "$HOME/.config/claude-code/config.json" 2>/dev/null || echo "   XDG Config missing!"
+
+    # 5. Execute payload
+    echo "🚀 [claude-docker] Launching Claude..."
+    if [ "$1" = "--debug-env" ]; then
+        exec /usr/bin/env
+    elif [ "$1" = "--run-cmd" ]; then
+        shift
+        exec "$@"
+    else
+        exec claude "$@"
+    fi
+'
+
+# Split into OPTS and IMAGE args to allow injecting SECRET_ARGS (which are -e flags) 
+# BEFORE the image name.
+DOCKER_OPTS=(
+    "docker" "run" "--rm" "-it"
+    "--user" "$USER_ID:$GROUP_ID"
+    "--network" "host"
+    "-v" "$HOME/.ssh:/home/claude/.ssh:ro"
+    "-v" "$HOME/.gitconfig:/home/claude/.gitconfig:ro"
+    "${DOCKER_MOUNTS[@]}"
+    "-w" "$WORKDIR_TARGET"
+    "${CONFIG_ARGS[@]}"
+    "--entrypoint" "/bin/sh"
+)
+
+DOCKER_IMAGE_ARGS=(
+    "$IMAGE_NAME"
+    "-c" "$CONTAINER_SCRIPT"
+    "claude-wrapper"
+)
+
+# Handle DEBUG mode argument passing
+if [[ -n "$DEBUG_ENV_MODE" ]]; then
+     CLAUDE_ARGS_FINAL=("--debug-env")
+else
+     CLAUDE_ARGS_FINAL=("${CLAUDE_ARGS[@]:-}")
+fi
+
 
 if [[ -f "$ENV_FILE" && -x "$(command -v op)" ]]; then
     log "Authenticating with 1Password..."
@@ -292,238 +613,28 @@ if [[ -f "$ENV_FILE" && -x "$(command -v op)" ]]; then
         "OPENAI_API_KEY"
         "OPENROUTER_API_KEY"
     )
-
-    # PASS_ENV_ARGS logic replaced by SECRET_ARGS logic below
-
-
-    # -------------------------------------------------------------------------
-    # 4a. Standard Z.AI Defaults & Configuration
-    # -------------------------------------------------------------------------
-    export Z_AI_MODE="${Z_AI_MODE:-ZAI}"
-    export Z_WEBSEARCH_URL="${Z_WEBSEARCH_URL:-https://api.z.ai/api/mcp/web_search_prime/mcp}"
-    export Z_READ_URL="${Z_READ_URL:-https://api.z.ai/api/mcp/zread/mcp}"
-    export ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-https://api.z.ai/api/anthropic}"
-    export API_TIMEOUT_MS="${API_TIMEOUT_MS:-3000000}"
-    export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
     
-    # Force managed mode flags
-    CLAUDE_ARGS+=("--dangerously-skip-permissions")
-
-    # Model defaults (from legacy launcher)
-    export ANTHROPIC_DEFAULT_OPUS_MODEL="${ANTHROPIC_DEFAULT_OPUS_MODEL:-GLM-4.7}"
-    export ANTHROPIC_DEFAULT_SONNET_MODEL="${ANTHROPIC_DEFAULT_SONNET_MODEL:-GLM-4.7}"
-    export ANTHROPIC_DEFAULT_HAIKU_MODEL="${ANTHROPIC_DEFAULT_HAIKU_MODEL:-GLM-4.5-Air}"
-
-    # Prevent runtime biometric prompts
-    export HEADERS_HELPER_MODE="env"
-    export HEADERS_HELPER_DISABLE_OP="1"
-    
-    # -------------------------------------------------------------------------
-    # 4b. Secrets from 1Password
-    # -------------------------------------------------------------------------
-    # Secret keys - we blindly pass -e for all of them.
-    # If they are set in the environment (by op run), Docker picks them up.
-    # If they are unset, they remain unset in the container.
     SECRET_ARGS=()
-    
-    # 4. PREPARE CONFIG ARGS (Passed via -e)
-    # These are safe configuration variables (URLs, models, etc)
-    CONFIG_KEYS=(
-        "Z_AI_MODE"
-        "Z_WEBSEARCH_URL"
-        "Z_READ_URL"
-        "ANTHROPIC_BASE_URL"
-        "API_TIMEOUT_MS"
-        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC"
-        "ANTHROPIC_DEFAULT_OPUS_MODEL"
-        "ANTHROPIC_DEFAULT_SONNET_MODEL"
-        "ANTHROPIC_DEFAULT_HAIKU_MODEL"
-        "HEADERS_HELPER_MODE"
-        "HEADERS_HELPER_DISABLE_OP"
-    )
-
-    CONFIG_ARGS=() 
-    for key in "${CONFIG_KEYS[@]}"; do
-        if [[ -n "${!key:-}" ]]; then
-            CONFIG_ARGS+=("-e" "$key=${!key}")
-        fi
-    done
-    # 2. Secret Keys (Defined at top)
     for key in "${SECRET_KEYS[@]}"; do
          SECRET_ARGS+=("-e" "$key")
     done
 
-    # -------------------------------------------------------------------------
-    # 5. EXECUTION STRATEGY (Robust Wrapper Mode)
-    # -------------------------------------------------------------------------
-    # We do NOT capture secrets in the host shell to avoid masking issues.
-    # Instead, we rely on 'op run' to inject them into the Docker client process,
-    # and use -e flags to pass them through.
-    # We handle variable logic (backfills, conflicts) INSIDE the container via a shell wrapper.
-
-    # User mapping
-    USER_ID="$(id -u)"
-    GROUP_ID="$(id -g)"
-    
-    # Define the container entrypoint script
-    # This runs INSIDE the container to handle logic safely with raw keys
-    CONTAINER_SCRIPT='
-        # 1. Backfill Z.AI keys if needed
-        if [ -z "${Z_AI_API_KEY:-}" ] && [ -n "${ANTHROPIC_API_KEY:-}" ]; then
-            export Z_AI_API_KEY="$ANTHROPIC_API_KEY"
-        fi
-        if [ -z "${ZAI_API_KEY:-}" ] && [ -n "${ANTHROPIC_API_KEY:-}" ]; then
-            export ZAI_API_KEY="$ANTHROPIC_API_KEY"
-        fi
-
-        # 2. Resolve Auth Conflict
-        if [ -n "${ANTHROPIC_API_KEY:-}" ] && [ -n "${ANTHROPIC_AUTH_TOKEN:-}" ]; then
-            unset ANTHROPIC_AUTH_TOKEN
-        fi
-
-        # 0. SETUP ENV & USER
-        export HOME="/home/claude"
-        export XDG_CONFIG_HOME="$HOME/.config"
-        export CLAUDE_CONFIG_DIR="$HOME/.config/claude-code"
-
-        # Patch /etc/passwd if whoami fails (fixing "cannot find name for user ID")
-        if ! whoami >/dev/null 2>&1; then
-            if [ -w /etc/passwd ]; then
-                echo "claude:x:$(id -u):$(id -g):Claude:$HOME:/bin/sh" >> /etc/passwd
-            fi
-        fi
-
-        # We use python3 to generate the JSON safely
-        # We use single quotes for the shell variable, so we wrap the python command in escaped single quotes '\''
-        # and use double quotes exclusively inside the python script.
-        python3 -c '\''
-import json
-import os
-import sys
-
-# Hardcode home since we forced it in shell
-home = "/home/claude"
-api_key = os.environ.get("ANTHROPIC_API_KEY")
-base_url = os.environ.get("ANTHROPIC_BASE_URL", "https://api.z.ai/api/anthropic")
-
-# DATA 1: Secrets/Auth (usually .claude.json or config.json)
-auth_data = {}
-if api_key:
-    auth_data["primaryApiKey"] = api_key
-    auth_data["ANTHROPIC_API_KEY"] = api_key
-auth_data["hasCompletedOnboarding"] = True
-auth_data["agreedToTerms"] = True
-
-# DATA 2: Settings (usually settings.json)
-settings_data = {}
-settings_data["anthropicBaseUrl"] = base_url
-settings_data["ANTHROPIC_BASE_URL"] = base_url
-settings_data["verbose"] = True
-settings_data["disableTelemetry"] = True
-settings_data["hasCompletedOnboarding"] = True 
-
-def write_json(path, data):
-    try:
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-        with open(path, "w") as f:
-            json.dump(data, f, indent=2)
-        print(f"[claude-docker] Wrote config to {path}")
-    except Exception as e:
-        print(f"[claude-docker] Failed to write {path}: {e}")
-
-# PATH 1: ~/.claude.json (Legacy Root)
-root_data = {**auth_data, **settings_data}
-write_json(os.path.join(home, ".claude.json"), root_data)
-
-# PATH 2: ~/.claude/config.json (Likely Auth)
-write_json(os.path.join(home, ".claude", "config.json"), auth_data)
-
-# PATH 3: ~/.claude/settings.json (Likely Global Settings)
-write_json(os.path.join(home, ".claude", "settings.json"), settings_data)
-
-# PATH 4: XDG Config (~/.config/claude-code/config.json)
-write_json(os.path.join(home, ".config", "claude-code", "config.json"), root_data)
-
-# Update .bashrc safely (avoiding f-string syntax errors with quotes)
-bashrc_path = os.path.join(home, ".bashrc")
-try:
-    with open(bashrc_path, "a") as f:
-        f.write(f"\nexport ANTHROPIC_BASE_URL=\"{base_url}\"\n")
-        f.write(f"export ANTHROPIC_API_KEY=\"{api_key}\"\n")
-    print(f"[claude-docker] Appended env vars to {bashrc_path}")
-except Exception as e:
-    print(f"[claude-docker] Failed to update .bashrc: {e}")
-'\''
-
-        # 4. DIAGNOSTICS & PRE-FLIGHT
-        echo "🔍 [claude-docker] Diagnostics:"
-        echo "   User: $(whoami) ($(id -u):$(id -g))"
-        echo "   HOME: $HOME"
-        echo "   XDG_CONFIG_HOME: $XDG_CONFIG_HOME"
-        
-        echo "   Checking config file permissions:"
-        ls -la "$HOME/.claude.json" 2>/dev/null || echo "   ~/.claude.json missing!"
-        ls -la "$HOME/.claude/config.json" 2>/dev/null || echo "   ~/.claude/config.json missing!"
-        ls -la "$HOME/.claude/settings.json" 2>/dev/null || echo "   ~/.claude/settings.json missing!"
-        ls -la "$HOME/.config/claude-code/config.json" 2>/dev/null || echo "   XDG Config missing!"
-
-        # 5. Execute payload
-        echo "🚀 [claude-docker] Launching Claude..."
-        if [ "$1" = "--debug-env" ]; then
-            exec /usr/bin/env
-        else
-            exec claude "$@"
-        fi
-    '
-
-    # -------------------------------------------------------------------------
-    # 7. EXECUTION
-    # -------------------------------------------------------------------------
-    DOCKER_CMD=(
-        "docker" "run" "--rm" "-it"
-        "--user" "$USER_ID:$GROUP_ID"
-        "--network" "host"
-        "-v" "$HOME/.ssh:/home/claude/.ssh:ro"
-        "-v" "$HOME/.gitconfig:/home/claude/.gitconfig:ro"
-        "${DOCKER_MOUNTS[@]}"
-        "-w" "$WORKDIR_TARGET"
-        "${SECRET_ARGS[@]}"
-        "${CONFIG_ARGS[@]}"
-        "--entrypoint" "/bin/sh"
-        "$IMAGE_NAME"
-        "-c" "$CONTAINER_SCRIPT"
-        "claude-wrapper" 
-    )
-
-    # Handle DEBUG mode argument passing
-    if [[ -n "$DEBUG_ENV_MODE" ]]; then
-         DOCKER_CMD+=("--debug-env")
-    else
-         DOCKER_CMD+=("${CLAUDE_ARGS[@]:-}")
-    fi
-
-    # Final Execution
+    # Final Execution with OP
+    # IMPORTANT: SECRET_ARGS must go BEFORE DOCKER_IMAGE_ARGS
     log "Starting container (via op run)..."
-    exec op run --no-masking --env-file "$ENV_FILE" -- "${DOCKER_CMD[@]}"
+    exec op run --no-masking --env-file "$ENV_FILE" -- "${DOCKER_OPTS[@]}" "${SECRET_ARGS[@]}" "${DOCKER_IMAGE_ARGS[@]}" "${CLAUDE_ARGS_FINAL[@]}"
 
 else
-    log "WARNING: Secrets not injected (1Password not found or env file missing)"
+    # Fallback / Environment Mode
+    # If variables are already in shell (from term-integration), CONFIG_KEYS logic above
+    # has already captured them into CONFIG_ARGS via the loop.
     
-    # Fallback without op wrapper (similar logic but no secrets)
-    CONTAINER_SCRIPT='exec claude "$@"'
-    if [[ -n "$DEBUG_ENV_MODE" ]]; then CONTAINER_SCRIPT='exec /usr/bin/env'; fi
-
-    docker run --rm -it \
-        --user "$(id -u):$(id -g)" \
-        --network host \
-        -v "$HOME/.ssh:/home/claude/.ssh:ro" \
-        -v "$HOME/.gitconfig:/home/claude/.gitconfig:ro" \
-        "${DOCKER_MOUNTS[@]}" \
-        -w "$WORKDIR_TARGET" \
-        --entrypoint /bin/sh \
-        "$IMAGE_NAME" \
-        -c "$CONTAINER_SCRIPT" \
-        "claude-wrapper" \
-        "${CONFIG_ARGS[@]}" \
-        "${CLAUDE_ARGS[@]:-}"
+    if [[ -n "${ANTHROPIC_API_KEY:-}" ]]; then
+         log "✅ Using secrets from current environment (Host Fallback)"
+    else
+         log "⚠️  No secrets found (op missing/failed, and no env vars set). Claude may Prompt for Login."
+    fi
+    
+    log "Starting container (Host Env)..."
+    exec "${DOCKER_OPTS[@]}" "${DOCKER_IMAGE_ARGS[@]}" "${CLAUDE_ARGS_FINAL[@]}"
 fi

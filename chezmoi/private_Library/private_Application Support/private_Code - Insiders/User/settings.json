@@ -437,6 +437,5 @@
   ],
   "workbench.secondarySideBar.defaultVisibility": "hidden",
   "chat.useAgentSkills": true,
-  "chat.tools.terminal.outputLocation": "chat",
-  "workbench.activityBar.location": "top"
+  "chat.tools.terminal.outputLocation": "chat"
 }

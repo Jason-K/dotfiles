@@ -369,36 +369,53 @@ CONTAINER_SCRIPT='
         unset ANTHROPIC_AUTH_TOKEN
     fi
 
-    # 3. Alias for Claude Code compatibility (matching local wrapper)
+    # 3. Alias for Claude Code compatibility
     if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
         export CLAUDE_API_KEY="$ANTHROPIC_API_KEY"
         export CLAUDE_CODE_AUTH_TOKEN="$ANTHROPIC_API_KEY"
     fi
 
-    # 0. SETUP ENV & USER
-    export HOME="/home/claude"
+    # 0. SETUP ENV & USER (MIRROR HOST)
+    # We use the passed HOST_HOME to set up the container environment
+    # exactly as it is on the host.
+    export HOME="$HOST_HOME"
     export XDG_CONFIG_HOME="$HOME/.config"
-    export CLAUDE_CONFIG_DIR="$HOME/.config/claude-code"
 
-    # Patch /etc/passwd if whoami fails (fixing "cannot find name for user ID")
-    if ! whoami >/dev/null 2>&1; then
-        if [ -w /etc/passwd ]; then
-            echo "claude:x:$(id -u):$(id -g):Claude:$HOME:/bin/sh" >> /etc/passwd
+    # Create parent directory for HOME if it doesnt exist
+    mkdir -p "$(dirname "$HOME")"
+    
+    # Create HOME and .config (if they do not exist)
+    mkdir -p "$HOME/.config"
+
+    # Create the user if it does not exist (using host logic)
+    # We use -N (no user group) because we will add to group manually or use existing
+    # We use -u $CMD_USER_ID
+    if ! id -u "$CMD_USER_ID" >/dev/null 2>&1; then
+        echo "Creating user claude with UID $CMD_USER_ID"
+        # Create group if needed
+        if ! getent group "$CMD_GROUP_ID" >/dev/null 2>&1; then
+            groupadd -g "$CMD_GROUP_ID" claude_group
         fi
+        
+        # User entry: claude:x:UID:GID:Claude:HOME:/bin/sh
+        echo "claude:x:$CMD_USER_ID:$CMD_GROUP_ID:Claude:$HOME:/bin/sh" >> /etc/passwd
+        echo "claude_group:x:$CMD_GROUP_ID:" >> /etc/group
     fi
+    
+    # FIX PERMISSIONS:
+    # Ensure ownership of home root and .config
+    chown "$CMD_USER_ID:$CMD_GROUP_ID" "$HOME"
+    chown -R "$CMD_USER_ID:$CMD_GROUP_ID" "$HOME/.config"
 
     # -------------------------------------------------------------------------
     # RESTORE CONFIG GENERATION (Suppress Onboarding)
     # -------------------------------------------------------------------------
-    # Even with v2.0.72, we need to signal that onboarding is complete
-    # because the container is ephemeral.
-    
     python3 -c '\''
 import json
 import os
 import sys
 
-home = "/home/claude"
+home = os.environ["HOME"]
 base_url = os.environ.get("ANTHROPIC_BASE_URL", "https://api.z.ai/api/anthropic")
 api_key = os.environ.get("ANTHROPIC_API_KEY", "")
 
@@ -411,6 +428,41 @@ settings_data["hasCompletedOnboarding"] = True
 settings_data["agreedToTerms"] = True
 settings_data["theme"] = "dark" 
 
+# Define MCP Servers
+mcp_servers = {
+    "zai-mcp-server": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@z_ai/mcp-server"],
+      "env": {
+        "Z_AI_API_KEY": os.environ.get("Z_AI_API_KEY", ""),
+        "Z_AI_MODE": os.environ.get("Z_AI_MODE", "ZAI")
+      }
+    },
+    "web-search-prime": {
+      "type": "http",
+      "url": os.environ.get("Z_WEBSEARCH_URL", "https://api.z.ai/api/mcp/web_search_prime/mcp"),
+      "headersHelper": "printf '\''{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}'\'' \"$Z_AI_API_KEY\""
+    },
+    "web-reader": {
+      "type": "http",
+      "url": "https://api.z.ai/api/mcp/web_reader/mcp",
+      "headersHelper": "printf '\''{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}'\'' \"$Z_AI_API_KEY\""
+    },
+    "zai-read": {
+      "type": "http",
+      "url": os.environ.get("Z_READ_URL", "https://api.z.ai/api/mcp/zread/mcp"),
+      "headersHelper": "printf '\''{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}'\'' \"$Z_AI_API_KEY\""
+    },
+    "context7-mcp": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "headersHelper": "printf '\''{\"Authorization\":\"Bearer %s\"}'\'' \"$CONTEXT7_API_KEY\""
+    }
+}
+
+settings_data["mcpServers"] = mcp_servers
+
 # Inject keys into settings if available (redundancy for env vars)
 if api_key:
     settings_data["primaryApiKey"] = api_key
@@ -420,14 +472,26 @@ if api_key:
 def write_json(path, data):
     try:
         os.makedirs(os.path.dirname(path), exist_ok=True)
+        current = {}
+        if os.path.exists(path):
+            try:
+                with open(path, "r") as f:
+                    current = json.load(f)
+            except Exception:
+                pass
+        
+        current.update(data)
+        
         with open(path, "w") as f:
-            json.dump(data, f, indent=2)
-        print(f"[claude-docker] Wrote config to {path}")
+            json.dump(current, f, indent=2)
+        print(f"[claude-docker] Updated config at {path}")
     except Exception as e:
         print(f"[claude-docker] Failed to write {path}: {e}")
 
 # Write to all possible config locations to be safe
+# These must be writable by the user, so we will chown them after if root
 write_json(os.path.join(home, ".claude.json"), settings_data)
+write_json(os.path.join(home, ".config", "claude-code", ".claude.json"), settings_data)
 write_json(os.path.join(home, ".claude", "config.json"), settings_data)
 write_json(os.path.join(home, ".claude", "settings.json"), settings_data)
 write_json(os.path.join(home, ".config", "claude-code", "config.json"), settings_data)
@@ -435,25 +499,35 @@ write_json(os.path.join(home, ".config", "claude-code", "settings.json"), settin
 write_json(os.path.join(home, ".config", "claude", "settings.json"), settings_data)
 '\''
 
-    echo "🚀 [claude-docker] Launching Claude (v2.0.72)..."
+    # Fix permissions again after config generation (just in case)
+    chown "$CMD_USER_ID:$CMD_GROUP_ID" "$HOME/.claude.json" 2>/dev/null || true
+    chown -R "$CMD_USER_ID:$CMD_GROUP_ID" "$HOME/.config" 2>/dev/null || true
+    chown -R "$CMD_USER_ID:$CMD_GROUP_ID" "$HOME/.claude" 2>/dev/null || true
+
+    echo "🚀 [claude-docker] Launching Claude (v2.0.72) as user $CMD_USER_ID..."
+    
     if [ "$1" = "--debug-env" ]; then
-        exec /usr/bin/env
+        exec gosu "$CMD_USER_ID:$CMD_GROUP_ID" /usr/bin/env
     elif [ "$1" = "--run-cmd" ]; then
         shift
-        exec "$@"
+        exec gosu "$CMD_USER_ID:$CMD_GROUP_ID" "$@"
     else
-        exec claude "$@"
+        exec gosu "$CMD_USER_ID:$CMD_GROUP_ID" claude "$@"
     fi
 '
 
 # Split into OPTS and IMAGE args to allow injecting SECRET_ARGS (which are -e flags) 
 # BEFORE the image name.
+# WE RUN AS ROOT IN DOCKER (no --user) but pass ID to use for gosu
 DOCKER_OPTS=(
     "docker" "run" "--rm" ${DOCKER_FLAGS:--it}
-    "--user" "$USER_ID:$GROUP_ID"
     "--network" "host"
-    "-v" "$HOME/.ssh:/home/claude/.ssh:ro"
-    "-v" "$HOME/.gitconfig:/home/claude/.gitconfig:ro"
+    "-e" "HOST_HOME=$HOME"
+    "-e" "CMD_USER_ID=$USER_ID"
+    "-e" "CMD_GROUP_ID=$GROUP_ID"
+    "-v" "$HOME/.ssh:$HOME/.ssh:ro"
+    "-v" "$HOME/.gitconfig:$HOME/.gitconfig:ro"
+    "-v" "$HOME/.claude:$HOME/.claude"
     "${DOCKER_MOUNTS[@]}"
     "-w" "$WORKDIR_TARGET"
     "${CONFIG_ARGS[@]}"

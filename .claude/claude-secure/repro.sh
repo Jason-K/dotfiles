@@ -355,7 +355,7 @@ GROUP_ID="$(id -g)"
 
 # Define the container entrypoint script
 # This runs INSIDE the container to handle logic safely with raw keys
-CONTAINER_SCRIPT=$(cat <<'EOF_CONTAINER_SCRIPT'
+CONTAINER_SCRIPT='
     # 1. Backfill Z.AI keys if needed
     if [ -z "${Z_AI_API_KEY:-}" ] && [ -n "${ANTHROPIC_API_KEY:-}" ]; then
         export Z_AI_API_KEY="$ANTHROPIC_API_KEY"
@@ -410,8 +410,7 @@ CONTAINER_SCRIPT=$(cat <<'EOF_CONTAINER_SCRIPT'
     # -------------------------------------------------------------------------
     # RESTORE CONFIG GENERATION (Suppress Onboarding)
     # -------------------------------------------------------------------------
-    # Write config script to file to avoid nested heredoc issues
-    cat > "$HOME/configure_claude.py" << 'EOF_PYTHON_SCRIPT'
+    python3 -c '\''
 import json
 import os
 import sys
@@ -443,22 +442,22 @@ mcp_servers = {
     "web-search-prime": {
       "type": "http",
       "url": os.environ.get("Z_WEBSEARCH_URL", "https://api.z.ai/api/mcp/web_search_prime/mcp"),
-      "headersHelper": "printf '{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}' \"$Z_AI_API_KEY\""
+      "headersHelper": "printf '\''{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}'\'' \"$Z_AI_API_KEY\""
     },
     "web-reader": {
       "type": "http",
       "url": "https://api.z.ai/api/mcp/web_reader/mcp",
-      "headersHelper": "printf '{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}' \"$Z_AI_API_KEY\""
+      "headersHelper": "printf '\''{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}'\'' \"$Z_AI_API_KEY\""
     },
     "zai-read": {
       "type": "http",
       "url": os.environ.get("Z_READ_URL", "https://api.z.ai/api/mcp/zread/mcp"),
-      "headersHelper": "printf '{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}' \"$Z_AI_API_KEY\""
+      "headersHelper": "printf '\''{\"Authorization\":\"Bearer %s\",\"Accept\":\"application/json, text/event-stream\"}'\'' \"$Z_AI_API_KEY\""
     },
     "context7-mcp": {
       "type": "http",
       "url": "https://mcp.context7.com/mcp",
-      "headersHelper": "printf '{\"Authorization\":\"Bearer %s\"}' \"$CONTEXT7_API_KEY\""
+      "headersHelper": "printf '\''{\"Authorization\":\"Bearer %s\"}'\'' \"$CONTEXT7_API_KEY\""
     }
 }
 
@@ -497,10 +496,9 @@ write_json(os.path.join(home, ".claude", "config.json"), settings_data)
 write_json(os.path.join(home, ".claude", "settings.json"), settings_data)
 write_json(os.path.join(home, ".config", "claude-code", "config.json"), settings_data)
 write_json(os.path.join(home, ".config", "claude-code", "settings.json"), settings_data)
-EOF_PYTHON_SCRIPT
+write_json(os.path.join(home, ".config", "claude", "settings.json"), settings_data)
+'\''
 
-    # Execute the config script
-    python3 "$HOME/configure_claude.py"
     # Fix permissions again after config generation (just in case)
     chown "$CMD_USER_ID:$CMD_GROUP_ID" "$HOME/.claude.json" 2>/dev/null || true
     chown -R "$CMD_USER_ID:$CMD_GROUP_ID" "$HOME/.config" 2>/dev/null || true
@@ -516,8 +514,7 @@ EOF_PYTHON_SCRIPT
     else
         exec gosu "$CMD_USER_ID:$CMD_GROUP_ID" claude "$@"
     fi
-EOF_CONTAINER_SCRIPT
-)
+'
 
 # Split into OPTS and IMAGE args to allow injecting SECRET_ARGS (which are -e flags) 
 # BEFORE the image name.

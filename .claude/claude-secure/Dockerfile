@@ -17,8 +17,10 @@ RUN apt-get update && apt-get install -y \
 
 # Install Claude Code globally
 # Install Claude Code globally
-# We install as root. Runtime execution will be as the host user (via --user flag).
-RUN npm install -g @anthropic-ai/claude-code
+# Install Claude Code globally (pinned to 2.0.72)
+# We match the user's local working version to ensure Z.AI auth compatibility
+# and avoid stricter checks in 2.1.x
+RUN npm install -g @anthropic-ai/claude-code@2.0.72 --unsafe-perm=true
 
 # Setup Environment for Runtime User
 # 1. Allow writing to /etc/passwd so we can inject the host user at runtime

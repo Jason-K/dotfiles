@@ -369,6 +369,12 @@ CONTAINER_SCRIPT='
         unset ANTHROPIC_AUTH_TOKEN
     fi
 
+    # 3. Alias for Claude Code compatibility (matching local wrapper)
+    if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+        export CLAUDE_API_KEY="$ANTHROPIC_API_KEY"
+        export CLAUDE_CODE_AUTH_TOKEN="$ANTHROPIC_API_KEY"
+    fi
+
     # 0. SETUP ENV & USER
     export HOME="/home/claude"
     export XDG_CONFIG_HOME="$HOME/.config"
@@ -382,115 +388,20 @@ CONTAINER_SCRIPT='
     fi
 
     # -------------------------------------------------------------------------
-    # PROXY SETUP (To bypass client-side key validation)
+    # RESTORE CONFIG GENERATION (Suppress Onboarding)
     # -------------------------------------------------------------------------
-    # Claude Code enforces "sk-ant-" prefix. Z.AI keys look like "6bcc...".
-    # We use a dummy key for Claude Code, and swap it for the REAL key in a local proxy.
-
-    export REAL_ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-https://api.z.ai/api/anthropic}"
+    # Even with v2.0.72, we need to signal that onboarding is complete
+    # because the container is ephemeral.
     
-    # Dynamic Port Selection using Python to avoid EADDRINUSE (OrbStack uses 8888)
-    PROXY_PORT=$(python3 -c '\''import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()'\'' )
-    export PROXY_PORT
-    export LOCAL_PROXY_URL="http://127.0.0.1:$PROXY_PORT"
-    
-    echo "[claude-docker] Selected Proxy Port: $PROXY_PORT"
-
-    # Write the Node.js Proxy
-    cat > /tmp/auth_proxy.js <<EOF
-const http = require("http");
-const https = require("https");
-const url = require("url");
-
-const TARGET_URL = process.env.REAL_ANTHROPIC_BASE_URL;
-const REAL_KEY = process.env.Z_AI_API_KEY;
-const DEBUG = process.env.VERBOSE_PROXY === "1";
-
-console.log("[Proxy] Starting Auth Proxy...");
-console.log("[Proxy] Target: " + TARGET_URL);
-if (!REAL_KEY) {
-    console.warn("[Proxy] WARNING: Z_AI_API_KEY is not set! Requests will likely fail.");
-}
-
-const server = http.createServer((req, res) => {
-    try {
-        if (DEBUG) console.log("[Proxy] Request: " + req.method + " " + req.url);
-
-        const target = new URL(TARGET_URL);
-        const options = {
-            hostname: target.hostname,
-            port: target.port || 443,
-            path: req.url, // Path usually includes /v1/...
-            method: req.method,
-            headers: { ...req.headers },
-            rejectUnauthorized: false 
-        };
-
-        // Key Swap Logic
-        // We replace the dummy key (sk-ant-dummy...) with the real Z.AI key
-        if (REAL_KEY) {
-            options.headers["x-api-key"] = REAL_KEY;
-            // Ensure we don"t send conflicting auth tokens if present
-            // delete options.headers["authorization"]; 
-        }
-        
-        // Host header should match target
-        options.headers["host"] = target.hostname;
-
-        const proxyReq = https.request(options, (proxyRes) => {
-            res.writeHead(proxyRes.statusCode, proxyRes.headers);
-            proxyRes.pipe(res, { end: true });
-        });
-
-        proxyReq.on("error", (e) => {
-            console.error("[Proxy] Upstream Error: " + e.message);
-            res.writeHead(502);
-            res.end("Proxy Upstream Error");
-        });
-
-        req.pipe(proxyReq, { end: true });
-
-    } catch (e) {
-        console.error("[Proxy] Handler Error: " + e.message);
-        res.writeHead(500);
-        res.end("Proxy Internal Error");
-    }
-});
-
-server.listen(parseInt(process.env.PROXY_PORT), "127.0.0.1", () => {
-    console.log("[Proxy] Listening on 127.0.0.1:" + process.env.PROXY_PORT);
-});
-EOF
-
-    # Start Proxy in Background
-    # We use nohup to ensure it stays alive, though & is usually enough in entrypoint
-    node /tmp/auth_proxy.js > /tmp/proxy.log 2>&1 &
-    PROXY_PID=$!
-    # Wait a moment for proxy to start
-    sleep 1
-
-    # -------------------------------------------------------------------------
-    # CONFIG GENERATION
-    # -------------------------------------------------------------------------
-    
-    # We use python3 to generate the JSON safely
-    # We use single quotes for the shell variable, so we wrap the python command in escaped single quotes '\''
-    # and use double quotes exclusively inside the python script.
     python3 -c '\''
 import json
 import os
 import sys
 
-# Hardcode home since we forced it in shell
 home = "/home/claude"
-# USE PROXY URL for Claude Code configuration
-base_url = os.environ.get("LOCAL_PROXY_URL", "http://127.0.0.1:8888")
+base_url = os.environ.get("ANTHROPIC_BASE_URL", "https://api.z.ai/api/anthropic")
+api_key = os.environ.get("ANTHROPIC_API_KEY", "")
 
-# USE DUMMY KEY for validation bypass
-# Must start with sk-ant- to satisfy client-side regex
-dummy_key = "sk-ant-api03-dummy-key-for-local-proxy-bypass-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-aaaaaa"
-
-# DATA 2: Settings (usually settings.json)
 settings_data = {}
 settings_data["anthropicBaseUrl"] = base_url
 settings_data["ANTHROPIC_BASE_URL"] = base_url
@@ -500,11 +411,11 @@ settings_data["hasCompletedOnboarding"] = True
 settings_data["agreedToTerms"] = True
 settings_data["theme"] = "dark" 
 
-# Merge Auth into Settings (Critical: claude-code may look for keys in settings.json)
-# We inject the DUMMY key here. The PROXY swaps it.
-settings_data["primaryApiKey"] = dummy_key
-settings_data["apiKey"] = dummy_key
-settings_data["ANTHROPIC_API_KEY"] = dummy_key
+# Inject keys into settings if available (redundancy for env vars)
+if api_key:
+    settings_data["primaryApiKey"] = api_key
+    settings_data["apiKey"] = api_key
+    settings_data["ANTHROPIC_API_KEY"] = api_key
 
 def write_json(path, data):
     try:
@@ -515,56 +426,16 @@ def write_json(path, data):
     except Exception as e:
         print(f"[claude-docker] Failed to write {path}: {e}")
 
-# PATH 1: ~/.claude.json (Legacy Root - Memory/Sessions)
-# Some versions use this for everything if singular
+# Write to all possible config locations to be safe
 write_json(os.path.join(home, ".claude.json"), settings_data)
-
-# PATH 2: ~/.claude/config.json (Likely Auth - Keeping for compat)
 write_json(os.path.join(home, ".claude", "config.json"), settings_data)
-
-# PATH 3: ~/.claude/settings.json (Main Config for Claude Code)
 write_json(os.path.join(home, ".claude", "settings.json"), settings_data)
-
-# PATH 4: XDG Config (~/.config/claude-code/config.json & settings.json)
 write_json(os.path.join(home, ".config", "claude-code", "config.json"), settings_data)
 write_json(os.path.join(home, ".config", "claude-code", "settings.json"), settings_data)
-
-# PATH 5: XDG Config Alternative (~/.config/claude/settings.json)
 write_json(os.path.join(home, ".config", "claude", "settings.json"), settings_data)
-
-# PATH 6: Managed Settings (Global Override - /etc/claude-code/managed-settings.json)
-# We try to write this if we have permission (we might not if running as non-root, but we are root or 501?)
-# Actually, inside the container we might be root initially? 
-# No, we run `python3 -c` via `sh -c`. The `docker run --user` argument sets the user.
-# So we likely CANNOT write to /etc. 
-# But lets try just in case /etc/claude-code exists and is writable (unlikely).
-write_json("/etc/claude-code/managed-settings.json", settings_data)
-
-# Update .bashrc safely (avoiding f-string syntax errors with quotes)
-bashrc_path = os.path.join(home, ".bashrc")
-try:
-    with open(bashrc_path, "a") as f:
-        f.write(f"\nexport ANTHROPIC_BASE_URL=\"{base_url}\"\n")
-        f.write(f"export ANTHROPIC_API_KEY=\"{dummy_key}\"\n")
-    print(f"[claude-docker] Appended env vars to {bashrc_path}")
-except Exception as e:
-    print(f"[claude-docker] Failed to update .bashrc: {e}")
 '\''
 
-    # 4. DIAGNOSTICS & PRE-FLIGHT
-    echo "🔍 [claude-docker] Diagnostics:"
-    echo "   User: $(whoami) ($(id -u):$(id -g))"
-    echo "   HOME: $HOME"
-    echo "   XDG_CONFIG_HOME: $XDG_CONFIG_HOME"
-    
-    echo "   Checking config file permissions:"
-    ls -la "$HOME/.claude.json" 2>/dev/null || echo "   ~/.claude.json missing!"
-    ls -la "$HOME/.claude/config.json" 2>/dev/null || echo "   ~/.claude/config.json missing!"
-    ls -la "$HOME/.claude/settings.json" 2>/dev/null || echo "   ~/.claude/settings.json missing!"
-    ls -la "$HOME/.config/claude-code/config.json" 2>/dev/null || echo "   XDG Config missing!"
-
-    # 5. Execute payload
-    echo "🚀 [claude-docker] Launching Claude..."
+    echo "🚀 [claude-docker] Launching Claude (v2.0.72)..."
     if [ "$1" = "--debug-env" ]; then
         exec /usr/bin/env
     elif [ "$1" = "--run-cmd" ]; then
@@ -578,7 +449,7 @@ except Exception as e:
 # Split into OPTS and IMAGE args to allow injecting SECRET_ARGS (which are -e flags) 
 # BEFORE the image name.
 DOCKER_OPTS=(
-    "docker" "run" "--rm" "-it"
+    "docker" "run" "--rm" ${DOCKER_FLAGS:--it}
     "--user" "$USER_ID:$GROUP_ID"
     "--network" "host"
     "-v" "$HOME/.ssh:/home/claude/.ssh:ro"

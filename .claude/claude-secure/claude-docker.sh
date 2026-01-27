@@ -388,9 +388,14 @@ CONTAINER_SCRIPT='
     # We use a dummy key for Claude Code, and swap it for the REAL key in a local proxy.
 
     export REAL_ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-https://api.z.ai/api/anthropic}"
-    export PROXY_PORT="8888"
+    
+    # Dynamic Port Selection using Python to avoid EADDRINUSE (OrbStack uses 8888)
+    PROXY_PORT=$(python3 -c '\''import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()'\'' )
+    export PROXY_PORT
     export LOCAL_PROXY_URL="http://127.0.0.1:$PROXY_PORT"
     
+    echo "[claude-docker] Selected Proxy Port: $PROXY_PORT"
+
     # Write the Node.js Proxy
     cat > /tmp/auth_proxy.js <<EOF
 const http = require("http");
